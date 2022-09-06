@@ -2,12 +2,10 @@
 import UIKit
 
 class RegisterViewController: UIViewController {
-
-    enum Result: String {
-        case success = "0"
-        case duplicateUsername = "1"
-        case duplicateEmail = "2"
-    }
+    
+    lazy var sheet = UIAlertController()
+    lazy var yesAction = UIAlertAction()
+    lazy var emailSent = 1 // not sent
     
     private let usernameField: UITextField = {
         let field = UITextField()
@@ -142,69 +140,132 @@ class RegisterViewController: UIViewController {
         usernameField.resignFirstResponder()
         passwordField.resignFirstResponder()
 
-        let url = MainURL.domain + "/user/signup"
-        var components = URLComponents(string: url)
-        let queryUsername = URLQueryItem(name: "username", value: usernameField.text)
-        let queryEmail = URLQueryItem(name: "email", value: emailField.text)
-        let queryPassword = URLQueryItem(name: "password", value: passwordField.text)
-        components?.queryItems = [queryUsername, queryEmail, queryPassword]
-
-        let totalUrl = (components?.url)!
-
-        let task = URLSession.shared.dataTask(with: totalUrl) {(data, response, error) in
-            guard let data = data else { return }
-            let result = String(data: data, encoding: .utf8)!
-
+        let username = usernameField.text!
+        let email = emailField.text!
+        let password = passwordField.text!
+        
+        let user = User(username: username, email: email, password: password)
+        AuthManager.shared.registerNewUser(user: user) { result in
             switch result {
-            case Result.success.rawValue:
+            case UserResult.success.rawValue:
                 DispatchQueue.main.async {
-                    self.showEmailCheckAlertMessage()
-                }
-            case Result.duplicateUsername.rawValue :
-                DispatchQueue.main.async {
-                    self.showAlertMessage(title: "Sorry!", message: "The username already exists") { [weak self] in
-                        self?.usernameField.text = ""
-                        self?.usernameLabel.text = "Required"
-                        self?.usernameLabel.isHidden = false
+                                    self.showEmailCheckAlertMessage(email: email)
+                                }
+                AuthManager.shared.validateEmail(email: email) { result in
+                    switch result {
+                    case Result.success.rawValue:
+                        self.emailSent = 0
+                    default:
+                        self.emailSent = 1
                     }
-                    return
                 }
-            case Result.duplicateEmail.rawValue:
+            case UserResult.duplicateUsername.rawValue:
                 DispatchQueue.main.async {
-                    self.showAlertMessage(title: "Sorry!", message: "The email address already exists") { [weak self] in
-                        self?.emailField.text = ""
-                        self?.emailLabel.text = "Required"
-                        self?.emailLabel.isHidden = false
-                    }
-                    return
-                }
+                                   self.showAlertMessage(title: "Sorry!", message: "The username already exists") { [weak self] in
+                                       self?.usernameField.text = ""
+                                       self?.usernameLabel.text = "Required"
+                                       self?.usernameLabel.isHidden = false
+                                       self?.checkAllValidForms()
+                                   }
+                                   return
+                               }
+            case UserResult.duplicateEmail.rawValue:
+                DispatchQueue.main.async {
+                                    self.showAlertMessage(title: "Sorry!", message: "The email address already exists") { [weak self] in
+                                        self?.emailField.text = ""
+                                        self?.emailLabel.text = "Required"
+                                        self?.emailLabel.isHidden = false
+                                        self?.checkAllValidForms()
+                                    }
+                                    return
+                                }
             default:
-                fatalError("unknown value")
+                fatalError("Server Error")
             }
         }
-
-        task.resume()
     }
     
-    func showEmailCheckAlertMessage() {
-        let sheet = UIAlertController(title: "Success", message: "Please check your email and put code to validate your account", preferredStyle: .alert)
+    func showEmailCheckAlertMessage(email: String) {
+        sheet = UIAlertController(title: "Success", message: "Please check your email and put code to validate your account", preferredStyle: .alert)
         
         sheet.addTextField { field in
             field.placeholder = "Code"
             field.textAlignment = .center
+            field.addTarget(self, action: #selector(self.alertTextFieldChanged), for: .editingChanged)
         }
-        sheet.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
-            guard let fields = sheet.textFields else {
+        
+        yesAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
+            guard let fields = self.sheet.textFields else {
                 return
             }
             let codeField = fields[0]
             guard let hasValue = codeField.text, !hasValue.isEmpty else {
                 return
             }
-            // Check hasValue and codeValue
-        }))
+           
+            if self.emailSent == 0 {
+                AuthManager.shared.validateCode(email: email, code: hasValue) { result in
+                    switch result {
+                    case Result.success.rawValue:
+                        DispatchQueue.main.async {
+                            self.showAlertMessage(title: "Success", message: "The email is validated. Please keep sign in!") { [weak self] in
+                                self?.dismiss(animated: true)
+                            }
+                        }
+                    default:
+                        DispatchQueue.main.async {
+                            self.showAlertMessage(title: "Failure", message: "Please check the code again!") { [weak self] in
+                                self?.showEmailCheckAlertMessage(email: email)
+                            }
+                        }
+                    }
+                }
+            } else {
+                fatalError("Server Error")
+                
+            }
+            
+        })
+        
+        yesAction.isEnabled = false
+        sheet.addAction(yesAction)
+        
         self.present(sheet, animated: true)
     }
+        
+        
+        
+        
+//        sheet.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+//            guard let fields = sheet.textFields else {
+//                return
+//            }
+//            let codeField = fields[0]
+//            guard let hasValue = codeField.text, !hasValue.isEmpty else {
+//                return self.showAlertMessage(title: "Notice", message: "Please put code!", completion: nil)
+//            }
+//            // Check hasValue and codeValue
+//            AuthManager.shared.validateEmail(email: email) { result in
+//                switch result {
+//                case Result.success.rawValue:
+//                    AuthManager.shared.validateCode(email: email, code: hasValue) { result in
+//                        switch result {
+//                        case Result.success.rawValue:
+//                            self.showAlertMessage(title: "Success", message: "The email is validated. Please keep sign in!") { [weak self] in
+//                                self?.dismiss(animated: true)
+//                            }
+//                        default:
+//                            self.showAlertMessage(title: "Failure", message: "Please check the code again!", completion: nil)
+//                        }
+//                    }
+//                default:
+//                    fatalError("Server Error")
+//                }
+//            }
+//
+//        }))
+//        self.present(sheet, animated: true)
+//    }
     
     
     func showAlertMessage( title: String?, message: String, completion: ( () -> Void )? ) {
@@ -297,6 +358,10 @@ class RegisterViewController: UIViewController {
             passwordLabel.isHidden = true
         }
         checkAllValidForms()
+    }
+    
+    @objc func alertTextFieldChanged() {
+        yesAction.isEnabled = sheet.textFields?.first!.text!.count ?? 0 > 0
     }
     
 }

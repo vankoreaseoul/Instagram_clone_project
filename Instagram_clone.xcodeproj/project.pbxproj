@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC4709C528C6C551007B915A /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4709C428C6C551007B915A /* DatabaseManager.swift */; };
+		DC4709C728C7784F007B915A /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4709C628C7784F007B915A /* MailManager.swift */; };
 		DC59C58428C59B24005A3DB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC59C58328C59B24005A3DB7 /* Extensions.swift */; };
 		DC59C58628C5BD05005A3DB7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC59C58528C5BD05005A3DB7 /* RegisterViewController.swift */; };
 		DCDAC28628C4C32000F9B418 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDAC28528C4C32000F9B418 /* AuthManager.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DC4709C428C6C551007B915A /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		DC4709C628C7784F007B915A /* MailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailManager.swift; sourceTree = "<group>"; };
 		DC59C58328C59B24005A3DB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DC59C58528C5BD05005A3DB7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DCDAC28528C4C32000F9B418 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -167,6 +171,8 @@
 				DC59C58328C59B24005A3DB7 /* Extensions.swift */,
 				DCDF456B28C488D300253B35 /* AppDelegate.swift */,
 				DCDAC28528C4C32000F9B418 /* AuthManager.swift */,
+				DC4709C428C6C551007B915A /* DatabaseManager.swift */,
+				DC4709C628C7784F007B915A /* MailManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -337,6 +343,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC4709C728C7784F007B915A /* MailManager.swift in Sources */,
 				DCDF457028C488D300253B35 /* HomeViewController.swift in Sources */,
 				DCDF456C28C488D300253B35 /* AppDelegate.swift in Sources */,
 				DCDAC28C28C4C5CF00F9B418 /* SignInViewController.swift in Sources */,
@@ -345,6 +352,7 @@
 				DCDF45A028C48A3800253B35 /* Models.swift in Sources */,
 				DCDAC28628C4C32000F9B418 /* AuthManager.swift in Sources */,
 				DC59C58428C59B24005A3DB7 /* Extensions.swift in Sources */,
+				DC4709C528C6C551007B915A /* DatabaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
