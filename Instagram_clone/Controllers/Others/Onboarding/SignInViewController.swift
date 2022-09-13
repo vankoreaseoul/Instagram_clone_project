@@ -146,7 +146,7 @@ class SignInViewController: UIViewController {
                 }
             case SignInResult.emailNotValidated.rawValue:
                     if !usernameOrEmail.contains("@"){
-                        DatabaseManager.shared.readUser(username: usernameOrEmail) { user in
+                        DatabaseManager.shared.readUser(username: usernameOrEmail, email: nil) { user in
                             DispatchQueue.main.async {
                                 self.showEmailCheckAlertMessage(email: user.email) {
                                     self.addUserInfoOnSessionAndChangePage()
@@ -279,8 +279,18 @@ class SignInViewController: UIViewController {
     }
     
     func addUserInfoOnSessionAndChangePage() {
-        UserDefaults.standard.setIsSignedIn(value: true)
-        self.dismiss(animated: true)
+        if usernameOrEmailField.text!.contains("@") {
+            DatabaseManager.shared.readUser(username: nil, email: usernameOrEmailField.text) { user in
+                let username = user.username
+                UserDefaults.standard.setIsSignedIn(value: true, username: username)
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true)
+                }
+            }
+        } else {
+            UserDefaults.standard.setIsSignedIn(value: true, username: usernameOrEmailField.text!)
+            self.dismiss(animated: true)
+        }
     }
     
 }

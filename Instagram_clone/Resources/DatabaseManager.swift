@@ -77,11 +77,13 @@ class DatabaseManager {
         }.resume()
     }
     
-    public func readUser( username: String, completion: @escaping (User) -> Void ) {
+    public func readUser( username: String?, email: String?, completion: @escaping (User) -> Void ) {
         let url = MainURL.domain + "/user"
         var components = URLComponents(string: url)
         let queryUsername = URLQueryItem(name: "username", value: username)
-        components?.queryItems = [queryUsername]
+        let queryEmail = URLQueryItem(name: "email", value: email)
+        
+        components?.queryItems = [queryUsername, queryEmail]
 
         let totalUrl = (components?.url)!
         

@@ -24,3 +24,7 @@ struct User: Decodable {
         return password;
     }
 }
+
+struct Post {
+    
+}

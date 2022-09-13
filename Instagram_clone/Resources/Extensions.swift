@@ -71,10 +71,12 @@ extension UIViewController {
 extension UserDefaults {
     enum UserDefaultsKeys: String {
         case isSignedIn
+        case username
     }
     
-    func setIsSignedIn(value: Bool) {
+    func setIsSignedIn(value: Bool, username: String) {
         self.set(value, forKey: UserDefaultsKeys.isSignedIn.rawValue)
+        self.set(username, forKey: UserDefaultsKeys.username.rawValue)
         self.synchronize()
     }
     

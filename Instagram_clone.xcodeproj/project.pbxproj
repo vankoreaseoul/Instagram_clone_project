@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC3424E828D08834004E6587 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3424E728D08834004E6587 /* EditProfileViewController.swift */; };
 		DC4709C528C6C551007B915A /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4709C428C6C551007B915A /* DatabaseManager.swift */; };
 		DC4709C728C7784F007B915A /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4709C628C7784F007B915A /* MailManager.swift */; };
 		DC59C58428C59B24005A3DB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC59C58328C59B24005A3DB7 /* Extensions.swift */; };
@@ -25,6 +26,9 @@
 		DCDF458D28C488D300253B35 /* Instagram_cloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF458C28C488D300253B35 /* Instagram_cloneUITests.swift */; };
 		DCDF458F28C488D300253B35 /* Instagram_cloneUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF458E28C488D300253B35 /* Instagram_cloneUITestsLaunchTests.swift */; };
 		DCDF45A028C48A3800253B35 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF459F28C48A3800253B35 /* Models.swift */; };
+		DCF80AC928D0509600135444 /* ProfileInfoHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF80AC828D0509600135444 /* ProfileInfoHeaderCollectionReusableView.swift */; };
+		DCF80ACB28D0677F00135444 /* ProfileTabsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF80ACA28D0677F00135444 /* ProfileTabsCollectionReusableView.swift */; };
+		DCF80ACE28D0684B00135444 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF80ACD28D0684B00135444 /* PhotoCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DC3424E728D08834004E6587 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		DC4709C428C6C551007B915A /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		DC4709C628C7784F007B915A /* MailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailManager.swift; sourceTree = "<group>"; };
 		DC59C58328C59B24005A3DB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -67,6 +72,9 @@
 		DCDF458C28C488D300253B35 /* Instagram_cloneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instagram_cloneUITests.swift; sourceTree = "<group>"; };
 		DCDF458E28C488D300253B35 /* Instagram_cloneUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instagram_cloneUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DCDF459F28C48A3800253B35 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		DCF80AC828D0509600135444 /* ProfileInfoHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		DCF80ACA28D0677F00135444 /* ProfileTabsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabsCollectionReusableView.swift; sourceTree = "<group>"; };
+		DCF80ACD28D0684B00135444 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				DC657B7128CF9F9300154779 /* SettingViewController.swift */,
+				DC3424E728D08834004E6587 /* EditProfileViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -202,6 +211,8 @@
 		DCDF459D28C4899300253B35 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DCF80ACC28D0682800135444 /* Cells */,
+				DCF80AC728D04FD900135444 /* CollectionViewHeaders */,
 				DCDF45A128C48A8600253B35 /* Storyboards */,
 				DCDF457428C488D300253B35 /* Assets.xcassets */,
 			);
@@ -224,6 +235,23 @@
 				DCDF457628C488D300253B35 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		DCF80AC728D04FD900135444 /* CollectionViewHeaders */ = {
+			isa = PBXGroup;
+			children = (
+				DCF80AC828D0509600135444 /* ProfileInfoHeaderCollectionReusableView.swift */,
+				DCF80ACA28D0677F00135444 /* ProfileTabsCollectionReusableView.swift */,
+			);
+			path = CollectionViewHeaders;
+			sourceTree = "<group>";
+		};
+		DCF80ACC28D0682800135444 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DCF80ACD28D0684B00135444 /* PhotoCollectionViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,6 +385,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC3424E828D08834004E6587 /* EditProfileViewController.swift in Sources */,
 				DC4709C728C7784F007B915A /* MailManager.swift in Sources */,
 				DCDF457028C488D300253B35 /* HomeViewController.swift in Sources */,
 				DCDF456C28C488D300253B35 /* AppDelegate.swift in Sources */,
@@ -368,7 +397,10 @@
 				DCDAC28628C4C32000F9B418 /* AuthManager.swift in Sources */,
 				DC59C58428C59B24005A3DB7 /* Extensions.swift in Sources */,
 				DC4709C528C6C551007B915A /* DatabaseManager.swift in Sources */,
+				DCF80ACE28D0684B00135444 /* PhotoCollectionViewCell.swift in Sources */,
+				DCF80ACB28D0677F00135444 /* ProfileTabsCollectionReusableView.swift in Sources */,
 				DC657B7228CF9F9300154779 /* SettingViewController.swift in Sources */,
+				DCF80AC928D0509600135444 /* ProfileInfoHeaderCollectionReusableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +577,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87NQ3CPZUA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Instagram_clone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -572,6 +605,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 87NQ3CPZUA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Instagram_clone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
