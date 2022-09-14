@@ -71,12 +71,17 @@ extension UIViewController {
 extension UserDefaults {
     enum UserDefaultsKeys: String {
         case isSignedIn
-        case username
+        case user
     }
     
-    func setIsSignedIn(value: Bool, username: String) {
+    func setIsSignedIn(value: Bool, user: User) {
         self.set(value, forKey: UserDefaultsKeys.isSignedIn.rawValue)
-        self.set(username, forKey: UserDefaultsKeys.username.rawValue)
+        
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(user) {
+            self.set(encoded, forKey: UserDefaultsKeys.user.rawValue)
+        }
+        
         self.synchronize()
     }
     

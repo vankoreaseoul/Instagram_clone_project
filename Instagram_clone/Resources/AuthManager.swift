@@ -71,7 +71,7 @@ class AuthManager {
             username = usernameOrEmail
         }
         
-        let user = User(id: 0, username: username, email: email, password: password, emailValidated: false)
+        let user = User(id: 0, username: username, email: email, password: password, emailValidated: false, name: "", bio: "", profileImage: "")
         
         DatabaseManager.shared.canCreateNewUser(user: user) { result in
             switch result {

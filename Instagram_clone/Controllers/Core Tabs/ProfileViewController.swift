@@ -51,7 +51,14 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 25.0)
         label.textAlignment = .center
-        label.text = UserDefaults.standard.string(forKey: UserDefaults.UserDefaultsKeys.username.rawValue)
+        
+        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode(User.self, from: savedData) {
+                label.text = savedObject.username
+            }
+        }
+        
         self.navigationItem.titleView = label
     }
     

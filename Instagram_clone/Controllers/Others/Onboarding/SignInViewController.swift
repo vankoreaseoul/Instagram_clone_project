@@ -281,15 +281,18 @@ class SignInViewController: UIViewController {
     func addUserInfoOnSessionAndChangePage() {
         if usernameOrEmailField.text!.contains("@") {
             DatabaseManager.shared.readUser(username: nil, email: usernameOrEmailField.text) { user in
-                let username = user.username
-                UserDefaults.standard.setIsSignedIn(value: true, username: username)
+                UserDefaults.standard.setIsSignedIn(value: true, user: user)
                 DispatchQueue.main.async {
                     self.dismiss(animated: true)
                 }
             }
         } else {
-            UserDefaults.standard.setIsSignedIn(value: true, username: usernameOrEmailField.text!)
-            self.dismiss(animated: true)
+            DatabaseManager.shared.readUser(username: usernameOrEmailField.text, email: nil) { user in
+                UserDefaults.standard.setIsSignedIn(value: true, user: user)
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true)
+                }
+            }
         }
     }
     

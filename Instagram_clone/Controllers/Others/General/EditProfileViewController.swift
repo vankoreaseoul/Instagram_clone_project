@@ -2,6 +2,8 @@
 import UIKit
 
 class EditProfileViewController: UIViewController {
+    
+    lazy var editProfileImageMenuView = EditProfileImageMenuView()
 
     struct ProfileCellModel {
         let title: String
@@ -12,7 +14,7 @@ class EditProfileViewController: UIViewController {
     
     private let headerView: UIView = {
         let headerView = UIView()
-        headerView.backgroundColor = .systemRed
+        headerView.backgroundColor = .systemBackground
         return headerView
     }()
     
@@ -66,6 +68,20 @@ class EditProfileViewController: UIViewController {
     }
     
     private func configureImageView() {
+        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode(User.self, from: savedData) {
+                if !savedObject.profileImage.isEmpty {
+                    // set image
+                    print(1)
+                } else {
+                    setDefaultImage()
+                }
+            }
+        }
+    }
+    
+    private func setDefaultImage() {
         let imageView = UIImageView(image: UIImage(named: "profileImage2"))
         imageView.contentMode = .scaleAspectFit
         headerView.addSubview(imageView)
@@ -81,13 +97,41 @@ class EditProfileViewController: UIViewController {
     }
     
     private func configureMenuList() {
-        menuList.append(ProfileCellModel(title: "Name", handler: { [weak self] in
-            //UINavigationController(rootViewController: self).pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: true)
-        }))
+        menuList.append(
+            ProfileCellModel(title: "Name", handler: {
+            let editProfileNameVC = EditProfileNameViewController()
+            editProfileNameVC.title = "Name"
+            self.navigationItem.backButtonTitle = ""
+            self.navigationController?.navigationBar.tintColor = .black
+            self.navigationController?.pushViewController(editProfileNameVC, animated: true)
+            })
+            )
+        menuList.append(
+            ProfileCellModel(title: "Username", handler: {
+            let editProfileUsernameVC = EditProfileUsernameViewController()
+            editProfileUsernameVC.title = "Username"
+            self.navigationItem.backButtonTitle = ""
+            self.navigationController?.navigationBar.tintColor = .black
+            self.navigationController?.pushViewController(editProfileUsernameVC, animated: true)
+            })
+            )
+        menuList.append(
+            ProfileCellModel(title: "Bio", handler: {
+            let editProfileBioVC = EditProfileBioViewController()
+            editProfileBioVC.title = "Bio"
+            self.navigationItem.backButtonTitle = ""
+            self.navigationController?.navigationBar.tintColor = .black
+            self.navigationController?.pushViewController(editProfileBioVC, animated: true)
+            })
+            )
     }
     
     @objc func didTapDoneButton() {
         // save changes
+        
+            // image
+                // save userDefaults
+                // save dataBase
     }
     
     @objc func didTapCancelButton() {
@@ -95,18 +139,66 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc func didTapEditProfileImageButton() {
-        // approach gallery
+        presentModal()
+    }
+    
+    private func presentModal() {
+        self.navigationController?.view.addSubview(editProfileImageMenuView)
+        editProfileImageMenuView.frame = CGRect(x: 0, y: view.height, width: view.width, height: 0)
+        editProfileImageMenuView.delegate = self
+        
+        UIView.animate(withDuration: 0.5,
+                         delay: 0, usingSpringWithDamping: 1.0,
+                         initialSpringVelocity: 1.0,
+                         options: .curveEaseInOut, animations: {
+            self.editProfileImageMenuView.frame = self.view.bounds
+          }, completion: nil)
+
+    }
+    
+    @objc func slideUpViewTapped() {
+        closeMenuSheet()
     }
 
 }
 
 extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return menuList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = profileTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = menuList[indexPath.row].title
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        menuList[indexPath.row].handler()
+    }
+}
+
+extension EditProfileViewController: EditProfileImageMenuViewDelegate {
+    func addProfileImage(_ image: UIImage) {
+        let imageView = headerView.subviews.first as! UIImageView
+        imageView.frame = CGRect(x: (headerView.width - 130) / 2, y: (headerView.height - 130) / 2, width: 130, height: 130).integral
+        imageView.layer.cornerRadius = 130 / 2.0
+        
+        imageView.image = image
+    }
+    
+    func presentLibrary(_ vc: UIViewController) {
+        present(vc, animated: true)
+    }
+    
+    func closeMenuSheet() {
+          UIView.animate(withDuration: 0.5,
+                         delay: 0, usingSpringWithDamping: 1.0,
+                         initialSpringVelocity: 1.0,
+                         options: .curveEaseInOut, animations: {
+              self.editProfileImageMenuView.frame = CGRect(x: 0, y: self.view.height, width: self.view.width, height: 0)
+          }, completion: nil)
     }
     
     

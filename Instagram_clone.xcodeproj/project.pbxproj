@@ -14,6 +14,10 @@
 		DC59C58628C5BD05005A3DB7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC59C58528C5BD05005A3DB7 /* RegisterViewController.swift */; };
 		DC657B6F28CF9F2100154779 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC657B6E28CF9F2100154779 /* ProfileViewController.swift */; };
 		DC657B7228CF9F9300154779 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC657B7128CF9F9300154779 /* SettingViewController.swift */; };
+		DC8513E928D14EA900EBB63A /* EditProfileNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8513E828D14EA900EBB63A /* EditProfileNameViewController.swift */; };
+		DC8513EB28D15C2900EBB63A /* EditProfileUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8513EA28D15C2900EBB63A /* EditProfileUsernameViewController.swift */; };
+		DC8513ED28D15F7100EBB63A /* EditProfileBioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8513EC28D15F7100EBB63A /* EditProfileBioViewController.swift */; };
+		DC8513F128D1B9CB00EBB63A /* EditProfileImageMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8513F028D1B9CB00EBB63A /* EditProfileImageMenuView.swift */; };
 		DCDAC28628C4C32000F9B418 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDAC28528C4C32000F9B418 /* AuthManager.swift */; };
 		DCDAC28C28C4C5CF00F9B418 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDAC28B28C4C5CF00F9B418 /* SignInViewController.swift */; };
 		DCDF456C28C488D300253B35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF456B28C488D300253B35 /* AppDelegate.swift */; };
@@ -56,6 +60,10 @@
 		DC59C58528C5BD05005A3DB7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DC657B6E28CF9F2100154779 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DC657B7128CF9F9300154779 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		DC8513E828D14EA900EBB63A /* EditProfileNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileNameViewController.swift; sourceTree = "<group>"; };
+		DC8513EA28D15C2900EBB63A /* EditProfileUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileUsernameViewController.swift; sourceTree = "<group>"; };
+		DC8513EC28D15F7100EBB63A /* EditProfileBioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileBioViewController.swift; sourceTree = "<group>"; };
+		DC8513F028D1B9CB00EBB63A /* EditProfileImageMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageMenuView.swift; sourceTree = "<group>"; };
 		DCDAC28528C4C32000F9B418 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		DCDAC28B28C4C5CF00F9B418 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DCDF456828C488D300253B35 /* Instagram_clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram_clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +115,9 @@
 			children = (
 				DC657B7128CF9F9300154779 /* SettingViewController.swift */,
 				DC3424E728D08834004E6587 /* EditProfileViewController.swift */,
+				DC8513E828D14EA900EBB63A /* EditProfileNameViewController.swift */,
+				DC8513EC28D15F7100EBB63A /* EditProfileBioViewController.swift */,
+				DC8513EA28D15C2900EBB63A /* EditProfileUsernameViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -215,6 +226,7 @@
 				DCF80AC728D04FD900135444 /* CollectionViewHeaders */,
 				DCDF45A128C48A8600253B35 /* Storyboards */,
 				DCDF457428C488D300253B35 /* Assets.xcassets */,
+				DC8513F028D1B9CB00EBB63A /* EditProfileImageMenuView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -389,15 +401,19 @@
 				DC4709C728C7784F007B915A /* MailManager.swift in Sources */,
 				DCDF457028C488D300253B35 /* HomeViewController.swift in Sources */,
 				DCDF456C28C488D300253B35 /* AppDelegate.swift in Sources */,
+				DC8513F128D1B9CB00EBB63A /* EditProfileImageMenuView.swift in Sources */,
 				DCDAC28C28C4C5CF00F9B418 /* SignInViewController.swift in Sources */,
 				DC59C58628C5BD05005A3DB7 /* RegisterViewController.swift in Sources */,
 				DCDF456E28C488D300253B35 /* SceneDelegate.swift in Sources */,
 				DC657B6F28CF9F2100154779 /* ProfileViewController.swift in Sources */,
+				DC8513ED28D15F7100EBB63A /* EditProfileBioViewController.swift in Sources */,
 				DCDF45A028C48A3800253B35 /* Models.swift in Sources */,
 				DCDAC28628C4C32000F9B418 /* AuthManager.swift in Sources */,
 				DC59C58428C59B24005A3DB7 /* Extensions.swift in Sources */,
+				DC8513E928D14EA900EBB63A /* EditProfileNameViewController.swift in Sources */,
 				DC4709C528C6C551007B915A /* DatabaseManager.swift in Sources */,
 				DCF80ACE28D0684B00135444 /* PhotoCollectionViewCell.swift in Sources */,
+				DC8513EB28D15C2900EBB63A /* EditProfileUsernameViewController.swift in Sources */,
 				DCF80ACB28D0677F00135444 /* ProfileTabsCollectionReusableView.swift in Sources */,
 				DC657B7228CF9F9300154779 /* SettingViewController.swift in Sources */,
 				DCF80AC928D0509600135444 /* ProfileInfoHeaderCollectionReusableView.swift in Sources */,

@@ -143,7 +143,7 @@ class RegisterViewController: UIViewController {
         let email = emailField.text!
         let password = passwordField.text!
         
-        let user = User(id: 0, username: username, email: email, password: password, emailValidated: false)
+        let user = User(id: 0, username: username, email: email, password: password, emailValidated: false, name: "", bio: "", profileImage: "")
         AuthManager.shared.registerNewUser(user: user) { result in
             switch result {
             case UserResult.success.rawValue:
