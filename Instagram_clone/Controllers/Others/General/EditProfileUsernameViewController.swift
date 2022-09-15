@@ -7,7 +7,7 @@ class EditProfileUsernameViewController: EditProfileNameViewController {
         super.viewDidLoad()
     }
    
-    override func didTapEditProfileNameButton() {
+    override func didTapEditProfileNameDoneButton() {
         print(2)
     }
 }

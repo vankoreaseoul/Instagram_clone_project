@@ -8,7 +8,11 @@ class EditProfileBioViewController: EditProfileNameViewController {
 
     }
     
-    override func didTapEditProfileNameButton() {
+    override func configureContents() {
+        
+    }
+    
+    override func didTapEditProfileNameDoneButton() {
         print(3)
     }
 

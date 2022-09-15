@@ -7,7 +7,8 @@ class EditProfileViewController: UIViewController {
 
     struct ProfileCellModel {
         let title: String
-        let handler: () -> Void
+        var value: String
+        let handler: (String, Int) -> Void
     }
     
     private var menuList = [ProfileCellModel]()
@@ -64,22 +65,63 @@ class EditProfileViewController: UIViewController {
         
         editProfileImageButton.frame = CGRect(x: (view.width - 200) / 2, y: headerView.bottom, width: 200, height: 30)
         
-        profileTableView.frame = CGRect(x: 0, y: editProfileImageButton.bottom + 30, width: view.width, height: view.height - headerView.height - editProfileImageButton.height - 30)
+        profileTableView.frame = CGRect(x: 0, y: editProfileImageButton.bottom + 30, width: view.width - 20, height: view.height - headerView.height - editProfileImageButton.height - 30)
     }
     
     private func configureImageView() {
+        let imageString = callProfileImage()
+        if imageString.isEmpty {
+            setDefaultImage()
+        } else {
+            // image setting!
+            
+        }
+    
+    }
+    
+    
+    private func callProfileImage() -> String {
         if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
             let decoder = JSONDecoder()
             if let savedObject = try? decoder.decode(User.self, from: savedData) {
-                if !savedObject.profileImage.isEmpty {
-                    // set image
-                    print(1)
-                } else {
-                    setDefaultImage()
-                }
+                return savedObject.profileImage
             }
         }
+        return ""
     }
+    
+    private func callProfileName() -> String {
+        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode(User.self, from: savedData) {
+                return savedObject.name
+            }
+        }
+        return ""
+    }
+    
+    private func callProfileUsername() -> String {
+        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode(User.self, from: savedData) {
+                return savedObject.username
+            }
+        }
+        return ""
+    }
+    
+    private func callProfileBio() -> String {
+        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode(User.self, from: savedData) {
+                return savedObject.bio
+            }
+        }
+        return ""
+    }
+    
+    
+    
     
     private func setDefaultImage() {
         let imageView = UIImageView(image: UIImage(named: "profileImage2"))
@@ -98,17 +140,21 @@ class EditProfileViewController: UIViewController {
     
     private func configureMenuList() {
         menuList.append(
-            ProfileCellModel(title: "Name", handler: {
+            ProfileCellModel(title: "Name", value: "", handler: { text, tagIndex in
             let editProfileNameVC = EditProfileNameViewController()
+            editProfileNameVC.value = text
+            editProfileNameVC.index = tagIndex
             editProfileNameVC.title = "Name"
+            editProfileNameVC.delegate = self
             self.navigationItem.backButtonTitle = ""
             self.navigationController?.navigationBar.tintColor = .black
             self.navigationController?.pushViewController(editProfileNameVC, animated: true)
             })
             )
         menuList.append(
-            ProfileCellModel(title: "Username", handler: {
+            ProfileCellModel(title: "Username", value: "", handler: { text, tagIndex in
             let editProfileUsernameVC = EditProfileUsernameViewController()
+            editProfileUsernameVC.value = text
             editProfileUsernameVC.title = "Username"
             self.navigationItem.backButtonTitle = ""
             self.navigationController?.navigationBar.tintColor = .black
@@ -116,8 +162,9 @@ class EditProfileViewController: UIViewController {
             })
             )
         menuList.append(
-            ProfileCellModel(title: "Bio", handler: {
+            ProfileCellModel(title: "Bio", value: "", handler: { text, tagIndex in
             let editProfileBioVC = EditProfileBioViewController()
+            editProfileBioVC.value = text
             editProfileBioVC.title = "Bio"
             self.navigationItem.backButtonTitle = ""
             self.navigationController?.navigationBar.tintColor = .black
@@ -159,6 +206,26 @@ class EditProfileViewController: UIViewController {
     @objc func slideUpViewTapped() {
         closeMenuSheet()
     }
+    
+    private func setValue(_ index: Int) -> String {
+        
+        enum title: Int {
+            case name = 0
+            case username = 1
+            case bio = 2
+        }
+        
+        switch index {
+        case title.name.rawValue:
+            return callProfileName()
+        case title.username.rawValue:
+            return callProfileUsername()
+        case title.bio.rawValue:
+            return callProfileBio()
+        default:
+            fatalError("outOfIndex")
+        }
+    }
 
 }
 
@@ -169,13 +236,38 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = profileTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = menuList[indexPath.row].title
+        
+        let titleLabel = UILabel()
+        titleLabel.frame = CGRect(x: 30, y: 10, width: 80, height: 30)
+        titleLabel.text = menuList[indexPath.row].title
+        cell.contentView.addSubview(titleLabel)
+        
+        let valueLabel = UILabel()
+        valueLabel.frame = CGRect(x: 140, y: 10, width: view.width - 170, height: 30)
+        if setValue(indexPath.row).isEmpty {
+            valueLabel.text = menuList[indexPath.row].title
+            valueLabel.textColor = .systemGray.withAlphaComponent(0.5)
+        } else {
+            valueLabel.text = setValue(indexPath.row)
+        }
+        
+        valueLabel.tag = indexPath.row + 1
+        valueLabel.font = UIFont.systemFont(ofSize: 18.0)
+        cell.contentView.addSubview(valueLabel)
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        menuList[indexPath.row].handler()
+        
+        let valueLabel = self.view.viewWithTag(indexPath.row + 1) as! UILabel
+        let value = valueLabel.text!
+        menuList[indexPath.row].handler(value, indexPath.row + 1)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }
 
@@ -199,6 +291,21 @@ extension EditProfileViewController: EditProfileImageMenuViewDelegate {
                          options: .curveEaseInOut, animations: {
               self.editProfileImageMenuView.frame = CGRect(x: 0, y: self.view.height, width: self.view.width, height: 0)
           }, completion: nil)
+    }
+    
+    
+}
+
+extension EditProfileViewController: EditProfileNameViewControllerDelegate {
+    func changeProfileName(_ newName: String, _ tagIndex: Int) {
+        let valueLabel = self.view.viewWithTag(tagIndex) as! UILabel
+        valueLabel.text = newName
+        if newName.isEmpty {
+            valueLabel.text = menuList[tagIndex - 1].title
+            valueLabel.textColor = .systemGray.withAlphaComponent(0.5)
+        } else {
+            valueLabel.textColor = .black.withAlphaComponent(1.0)
+        }
     }
     
     

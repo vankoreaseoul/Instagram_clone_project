@@ -131,10 +131,11 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         let bioLabelSize = bioLabel.sizeThatFits(frame.size)
         bioLabel.frame = CGRect(x: 25, y: 5 + profilePhotoImageView.bottom, width: width - 10, height: bioLabelSize.height).integral
         
-        configureProfileImageAgain()
+        configureProfileImage()
+        configureBio()
     }
     
-    private func configureProfileImageAgain() {
+    private func configureProfileImage() {
         if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
             let decoder = JSONDecoder()
             if let savedObject = try? decoder.decode(User.self, from: savedData) {
@@ -145,4 +146,18 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
             }
         }
     }
+    
+    private func configureBio() {
+        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode(User.self, from: savedData) {
+                if !savedObject.bio.isEmpty {
+                    // set bio
+                    print(1)
+                }
+            }
+        }
+    }
+    
+    
 }
