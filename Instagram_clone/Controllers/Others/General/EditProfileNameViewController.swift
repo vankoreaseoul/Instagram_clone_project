@@ -3,6 +3,8 @@ import UIKit
 
 protocol EditProfileNameViewControllerDelegate {
     func changeProfileName(_ newName: String, _ tagIndex: Int)
+    func changeProfileBio(_ newBio: String, _ tagIndex: Int)
+    func changeProfileUsername(_ newUsername: String, _ tagIndex: Int)
 }
 
 class EditProfileNameViewController: UIViewController {

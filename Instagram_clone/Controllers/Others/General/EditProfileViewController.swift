@@ -4,6 +4,8 @@ import UIKit
 class EditProfileViewController: UIViewController {
     
     lazy var editProfileImageMenuView = EditProfileImageMenuView()
+    
+    private var bioContentHeight: CGFloat?
 
     struct ProfileCellModel {
         let title: String
@@ -28,6 +30,7 @@ class EditProfileViewController: UIViewController {
     
     private let profileTableView: UITableView = {
         let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
@@ -49,7 +52,7 @@ class EditProfileViewController: UIViewController {
         super.viewDidLayoutSubviews()
         assignFrames()
         configureImageView()
-    }
+   }
     
     private func addSubviews() {
         view.addSubview(headerView)
@@ -155,7 +158,9 @@ class EditProfileViewController: UIViewController {
             ProfileCellModel(title: "Username", value: "", handler: { text, tagIndex in
             let editProfileUsernameVC = EditProfileUsernameViewController()
             editProfileUsernameVC.value = text
+            editProfileUsernameVC.index = tagIndex
             editProfileUsernameVC.title = "Username"
+            editProfileUsernameVC.delegate = self
             self.navigationItem.backButtonTitle = ""
             self.navigationController?.navigationBar.tintColor = .black
             self.navigationController?.pushViewController(editProfileUsernameVC, animated: true)
@@ -165,7 +170,9 @@ class EditProfileViewController: UIViewController {
             ProfileCellModel(title: "Bio", value: "", handler: { text, tagIndex in
             let editProfileBioVC = EditProfileBioViewController()
             editProfileBioVC.value = text
+            editProfileBioVC.index = tagIndex
             editProfileBioVC.title = "Bio"
+            editProfileBioVC.delegate = self
             self.navigationItem.backButtonTitle = ""
             self.navigationController?.navigationBar.tintColor = .black
             self.navigationController?.pushViewController(editProfileBioVC, animated: true)
@@ -226,10 +233,15 @@ class EditProfileViewController: UIViewController {
             fatalError("outOfIndex")
         }
     }
+    
+    private func setDoneButtonBlue() {
+        navigationItem.rightBarButtonItem?.tintColor = .systemBlue
+    }
 
 }
 
 extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menuList.count
     }
@@ -240,12 +252,23 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
         let titleLabel = UILabel()
         titleLabel.frame = CGRect(x: 30, y: 10, width: 80, height: 30)
         titleLabel.text = menuList[indexPath.row].title
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.addSubview(titleLabel)
         
         let valueLabel = UILabel()
         valueLabel.frame = CGRect(x: 140, y: 10, width: view.width - 170, height: 30)
+        valueLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         if setValue(indexPath.row).isEmpty {
             valueLabel.text = menuList[indexPath.row].title
+            
+            // for test
+            if indexPath.row == 2 {
+                valueLabel.text = "akslhsakg\nashkjldgh\nsdfjlag"
+            }
+            // -------------------
+            
+            
             valueLabel.textColor = .systemGray.withAlphaComponent(0.5)
         } else {
             valueLabel.text = setValue(indexPath.row)
@@ -253,7 +276,19 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
         
         valueLabel.tag = indexPath.row + 1
         valueLabel.font = UIFont.systemFont(ofSize: 18.0)
+        
         cell.contentView.addSubview(valueLabel)
+        
+        
+        if indexPath.row == 2 {
+            let containerViewHeight: CGFloat = DynamicLabelSize.height(text: valueLabel.text, font: valueLabel.font, width: view.frame.width - 20)
+            valueLabel.numberOfLines = 0
+            valueLabel.superview?.frame.size.height = containerViewHeight
+            valueLabel.frame.size.height = valueLabel.superview!.bounds.height
+            
+            let cellOfValueLabelHeight = valueLabel.frame.size.height + 20
+            bioContentHeight = cellOfValueLabelHeight
+        }
 
         return cell
     }
@@ -267,8 +302,15 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        if indexPath.row == 2 {
+            return bioContentHeight ?? 0.0
+        } else {
+            return UITableView.automaticDimension
+        }
     }
+    
+    
+
 }
 
 extension EditProfileViewController: EditProfileImageMenuViewDelegate {
@@ -297,6 +339,12 @@ extension EditProfileViewController: EditProfileImageMenuViewDelegate {
 }
 
 extension EditProfileViewController: EditProfileNameViewControllerDelegate {
+    func changeProfileUsername(_ newUsername: String, _ tagIndex: Int) {
+        let valueLabel = self.view.viewWithTag(tagIndex) as! UILabel
+        valueLabel.text = newUsername
+        setDoneButtonBlue()
+    }
+    
     func changeProfileName(_ newName: String, _ tagIndex: Int) {
         let valueLabel = self.view.viewWithTag(tagIndex) as! UILabel
         valueLabel.text = newName
@@ -306,7 +354,50 @@ extension EditProfileViewController: EditProfileNameViewControllerDelegate {
         } else {
             valueLabel.textColor = .black.withAlphaComponent(1.0)
         }
+        setDoneButtonBlue()
+    }
+    
+    func changeProfileBio(_ newBio: String, _ tagIndex: Int) {
+        let valueLabel = self.view.viewWithTag(tagIndex) as! UILabel
+        valueLabel.text = newBio
+        if newBio.isEmpty {
+            valueLabel.text = menuList[tagIndex - 1].title
+            valueLabel.textColor = .systemGray.withAlphaComponent(0.5)
+        } else {
+            valueLabel.textColor = .black.withAlphaComponent(1.0)
+        }
+        
+        if tagIndex == 3 {
+            let containerViewHeight: CGFloat = DynamicLabelSize.height(text: valueLabel.text, font: valueLabel.font, width: view.frame.width - 20)
+            valueLabel.numberOfLines = 0
+            valueLabel.superview?.frame.size.height = containerViewHeight
+            valueLabel.frame.size.height = valueLabel.superview!.bounds.height
+        }
+        
+        
+        let cellOfValueLabel = valueLabel.superview?.superview! as! UITableViewCell
+        cellOfValueLabel.frame.size.height = valueLabel.frame.size.height + 20
+        
+        setDoneButtonBlue()
     }
     
     
+}
+
+class DynamicLabelSize {
+    static func height(text: String?, font: UIFont, width: CGFloat) -> CGFloat {
+        var currentHeight: CGFloat!
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
+        label.text = text
+        label.font = font
+        label.numberOfLines = 0
+        label.sizeToFit()
+        label.lineBreakMode = .byWordWrapping
+        
+        currentHeight = label.frame.height
+        label.removeFromSuperview()
+        
+        return currentHeight
+    }
 }
