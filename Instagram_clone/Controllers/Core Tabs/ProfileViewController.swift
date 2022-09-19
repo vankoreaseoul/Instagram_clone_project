@@ -35,7 +35,6 @@ final class ProfileViewController: UIViewController {
         }
         
         view.addSubview(hasCollectionView)
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,19 +46,8 @@ final class ProfileViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(didTapSettingButton))
         self.navigationItem.rightBarButtonItem?.tintColor = .systemGray
         
-        
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 25.0)
-        label.textAlignment = .center
-        
-        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
-            let decoder = JSONDecoder()
-            if let savedObject = try? decoder.decode(User.self, from: savedData) {
-                label.text = savedObject.username
-            }
-        }
-        
-        self.navigationItem.titleView = label
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30.0, weight: .bold)]
+        self.navigationController?.navigationBar.topItem?.title = EditProfileViewController.callUserInfo()?.username
     }
     
     @objc func didTapSettingButton() {
@@ -67,6 +55,8 @@ final class ProfileViewController: UIViewController {
         settingVC.title = "Settings"
         navigationController?.pushViewController(settingVC, animated: true)
     }
+    
+
 }
 
 

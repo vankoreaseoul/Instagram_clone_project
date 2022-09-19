@@ -44,7 +44,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="b2i-KC-1wp">
             <objects>
-                <tabBarController id="vtz-Hu-pFS" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="mainTabBar" id="vtz-Hu-pFS" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WZI-Ro-I8a">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -63,10 +63,10 @@
             </objects>
             <point key="canvasLocation" x="-980" y="-123"/>
         </scene>
-        <!--View Controller-->
+        <!--Explore View Controller-->
         <scene sceneID="FZN-kY-oyF">
             <objects>
-                <viewController id="u0q-fw-UV2" sceneMemberID="viewController">
+                <viewController id="u0q-fw-UV2" customClass="ExploreViewController" customModule="Instagram_clone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XGt-Iw-FDj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -96,10 +96,10 @@
             </objects>
             <point key="canvasLocation" x="-1842" y="646"/>
         </scene>
-        <!--View Controller-->
+        <!--Film View Controller-->
         <scene sceneID="Vd7-Jh-sz3">
             <objects>
-                <viewController id="VfC-Cw-XcN" sceneMemberID="viewController">
+                <viewController id="VfC-Cw-XcN" customClass="FilmViewController" customModule="Instagram_clone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="daw-kd-qoR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -129,10 +129,10 @@
             </objects>
             <point key="canvasLocation" x="-981" y="646"/>
         </scene>
-        <!--View Controller-->
+        <!--Notification View Controller-->
         <scene sceneID="eO2-Z9-99N">
             <objects>
-                <viewController id="XPq-wt-YhP" sceneMemberID="viewController">
+                <viewController id="XPq-wt-YhP" customClass="NotificationViewController" customModule="Instagram_clone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c5Q-vQ-AOH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

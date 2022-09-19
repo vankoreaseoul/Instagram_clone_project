@@ -14,6 +14,7 @@ class EditProfileUsernameViewController: EditProfileNameViewController {
         super.viewDidLoad()
         contentView.explantaion1.backgroundColor = .red
         contentView.addSubview(textView)
+        contentView.textField.autocapitalizationType = .none
     }
    
     override func configureContents() {
@@ -30,6 +31,8 @@ class EditProfileUsernameViewController: EditProfileNameViewController {
         
         textView.delegate = self
         textView.isEditable = false
+        
+        contentView.textField.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -75,15 +78,32 @@ class EditProfileUsernameViewController: EditProfileNameViewController {
     }
     
     override func didTapEditProfileNameDoneButton() {
-        // check duplication and show message here
+        let username = contentView.textField.text ?? ""
+        let user = User(id: 0, username: username, email: "", password: "", emailValidated: false, name: "", bio: "", profileImage: "")
         
-        // message: "This username isn't available. Please try another.(Red)"
-        
-        
-        var username = contentView.textField.text ?? ""
-        if username.isEmpty {
-            username = formerValue
+        DatabaseManager.shared.canCreateNewUser(user: user) { result in
+            if result == "1" {
+                if username == self.formerValue {
+                    DispatchQueue.main.async {
+                        self.proceedEditUsername(username)
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.contentView.title.text = "This username isn't available. Please try another."
+                        self.contentView.title.textColor = .systemRed
+                        self.contentView.title.adjustsFontSizeToFitWidth = true
+                    }
+                    return
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.proceedEditUsername(username)
+                }
+            }
         }
+    }
+    
+    private func proceedEditUsername(_ username: String) {
         super.delegate?.changeProfileUsername(username, super.index)
         self.navigationController?.popViewController(animated: true)
     }
@@ -94,5 +114,16 @@ extension EditProfileUsernameViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         UIApplication.shared.open(URL)
         return false
+    }
+}
+
+extension EditProfileUsernameViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        let username = textField.text ?? ""
+        if username.isEmpty {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        }
     }
 }

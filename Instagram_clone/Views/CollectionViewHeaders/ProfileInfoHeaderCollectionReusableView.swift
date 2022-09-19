@@ -57,11 +57,20 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         return button
     }()
     
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Name"
+        label.textColor = .label
+        label.numberOfLines = 1
+        return label
+    }()
+    
     private let bioLabel: UILabel = {
         let label = UILabel()
-        label.text = "bio"
+        label.text = "Bio"
         label.textColor = .label
         label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -82,7 +91,12 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         addSubview(followersButton)
         addSubview(followingButton)
         addSubview(editProfileButton)
+        addSubview(nameLabel)
         addSubview(bioLabel)
+        
+        configureProfileImage()
+        configureName()
+        configureBio()
     }
     
     private func addButtonActions() {
@@ -128,34 +142,47 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         followingButton.frame = CGRect(x: followersButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
         editProfileButton.frame = CGRect(x: 10, y: height - 10 - buttonHeight/3, width: width - 20, height: buttonHeight/3).integral
         
-        let bioLabelSize = bioLabel.sizeThatFits(frame.size)
-        bioLabel.frame = CGRect(x: 25, y: 5 + profilePhotoImageView.bottom, width: width - 10, height: bioLabelSize.height).integral
+        let nameLabelSize = nameLabel.sizeThatFits(frame.size)
+        nameLabel.frame = CGRect(x: 25, y: profilePhotoImageView.bottom - 5, width: width - 50, height: nameLabelSize.height).integral
         
-        configureProfileImage()
-        configureBio()
+        let bioLabelSize = bioLabel.sizeThatFits(frame.size)
+        bioLabel.frame = CGRect(x: 25, y: 5 + nameLabel.bottom, width: width - 50, height: bioLabelSize.height).integral
+    }
+    
+    private func setDefaultImage() {
+        profilePhotoImageView.image = UIImage(named: "profileImage")
+        profilePhotoImageView.contentMode = .scaleAspectFit
+        profilePhotoImageView.layer.masksToBounds = true
+        
+        let profilePhotoSize = width/3
+        profilePhotoImageView.frame = CGRect(x: 5, y: 20, width: profilePhotoSize, height: profilePhotoSize).integral
+        profilePhotoImageView.layer.cornerRadius = profilePhotoSize/2.0
     }
     
     private func configureProfileImage() {
-        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
-            let decoder = JSONDecoder()
-            if let savedObject = try? decoder.decode(User.self, from: savedData) {
-                if !savedObject.profileImage.isEmpty {
-                    // set image
-                    print(1)
-                }
-            }
+        let user = EditProfileViewController.callUserInfo()!
+        if !user.profileImage.isEmpty {
+            
+        } else {
+            setDefaultImage()
+        }
+    }
+    
+    private func configureName() {
+        let user = EditProfileViewController.callUserInfo()!
+        if !user.name.isEmpty {
+            nameLabel.text = user.name
+        } else {
+            nameLabel.text = "Name"
         }
     }
     
     private func configureBio() {
-        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
-            let decoder = JSONDecoder()
-            if let savedObject = try? decoder.decode(User.self, from: savedData) {
-                if !savedObject.bio.isEmpty {
-                    // set bio
-                    print(1)
-                }
-            }
+        let user = EditProfileViewController.callUserInfo()!
+        if !user.bio.isEmpty {
+            bioLabel.text = user.bio
+        } else {
+            bioLabel.text = "Bio"
         }
     }
     

@@ -3,6 +3,11 @@ import UIKit
 
 class EditProfileViewController: UIViewController {
     
+    enum Result: String {
+        case success = "0"
+        case fail = "-1"
+    }
+    
     lazy var editProfileImageMenuView = EditProfileImageMenuView()
     
     private var bioContentHeight: CGFloat?
@@ -34,6 +39,11 @@ class EditProfileViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setDoneButtonBlue()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +82,7 @@ class EditProfileViewController: UIViewController {
     }
     
     private func configureImageView() {
-        let imageString = callProfileImage()
+        let imageString = EditProfileViewController.callUserInfo()!.profileImage
         if imageString.isEmpty {
             setDefaultImage()
         } else {
@@ -82,49 +92,19 @@ class EditProfileViewController: UIViewController {
     
     }
     
-    
-    private func callProfileImage() -> String {
+    public static func callUserInfo() -> User? {
         if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
             let decoder = JSONDecoder()
             if let savedObject = try? decoder.decode(User.self, from: savedData) {
-                return savedObject.profileImage
+                print(savedObject)
+                return savedObject
+            } else {
+                return nil
             }
+        } else {
+            return nil
         }
-        return ""
     }
-    
-    private func callProfileName() -> String {
-        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
-            let decoder = JSONDecoder()
-            if let savedObject = try? decoder.decode(User.self, from: savedData) {
-                return savedObject.name
-            }
-        }
-        return ""
-    }
-    
-    private func callProfileUsername() -> String {
-        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
-            let decoder = JSONDecoder()
-            if let savedObject = try? decoder.decode(User.self, from: savedData) {
-                return savedObject.username
-            }
-        }
-        return ""
-    }
-    
-    private func callProfileBio() -> String {
-        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
-            let decoder = JSONDecoder()
-            if let savedObject = try? decoder.decode(User.self, from: savedData) {
-                return savedObject.bio
-            }
-        }
-        return ""
-    }
-    
-    
-    
     
     private func setDefaultImage() {
         let imageView = UIImageView(image: UIImage(named: "profileImage2"))
@@ -181,13 +161,181 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc func didTapDoneButton() {
-        // save changes
+        let email = EditProfileViewController.callUserInfo()!.email
+        let image = (headerView.subviews.first as! UIImageView).image!
         
-            // image
-                // save userDefaults
-                // save dataBase
+        if (headerView.subviews.first as! UIImageView).frame.width == 150 { // image default case
+            // delete image named email on server storage
+            deleteImage(filename: email)
+            
+            // delete image on Mobile Directory and path on UserDefaults
+            
+        } else {
+            // save(update) image named email on server storage
+            uploadImage(paramName: "file", fileName: email, image: image)
+            
+            // save image on Mobile Directory and path on UserDefaults
+            saveAtDirectory(image: image, imageName: email)
+        }
+        
+        
+        // update name, username, bio on database and UserDefaults
+        var name = (view.viewWithTag(1) as! UILabel).text!
+        let username = (view.viewWithTag(2) as! UILabel).text!
+        var bio = (view.viewWithTag(3) as! UILabel).text!
+        
+        if name == "Name" {
+            name = ""
+        }
+        
+        if bio == "Bio" {
+            bio = ""
+        }
+        
+        var user = EditProfileViewController.callUserInfo()!
+        user.name = name
+        user.username = username
+        user.bio = bio
+        
+        DatabaseManager.shared.updateUser(user: user) { result in
+            switch result {
+            case Result.success.rawValue:
+                self.updateUserInfoInUserDefaults(user)
+            case Result.fail.rawValue:
+                fatalError("Server problem")
+            default:
+                fatalError("Invalid value")
+            }
+            
+        }
+        
     }
     
+    private func updateUserInfoInUserDefaults(_ user: User) {
+        UserDefaults.standard.setIsSignedIn(value: true, user: user)
+    }
+    
+    private func updateUserInfo(_ newName: String, _ newUsername: String, _ newBio: String) {
+        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
+            let decoder = JSONDecoder()
+            if var savedObject = try? decoder.decode(User.self, from: savedData) {
+                savedObject.name = newName
+                savedObject.username = newUsername
+                savedObject.bio = newBio
+                
+                DatabaseManager.shared.updateUser(user: savedObject) { result in
+                    
+                }
+                
+                
+            }
+        }
+    }
+    
+    private func deleteAtDirectory(imageName: String) {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let directoryURL = documentsURL.appendingPathComponent("profile_image")
+        let fileURL = directoryURL.appendingPathComponent(imageName + ".png")
+        
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(atPath: fileURL.path)
+            } catch {
+                print(error)
+            }
+        } else {
+            print("File does not exist")
+        }
+    }
+    
+    
+    public func saveAtDirectory(image: UIImage, imageName: String) {
+        let data = image.pngData()!
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let directoryURL = documentsURL.appendingPathComponent("profile_image")
+        
+        if !FileManager.default.fileExists(atPath: directoryURL.path) {
+            do{
+                try FileManager.default.createDirectory(atPath: directoryURL.path, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                NSLog("Couldn't create document directory")
+            }
+        }
+    
+        let fileURL = directoryURL.appendingPathComponent(imageName + ".png")
+        
+        do {
+            // Write to Directory
+            try data.write(to: fileURL)
+            print(fileURL.path)
+            
+            // Store Path in UserDefaults
+            UserDefaults.standard.set(fileURL, forKey: "background")
+        } catch {
+            print("Unable to Write Data to Directory (\(error))")
+        }
+    }
+    
+        
+    private func uploadImage(paramName: String, fileName: String, image: UIImage) {
+        let urlString = MainURL.domain + "/upload_profile_info"
+        let url = URL(string: urlString)
+        
+        // Random String for seperating boundary. Each field is seperated by line looking like '--(boundary)'
+        let boundary = UUID().uuidString
+        let session = URLSession.shared
+        
+        // Create URLRequest
+        var urlRequest = URLRequest(url: url!)
+        urlRequest.httpMethod = "POST"
+        
+        // Set Boundary and Content-type
+        urlRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        var data = Data()
+        
+        // Start by '--(boundary)'
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        // Define Header - Should return Data type by encoding UTF8 after writing by String
+        data.append("Content-Disposition: form-data; name=\"\(paramName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
+        // Define Header 2 - Should return Data type by encoding UTF8 after writing by String. Seperation is '\r\n'.
+        data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
+        // Add Content
+        data.append(image.pngData()!)
+        
+        // Set '--(boundary)--' at the end of all
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        // Send a POST request to the URL, with the data we created earlier
+        session.uploadTask(with: urlRequest, from: data, completionHandler: { responseData, response, error in
+            if error == nil {
+                let jsonData = try? JSONSerialization.jsonObject(with: responseData!, options: .allowFragments)
+                if let json = jsonData as? [String: Any] {
+                    print(json)
+                }
+            }
+        }).resume()
+    }
+    
+    private func deleteImage(filename: String) {
+        let urlString = MainURL.domain + "/delete_profile_info"
+        let url = URL(string: urlString)
+       
+        let param = ["filename": filename]
+        let requestBody = try! JSONSerialization.data(withJSONObject: param, options: [])
+        
+       
+        var request = URLRequest(url: url!)
+        request.httpMethod = "DELETE"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = requestBody
+        
+        let defaultSession = URLSession(configuration: .default)
+        defaultSession.dataTask(with: request) {(data, response, error) in
+        
+        }.resume()
+    }
+
     @objc func didTapCancelButton() {
         self.dismiss(animated: true)
     }
@@ -224,11 +372,11 @@ class EditProfileViewController: UIViewController {
         
         switch index {
         case title.name.rawValue:
-            return callProfileName()
+            return EditProfileViewController.callUserInfo()!.name
         case title.username.rawValue:
-            return callProfileUsername()
+            return EditProfileViewController.callUserInfo()!.username
         case title.bio.rawValue:
-            return callProfileBio()
+            return EditProfileViewController.callUserInfo()!.bio
         default:
             fatalError("outOfIndex")
         }
@@ -236,6 +384,7 @@ class EditProfileViewController: UIViewController {
     
     private func setDoneButtonBlue() {
         navigationItem.rightBarButtonItem?.tintColor = .systemBlue
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17.0)], for: .normal)
     }
 
 }
@@ -261,14 +410,6 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
         
         if setValue(indexPath.row).isEmpty {
             valueLabel.text = menuList[indexPath.row].title
-            
-            // for test
-            if indexPath.row == 2 {
-                valueLabel.text = "akslhsakg\nashkjldgh\nsdfjlag"
-            }
-            // -------------------
-            
-            
             valueLabel.textColor = .systemGray.withAlphaComponent(0.5)
         } else {
             valueLabel.text = setValue(indexPath.row)
@@ -314,6 +455,16 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
 }
 
 extension EditProfileViewController: EditProfileImageMenuViewDelegate {
+    func removeProfileImage() {
+        let imageView = headerView.subviews.first as! UIImageView
+        imageView.frame = CGRect(x: (headerView.width - 150) / 2, y: (headerView.height - 150) / 2, width: 150, height: 150).integral
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 150 / 2.0
+        imageView.contentMode = .scaleAspectFit
+        
+        imageView.image = UIImage(named: "profileImage2")
+    }
+    
     func addProfileImage(_ image: UIImage) {
         let imageView = headerView.subviews.first as! UIImageView
         imageView.frame = CGRect(x: (headerView.width - 130) / 2, y: (headerView.height - 130) / 2, width: 130, height: 130).integral
@@ -323,6 +474,11 @@ extension EditProfileViewController: EditProfileImageMenuViewDelegate {
     }
     
     func presentLibrary(_ vc: UIViewController) {
+        present(vc, animated: true)
+    }
+    
+    func presentCamera(_ vc: UIViewController) {
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
     
@@ -342,7 +498,6 @@ extension EditProfileViewController: EditProfileNameViewControllerDelegate {
     func changeProfileUsername(_ newUsername: String, _ tagIndex: Int) {
         let valueLabel = self.view.viewWithTag(tagIndex) as! UILabel
         valueLabel.text = newUsername
-        setDoneButtonBlue()
     }
     
     func changeProfileName(_ newName: String, _ tagIndex: Int) {
@@ -354,7 +509,6 @@ extension EditProfileViewController: EditProfileNameViewControllerDelegate {
         } else {
             valueLabel.textColor = .black.withAlphaComponent(1.0)
         }
-        setDoneButtonBlue()
     }
     
     func changeProfileBio(_ newBio: String, _ tagIndex: Int) {
@@ -377,8 +531,6 @@ extension EditProfileViewController: EditProfileNameViewControllerDelegate {
         
         let cellOfValueLabel = valueLabel.superview?.superview! as! UITableViewCell
         cellOfValueLabel.frame.size.height = valueLabel.frame.size.height + 20
-        
-        setDoneButtonBlue()
     }
     
     

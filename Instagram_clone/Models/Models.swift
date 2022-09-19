@@ -7,13 +7,13 @@ struct MainURL {
 
 struct User: Codable {
     let id: Int
-    let username: String
+    var username: String
     let email: String
-    let password: String
+    var password: String
     let emailValidated: Bool
-    let name: String
-    let bio: String
-    let profileImage: String
+    var name: String
+    var bio: String
+    var profileImage: String
     
     func getUsername() -> String {
         return username;

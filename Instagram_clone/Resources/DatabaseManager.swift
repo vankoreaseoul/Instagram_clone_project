@@ -96,6 +96,29 @@ class DatabaseManager {
         task.resume()
     }
     
+    public func updateUser( user: User, completion: @escaping (String) -> Void ) {
+        let name = user.getName()
+        let username = user.getUsername()
+        let bio = user.getBio()
+        let email = user.getEmail()
+        
+        let params = ["name": name, "username": username, "bio": bio, "email": email]
+        let requestBody = try! JSONSerialization.data(withJSONObject: params, options: [])
+        
+        let urlString = MainURL.domain + "/user"
+        let url = URL(string: urlString)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = requestBody
+        
+        let defaultSession = URLSession(configuration: .default)
+        defaultSession.dataTask(with: request) {(data, response, error) in
+            guard let data = data else { return }
+            let result = String(data: data, encoding: .utf8)!
+            completion(result)
+        }.resume()
+    }
     
 }
 

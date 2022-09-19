@@ -74,7 +74,7 @@ extension UserDefaults {
         case user
     }
     
-    func setIsSignedIn(value: Bool, user: User) {
+    func setIsSignedIn(value: Bool, user: User?) {
         self.set(value, forKey: UserDefaultsKeys.isSignedIn.rawValue)
         
         let encoder = JSONEncoder()

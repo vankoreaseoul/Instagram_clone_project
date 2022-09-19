@@ -9,16 +9,21 @@
 /* Begin PBXBuildFile section */
 		DC1C31F428D2DF720018F30D /* EditProfileTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1C31F328D2DF720018F30D /* EditProfileTextView.swift */; };
 		DC3424E828D08834004E6587 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3424E728D08834004E6587 /* EditProfileViewController.swift */; };
+		DC42D85D28D811FF005105AB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC42D85C28D811FF005105AB /* ExploreViewController.swift */; };
+		DC42D85F28D8123B005105AB /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC42D85E28D8123B005105AB /* NotificationViewController.swift */; };
+		DC42D86128D81259005105AB /* FilmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC42D86028D81259005105AB /* FilmViewController.swift */; };
 		DC4709C528C6C551007B915A /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4709C428C6C551007B915A /* DatabaseManager.swift */; };
 		DC4709C728C7784F007B915A /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4709C628C7784F007B915A /* MailManager.swift */; };
 		DC59C58428C59B24005A3DB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC59C58328C59B24005A3DB7 /* Extensions.swift */; };
 		DC59C58628C5BD05005A3DB7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC59C58528C5BD05005A3DB7 /* RegisterViewController.swift */; };
 		DC657B6F28CF9F2100154779 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC657B6E28CF9F2100154779 /* ProfileViewController.swift */; };
 		DC657B7228CF9F9300154779 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC657B7128CF9F9300154779 /* SettingViewController.swift */; };
+		DC838A2628D598CA00A09F03 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC838A2528D598CA00A09F03 /* CameraViewController.swift */; };
 		DC8513E928D14EA900EBB63A /* EditProfileNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8513E828D14EA900EBB63A /* EditProfileNameViewController.swift */; };
 		DC8513EB28D15C2900EBB63A /* EditProfileUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8513EA28D15C2900EBB63A /* EditProfileUsernameViewController.swift */; };
 		DC8513ED28D15F7100EBB63A /* EditProfileBioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8513EC28D15F7100EBB63A /* EditProfileBioViewController.swift */; };
 		DC8513F128D1B9CB00EBB63A /* EditProfileImageMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8513F028D1B9CB00EBB63A /* EditProfileImageMenuView.swift */; };
+		DCBC378C28D718C70053A254 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBC378B28D718C70053A254 /* StorageManager.swift */; };
 		DCDAC28628C4C32000F9B418 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDAC28528C4C32000F9B418 /* AuthManager.swift */; };
 		DCDAC28C28C4C5CF00F9B418 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDAC28B28C4C5CF00F9B418 /* SignInViewController.swift */; };
 		DCDF456C28C488D300253B35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF456B28C488D300253B35 /* AppDelegate.swift */; };
@@ -56,16 +61,21 @@
 /* Begin PBXFileReference section */
 		DC1C31F328D2DF720018F30D /* EditProfileTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTextView.swift; sourceTree = "<group>"; };
 		DC3424E728D08834004E6587 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		DC42D85C28D811FF005105AB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
+		DC42D85E28D8123B005105AB /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		DC42D86028D81259005105AB /* FilmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmViewController.swift; sourceTree = "<group>"; };
 		DC4709C428C6C551007B915A /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		DC4709C628C7784F007B915A /* MailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailManager.swift; sourceTree = "<group>"; };
 		DC59C58328C59B24005A3DB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DC59C58528C5BD05005A3DB7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DC657B6E28CF9F2100154779 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DC657B7128CF9F9300154779 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		DC838A2528D598CA00A09F03 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		DC8513E828D14EA900EBB63A /* EditProfileNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileNameViewController.swift; sourceTree = "<group>"; };
 		DC8513EA28D15C2900EBB63A /* EditProfileUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileUsernameViewController.swift; sourceTree = "<group>"; };
 		DC8513EC28D15F7100EBB63A /* EditProfileBioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileBioViewController.swift; sourceTree = "<group>"; };
 		DC8513F028D1B9CB00EBB63A /* EditProfileImageMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageMenuView.swift; sourceTree = "<group>"; };
+		DCBC378B28D718C70053A254 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		DCDAC28528C4C32000F9B418 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		DCDAC28B28C4C5CF00F9B418 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DCDF456828C488D300253B35 /* Instagram_clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram_clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				DC657B7128CF9F9300154779 /* SettingViewController.swift */,
+				DC838A2528D598CA00A09F03 /* CameraViewController.swift */,
 				DC3424E728D08834004E6587 /* EditProfileViewController.swift */,
 				DC8513E828D14EA900EBB63A /* EditProfileNameViewController.swift */,
 				DC8513EC28D15F7100EBB63A /* EditProfileBioViewController.swift */,
@@ -137,6 +148,9 @@
 			isa = PBXGroup;
 			children = (
 				DCDF456F28C488D300253B35 /* HomeViewController.swift */,
+				DC42D85C28D811FF005105AB /* ExploreViewController.swift */,
+				DC42D86028D81259005105AB /* FilmViewController.swift */,
+				DC42D85E28D8123B005105AB /* NotificationViewController.swift */,
 				DC657B6E28CF9F2100154779 /* ProfileViewController.swift */,
 			);
 			path = "Core Tabs";
@@ -208,6 +222,7 @@
 				DCDF456B28C488D300253B35 /* AppDelegate.swift */,
 				DCDAC28528C4C32000F9B418 /* AuthManager.swift */,
 				DC4709C428C6C551007B915A /* DatabaseManager.swift */,
+				DCBC378B28D718C70053A254 /* StorageManager.swift */,
 				DC4709C628C7784F007B915A /* MailManager.swift */,
 			);
 			path = Resources;
@@ -410,17 +425,22 @@
 				DC59C58628C5BD05005A3DB7 /* RegisterViewController.swift in Sources */,
 				DCDF456E28C488D300253B35 /* SceneDelegate.swift in Sources */,
 				DC657B6F28CF9F2100154779 /* ProfileViewController.swift in Sources */,
+				DC42D85F28D8123B005105AB /* NotificationViewController.swift in Sources */,
 				DC8513ED28D15F7100EBB63A /* EditProfileBioViewController.swift in Sources */,
+				DC838A2628D598CA00A09F03 /* CameraViewController.swift in Sources */,
 				DCDF45A028C48A3800253B35 /* Models.swift in Sources */,
 				DCDAC28628C4C32000F9B418 /* AuthManager.swift in Sources */,
 				DC59C58428C59B24005A3DB7 /* Extensions.swift in Sources */,
 				DC8513E928D14EA900EBB63A /* EditProfileNameViewController.swift in Sources */,
+				DC42D86128D81259005105AB /* FilmViewController.swift in Sources */,
 				DC4709C528C6C551007B915A /* DatabaseManager.swift in Sources */,
 				DCF80ACE28D0684B00135444 /* PhotoCollectionViewCell.swift in Sources */,
 				DC8513EB28D15C2900EBB63A /* EditProfileUsernameViewController.swift in Sources */,
 				DCF80ACB28D0677F00135444 /* ProfileTabsCollectionReusableView.swift in Sources */,
+				DC42D85D28D811FF005105AB /* ExploreViewController.swift in Sources */,
 				DC657B7228CF9F9300154779 /* SettingViewController.swift in Sources */,
 				DCF80AC928D0509600135444 /* ProfileInfoHeaderCollectionReusableView.swift in Sources */,
+				DCBC378C28D718C70053A254 /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

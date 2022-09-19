@@ -1,10 +1,13 @@
 
+import PhotosUI
 import UIKit
 
 protocol EditProfileImageMenuViewDelegate: AnyObject {
     func closeMenuSheet()
     func presentLibrary(_ vc: UIViewController)
     func addProfileImage(_ image: UIImage)
+    func presentCamera(_ vc: UIViewController)
+    func removeProfileImage()
 }
 
 class EditProfileImageMenuView: UIView, UINavigationControllerDelegate {
@@ -49,7 +52,7 @@ class EditProfileImageMenuView: UIView, UINavigationControllerDelegate {
         addSubview(container)
         addSubview(cancelButton)
         addButtonAction()
-        addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleDismiss)))
+        addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleDismiss))) // drag gesture to close
         
         configureCellModel()
     }
@@ -98,14 +101,44 @@ class EditProfileImageMenuView: UIView, UINavigationControllerDelegate {
     }
     
     private func didTapRemoveButton() {
-        
+        delegate?.removeProfileImage()
+        removeFromSuperview()
     }
     
     private func didTapPhotoButton() {
-        
+        let cameraVC = CameraViewController()
+        delegate?.presentCamera(cameraVC)
+        removeFromSuperview()
     }
     
     private func didTapLibraryButton() {
+        checkLibraryPermissions()
+    }
+    
+    private func checkLibraryPermissions() {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+
+             switch photoAuthorizationStatus {
+             case .authorized:
+                 self.showLibrary()
+             case .notDetermined:
+                 PHPhotoLibrary.requestAuthorization({ (newStatus) in
+                     if newStatus ==  PHAuthorizationStatus.authorized {
+                         DispatchQueue.main.async {
+                             self.showLibrary()
+                         }
+                     }
+                 })
+             case .restricted:
+                 break
+             case .denied:
+                 break
+             default:
+                 break
+             }
+    }
+    
+    private func showLibrary() {
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
         vc.delegate = self

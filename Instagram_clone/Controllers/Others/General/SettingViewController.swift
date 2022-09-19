@@ -73,10 +73,10 @@ final class SettingViewController: UIViewController { // prevent from making sub
     }
     
     private func didTapSignOut() {
-        UserDefaults.standard.set(false, forKey: UserDefaults.UserDefaultsKeys.isSignedIn.rawValue)
-        UserDefaults.standard.set(nil, forKey: UserDefaults.UserDefaultsKeys.user.rawValue)
-        navigationController?.popViewController(animated: true)
-        tabBarController?.selectedIndex = 0
+        UserDefaults.standard.setIsSignedIn(value: false, user: nil)
+        UserDefaults.standard.set(nil, forKey: "background")
+
+        self.view.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as! UITabBarController
     }
     
     
