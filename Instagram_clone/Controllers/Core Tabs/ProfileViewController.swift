@@ -42,12 +42,25 @@ final class ProfileViewController: UIViewController {
         collectionView?.frame = view.bounds
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        configureNavigationBar()
+        reloadHeaderView()
+    }
+    
+    private func reloadHeaderView() {
+        let profileHeaderCollectView = view.viewWithTag(4) as! ProfileInfoHeaderCollectionReusableView
+        profileHeaderCollectView.configureName()
+        profileHeaderCollectView.configureBio()
+        profileHeaderCollectView.layoutSubviews()
+    }
+    
     private func configureNavigationBar() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(didTapSettingButton))
         self.navigationItem.rightBarButtonItem?.tintColor = .systemGray
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30.0, weight: .bold)]
-        self.navigationController?.navigationBar.topItem?.title = EditProfileViewController.callUserInfo()?.username
+        self.navigationController?.navigationBar.topItem?.title = StorageManager.shared.callUserInfo()?.username
+        self.navigationItem.backButtonTitle = "Back"
     }
     
     @objc func didTapSettingButton() {
@@ -86,6 +99,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             return tabHeader
         }
         let profileHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileInfoHeaderCollectionReusableView.identifier, for: indexPath) as! ProfileInfoHeaderCollectionReusableView
+        profileHeader.tag = 4
         profileHeader.delegate = self
         return profileHeader
     }

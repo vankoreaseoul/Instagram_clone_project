@@ -74,6 +74,9 @@ final class SettingViewController: UIViewController { // prevent from making sub
     
     private func didTapSignOut() {
         UserDefaults.standard.setIsSignedIn(value: false, user: nil)
+        if let hasPath = StorageManager.shared.callProfileImagePath() {
+            StorageManager.shared.deleteAtDirectory(hasPath)
+        }
         UserDefaults.standard.set(nil, forKey: "background")
 
         self.view.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as! UITabBarController

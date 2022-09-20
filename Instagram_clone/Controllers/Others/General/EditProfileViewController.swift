@@ -82,28 +82,20 @@ class EditProfileViewController: UIViewController {
     }
     
     private func configureImageView() {
-        let imageString = EditProfileViewController.callUserInfo()!.profileImage
-        if imageString.isEmpty {
-            setDefaultImage()
+        if let hasPath = StorageManager.shared.callProfileImagePath() {
+            let image = StorageManager.shared.uploadFromDirectory(hasPath)!
+            setNewImage(image)
         } else {
-            // image setting!
-            
+            setDefaultImage()
         }
-    
     }
     
-    public static func callUserInfo() -> User? {
-        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
-            let decoder = JSONDecoder()
-            if let savedObject = try? decoder.decode(User.self, from: savedData) {
-                print(savedObject)
-                return savedObject
-            } else {
-                return nil
-            }
-        } else {
-            return nil
-        }
+    private func setNewImage(_ image: UIImage) {
+        let imageView = UIImageView(image: image)
+        headerView.addSubview(imageView)
+        imageView.frame = CGRect(x: (headerView.width - 140) / 2, y: (headerView.height - 140) / 2, width: 140, height: 140).integral
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 140 / 2.0
     }
     
     private func setDefaultImage() {
@@ -161,21 +153,28 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc func didTapDoneButton() {
-        let email = EditProfileViewController.callUserInfo()!.email
+        let email = StorageManager.shared.callUserInfo()!.email
         let image = (headerView.subviews.first as! UIImageView).image!
         
         if (headerView.subviews.first as! UIImageView).frame.width == 150 { // image default case
             // delete image named email on server storage
-            deleteImage(filename: email)
+            StorageManager.shared.deleteImage(filename: email)
+//            var user = StorageManager.shared.callUserInfo()!
+//            user.profileImage = ""
+//            UserDefaults.standard.setIsSignedIn(value: true, user: user)
             
             // delete image on Mobile Directory and path on UserDefaults
+            if let hasPath = StorageManager.shared.callProfileImagePath() {
+                StorageManager.shared.deleteAtDirectory(hasPath)
+                UserDefaults.standard.setValue(nil, forKey: "background")
+            }
             
         } else {
             // save(update) image named email on server storage
-            uploadImage(paramName: "file", fileName: email, image: image)
+            StorageManager.shared.uploadImage(paramName: "file", fileName: email, image: image)
             
             // save image on Mobile Directory and path on UserDefaults
-            saveAtDirectory(image: image, imageName: email)
+            StorageManager.shared.saveAtDirectory(image: image, imageName: email)
         }
         
         
@@ -192,7 +191,7 @@ class EditProfileViewController: UIViewController {
             bio = ""
         }
         
-        var user = EditProfileViewController.callUserInfo()!
+        var user = StorageManager.shared.callUserInfo()!
         user.name = name
         user.username = username
         user.bio = bio
@@ -208,132 +207,11 @@ class EditProfileViewController: UIViewController {
             }
             
         }
-        
+        dismiss(animated: true)
     }
     
     private func updateUserInfoInUserDefaults(_ user: User) {
         UserDefaults.standard.setIsSignedIn(value: true, user: user)
-    }
-    
-    private func updateUserInfo(_ newName: String, _ newUsername: String, _ newBio: String) {
-        if let savedData = UserDefaults.standard.object(forKey: UserDefaults.UserDefaultsKeys.user.rawValue) as? Data {
-            let decoder = JSONDecoder()
-            if var savedObject = try? decoder.decode(User.self, from: savedData) {
-                savedObject.name = newName
-                savedObject.username = newUsername
-                savedObject.bio = newBio
-                
-                DatabaseManager.shared.updateUser(user: savedObject) { result in
-                    
-                }
-                
-                
-            }
-        }
-    }
-    
-    private func deleteAtDirectory(imageName: String) {
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let directoryURL = documentsURL.appendingPathComponent("profile_image")
-        let fileURL = directoryURL.appendingPathComponent(imageName + ".png")
-        
-        if FileManager.default.fileExists(atPath: fileURL.path) {
-            do {
-                try FileManager.default.removeItem(atPath: fileURL.path)
-            } catch {
-                print(error)
-            }
-        } else {
-            print("File does not exist")
-        }
-    }
-    
-    
-    public func saveAtDirectory(image: UIImage, imageName: String) {
-        let data = image.pngData()!
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let directoryURL = documentsURL.appendingPathComponent("profile_image")
-        
-        if !FileManager.default.fileExists(atPath: directoryURL.path) {
-            do{
-                try FileManager.default.createDirectory(atPath: directoryURL.path, withIntermediateDirectories: true, attributes: nil)
-            } catch {
-                NSLog("Couldn't create document directory")
-            }
-        }
-    
-        let fileURL = directoryURL.appendingPathComponent(imageName + ".png")
-        
-        do {
-            // Write to Directory
-            try data.write(to: fileURL)
-            print(fileURL.path)
-            
-            // Store Path in UserDefaults
-            UserDefaults.standard.set(fileURL, forKey: "background")
-        } catch {
-            print("Unable to Write Data to Directory (\(error))")
-        }
-    }
-    
-        
-    private func uploadImage(paramName: String, fileName: String, image: UIImage) {
-        let urlString = MainURL.domain + "/upload_profile_info"
-        let url = URL(string: urlString)
-        
-        // Random String for seperating boundary. Each field is seperated by line looking like '--(boundary)'
-        let boundary = UUID().uuidString
-        let session = URLSession.shared
-        
-        // Create URLRequest
-        var urlRequest = URLRequest(url: url!)
-        urlRequest.httpMethod = "POST"
-        
-        // Set Boundary and Content-type
-        urlRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        var data = Data()
-        
-        // Start by '--(boundary)'
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        // Define Header - Should return Data type by encoding UTF8 after writing by String
-        data.append("Content-Disposition: form-data; name=\"\(paramName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
-        // Define Header 2 - Should return Data type by encoding UTF8 after writing by String. Seperation is '\r\n'.
-        data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
-        // Add Content
-        data.append(image.pngData()!)
-        
-        // Set '--(boundary)--' at the end of all
-        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-        
-        // Send a POST request to the URL, with the data we created earlier
-        session.uploadTask(with: urlRequest, from: data, completionHandler: { responseData, response, error in
-            if error == nil {
-                let jsonData = try? JSONSerialization.jsonObject(with: responseData!, options: .allowFragments)
-                if let json = jsonData as? [String: Any] {
-                    print(json)
-                }
-            }
-        }).resume()
-    }
-    
-    private func deleteImage(filename: String) {
-        let urlString = MainURL.domain + "/delete_profile_info"
-        let url = URL(string: urlString)
-       
-        let param = ["filename": filename]
-        let requestBody = try! JSONSerialization.data(withJSONObject: param, options: [])
-        
-       
-        var request = URLRequest(url: url!)
-        request.httpMethod = "DELETE"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = requestBody
-        
-        let defaultSession = URLSession(configuration: .default)
-        defaultSession.dataTask(with: request) {(data, response, error) in
-        
-        }.resume()
     }
 
     @objc func didTapCancelButton() {
@@ -372,11 +250,11 @@ class EditProfileViewController: UIViewController {
         
         switch index {
         case title.name.rawValue:
-            return EditProfileViewController.callUserInfo()!.name
+            return StorageManager.shared.callUserInfo()!.name
         case title.username.rawValue:
-            return EditProfileViewController.callUserInfo()!.username
+            return StorageManager.shared.callUserInfo()!.username
         case title.bio.rawValue:
-            return EditProfileViewController.callUserInfo()!.bio
+            return StorageManager.shared.callUserInfo()!.bio
         default:
             fatalError("outOfIndex")
         }

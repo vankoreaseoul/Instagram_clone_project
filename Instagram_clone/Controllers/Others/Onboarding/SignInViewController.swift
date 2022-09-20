@@ -281,16 +281,11 @@ class SignInViewController: UIViewController {
     func addUserInfoOnSessionAndChangePage() {
         if usernameOrEmailField.text!.contains("@") {
             DatabaseManager.shared.readUser(username: nil, email: usernameOrEmailField.text) { user in
-                
-                print(user)
-                // print(UserDefaults.standard.url(forKey: "background")!.description + "1111")
-                
-                // download profile image from server storage
                 if !user.profileImage.isEmpty {
-                    // download image and save path in UserDefaults
                     StorageManager.shared.download(user.profileImage) { image in
                         DispatchQueue.main.async {
-                            EditProfileViewController().saveAtDirectory(image: image, imageName: "done")
+                            StorageManager.shared.saveAtDirectory(image: image, imageName: user.email)
+                            print(UserDefaults.standard.url(forKey: "background")!.description)
                         }
                     }
                 }
@@ -302,9 +297,16 @@ class SignInViewController: UIViewController {
             }
         } else {
             DatabaseManager.shared.readUser(username: usernameOrEmailField.text, email: nil) { user in
-                
                 print(user)
-                // print(UserDefaults.standard.url(forKey: "background")!.description + "1111")
+                
+                    if !user.profileImage.isEmpty {
+                        StorageManager.shared.download(user.profileImage) { image in
+                            DispatchQueue.main.async {
+                                StorageManager.shared.saveAtDirectory(image: image, imageName: user.email)
+                                print(UserDefaults.standard.url(forKey: "background")!.description)
+                            }
+                        }
+                    }
                 
                 UserDefaults.standard.setIsSignedIn(value: true, user: user)
                 DispatchQueue.main.async {

@@ -94,7 +94,6 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         addSubview(nameLabel)
         addSubview(bioLabel)
         
-        configureProfileImage()
         configureName()
         configureBio()
     }
@@ -130,7 +129,55 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let profilePhotoSize = width/3
+        let profilePhotoSize = width / 3
+        profilePhotoImageView.frame = CGRect(x: 5, y: 20, width: profilePhotoSize, height: profilePhotoSize).integral
+        profilePhotoImageView.layer.cornerRadius = profilePhotoSize/2.0
+        
+        let buttonHeight = profilePhotoSize
+        let countButtonWidth = (width - 10 - profilePhotoSize)/3
+       
+        postsButton.frame = CGRect(x: profilePhotoImageView.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
+        followersButton.frame = CGRect(x: postsButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
+        followingButton.frame = CGRect(x: followersButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
+        editProfileButton.frame = CGRect(x: 10, y: height - 10 - buttonHeight/3, width: width - 20, height: buttonHeight/3).integral
+        
+        let nameLabelSize = nameLabel.sizeThatFits(frame.size)
+        nameLabel.frame = CGRect(x: 25, y: profilePhotoImageView.bottom - 5, width: width - 50, height: nameLabelSize.height).integral
+        
+        let bioLabelSize = bioLabel.sizeThatFits(frame.size)
+        bioLabel.frame = CGRect(x: 25, y: 5 + nameLabel.bottom, width: width - 50, height: bioLabelSize.height).integral
+        
+        configureProfileImage()
+    }
+    
+    private func setNewImage(_ image: UIImage) {
+        profilePhotoImageView.image = image
+        
+        let profilePhotoSize = width / 3.2
+        profilePhotoImageView.frame = CGRect(x: 5, y: 20, width: profilePhotoSize, height: profilePhotoSize).integral
+        profilePhotoImageView.layer.cornerRadius = profilePhotoSize / 2.0
+        
+        let buttonHeight = profilePhotoSize
+        let countButtonWidth = (width - 10 - profilePhotoSize) / 3
+       
+        postsButton.frame = CGRect(x: profilePhotoImageView.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
+        followersButton.frame = CGRect(x: postsButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
+        followingButton.frame = CGRect(x: followersButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
+        editProfileButton.frame = CGRect(x: 10, y: height - 10 - buttonHeight/3, width: width - 20, height: buttonHeight/3).integral
+        
+        let nameLabelSize = nameLabel.sizeThatFits(frame.size)
+        nameLabel.frame = CGRect(x: 25, y: profilePhotoImageView.bottom + 7, width: width - 50, height: nameLabelSize.height).integral
+        
+        let bioLabelSize = bioLabel.sizeThatFits(frame.size)
+        bioLabel.frame = CGRect(x: 25, y: 5 + nameLabel.bottom, width: width - 50, height: bioLabelSize.height).integral
+    }
+    
+    private func setDefaultImage() {
+        profilePhotoImageView.image = UIImage(named: "profileImage")
+        profilePhotoImageView.contentMode = .scaleAspectFit
+        profilePhotoImageView.layer.masksToBounds = true
+        
+        let profilePhotoSize = width / 3
         profilePhotoImageView.frame = CGRect(x: 5, y: 20, width: profilePhotoSize, height: profilePhotoSize).integral
         profilePhotoImageView.layer.cornerRadius = profilePhotoSize/2.0
         
@@ -149,27 +196,17 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         bioLabel.frame = CGRect(x: 25, y: 5 + nameLabel.bottom, width: width - 50, height: bioLabelSize.height).integral
     }
     
-    private func setDefaultImage() {
-        profilePhotoImageView.image = UIImage(named: "profileImage")
-        profilePhotoImageView.contentMode = .scaleAspectFit
-        profilePhotoImageView.layer.masksToBounds = true
-        
-        let profilePhotoSize = width/3
-        profilePhotoImageView.frame = CGRect(x: 5, y: 20, width: profilePhotoSize, height: profilePhotoSize).integral
-        profilePhotoImageView.layer.cornerRadius = profilePhotoSize/2.0
-    }
-    
     private func configureProfileImage() {
-        let user = EditProfileViewController.callUserInfo()!
-        if !user.profileImage.isEmpty {
-            
+        if let path = StorageManager.shared.callProfileImagePath() {
+            let profileImage = StorageManager.shared.uploadFromDirectory(path)!
+            setNewImage(profileImage)
         } else {
             setDefaultImage()
         }
     }
     
-    private func configureName() {
-        let user = EditProfileViewController.callUserInfo()!
+    public func configureName() {
+        let user = StorageManager.shared.callUserInfo()!
         if !user.name.isEmpty {
             nameLabel.text = user.name
         } else {
@@ -177,8 +214,8 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         }
     }
     
-    private func configureBio() {
-        let user = EditProfileViewController.callUserInfo()!
+    public func configureBio() {
+        let user = StorageManager.shared.callUserInfo()!
         if !user.bio.isEmpty {
             bioLabel.text = user.bio
         } else {
