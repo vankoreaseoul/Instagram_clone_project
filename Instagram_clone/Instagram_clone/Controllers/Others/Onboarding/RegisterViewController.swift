@@ -2,6 +2,7 @@ import UIKit
 
 class RegisterViewController: UIViewController {
     
+    var isExpand = false
     lazy var sheet = UIAlertController()
     lazy var yesAction = UIAlertAction()
     lazy var emailSent = 1 // not sent
@@ -10,6 +11,7 @@ class RegisterViewController: UIViewController {
         let field = UITextField()
         field.setTextField(placeholder: "Username..")
         field.returnKeyType = .next
+        field.enablesReturnKeyAutomatically = true
         return field
     }()
     
@@ -25,6 +27,7 @@ class RegisterViewController: UIViewController {
         let field = UITextField()
         field.setTextField(placeholder: "Email..")
         field.returnKeyType = .next
+        field.enablesReturnKeyAutomatically = true
         return field
     }()
     
@@ -39,7 +42,8 @@ class RegisterViewController: UIViewController {
     private let passwordField: UITextField = {
         let field = UITextField()
         field.setTextField(placeholder: "Password..")
-        field.returnKeyType = .continue
+        field.returnKeyType = .go
+        field.enablesReturnKeyAutomatically = true
         field.isSecureTextEntry = true
         return field
     }()
@@ -63,9 +67,16 @@ class RegisterViewController: UIViewController {
         return button
     }()
     
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame: UIScreen.main.bounds)
+        scrollView.isScrollEnabled = false
+        return scrollView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        view.addSubview(scrollView)
         
         addSubviews()
         resetForm()
@@ -73,6 +84,9 @@ class RegisterViewController: UIViewController {
         usernameField.delegate = self
         emailField.delegate = self
         passwordField.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -80,8 +94,25 @@ class RegisterViewController: UIViewController {
         assignFrames()
     }
     
+    @objc func keyboardAppear() {
+        if !isExpand {
+            scrollView.isScrollEnabled = true
+            scrollView.contentSize = CGSize(width: view.width, height: view.height + 200)
+            isExpand = true
+        }
+    }
+    
+    @objc func keyboardDisappear() {
+        if isExpand {
+            scrollView.isScrollEnabled = false
+            scrollView.setContentOffset(CGPoint(x: 0, y: -30), animated: true)
+            isExpand = false
+        }
+    }
+    
     func assignFrames() {
-        usernameField.frame = CGRect(x: 20, y: view.safeAreaInsets.top + 50, width: view.width - 40, height: 52)
+        scrollView.frame = view.bounds
+        usernameField.frame = CGRect(x: 20, y: view.safeAreaInsets.top + 30, width: view.width - 40, height: 52)
         usernameLabel.frame = CGRect(x: 20, y: usernameField.bottom, width: view.width - 40, height: 52)
         emailField.frame = CGRect(x: 20, y: usernameLabel.bottom + 10, width: view.width - 40, height: 52)
         emailLabel.frame = CGRect(x: 20, y: emailField.bottom, width: view.width - 40, height: 52)
@@ -91,13 +122,13 @@ class RegisterViewController: UIViewController {
     }
     
     func addSubviews() {
-        view.addSubview(usernameField)
-        view.addSubview(usernameLabel)
-        view.addSubview(emailField)
-        view.addSubview(emailLabel)
-        view.addSubview(passwordField)
-        view.addSubview(passwordLabel)
-        view.addSubview(registerButton)
+        scrollView.addSubview(usernameField)
+        scrollView.addSubview(usernameLabel)
+        scrollView.addSubview(emailField)
+        scrollView.addSubview(emailLabel)
+        scrollView.addSubview(passwordField)
+        scrollView.addSubview(passwordLabel)
+        scrollView.addSubview(registerButton)
         touchView()
         
         registerButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
@@ -135,9 +166,7 @@ class RegisterViewController: UIViewController {
     }
     
     @objc func didTapRegister() {
-        emailField.resignFirstResponder()
-        usernameField.resignFirstResponder()
-        passwordField.resignFirstResponder()
+        view.endEditing(true)
 
         let username = usernameField.text!
         let email = emailField.text!
@@ -327,14 +356,29 @@ class RegisterViewController: UIViewController {
 
 extension RegisterViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        if textField == usernameField {
-            usernameFieldChanged()
+        if textField == self.usernameField {
+            self.usernameFieldChanged()
         }
-        if textField == emailField {
-            emailFieldChanged()
+        if textField == self.emailField {
+            self.emailFieldChanged()
         }
-        if textField == passwordField {
-            passwordFieldChanged()
+        if textField == self.passwordField {
+            self.passwordFieldChanged()
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.usernameField {
+            self.emailField.becomeFirstResponder()
+        } else if textField == self.emailField {
+            scrollView.setContentOffset(CGPoint(x: 0, y: emailField.top), animated: true)
+            self.passwordField.becomeFirstResponder()
+        } else {
+            if self.registerButton.isEnabled {
+                self.didTapRegister()
+            }
+        }
+        return true
+    }
+    
 }

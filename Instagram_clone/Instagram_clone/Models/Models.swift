@@ -2,7 +2,8 @@
 import Foundation
 
 struct MainURL {
-    static let domain = "http://localhost:8080"
+    static let domain = "https://d68e-211-215-121-152.jp.ngrok.io"
+    // "http://localhost:8080"
 }
 
 struct User: Codable {

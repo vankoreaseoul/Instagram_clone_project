@@ -5,6 +5,7 @@ class EditProfileBioViewController: EditProfileNameViewController {
 
     private let bioTextView: UITextView = {
         let textView = UITextView()
+        textView.autocapitalizationType = .none
         textView.font = UIFont.systemFont(ofSize: 18.0)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false

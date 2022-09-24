@@ -96,6 +96,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         if indexPath.section == 1 {
             let tabHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileTabsCollectionReusableView.identifier, for: indexPath)
+            tabHeader.tag = 5
             return tabHeader
         }
         let profileHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileInfoHeaderCollectionReusableView.identifier, for: indexPath) as! ProfileInfoHeaderCollectionReusableView
@@ -106,11 +107,19 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 1 {
+            if let tabHeader = view.viewWithTag(5) as? ProfileTabsCollectionReusableView {
+                tabHeader.frame.origin.y = (view.viewWithTag(4) as! ProfileInfoHeaderCollectionReusableView).frame.height + 10
+                collectionView.reloadData()
+            }
             return CGSize(width: collectionView.width, height: 50)
         }
-        return CGSize(width: collectionView.width, height: collectionView.height/3)
+        guard let profileHeader = view.viewWithTag(4) as? ProfileInfoHeaderCollectionReusableView else {
+            return CGSize(width: collectionView.width, height: collectionView.height/2.8)
+        }
+        let height = profileHeader.bioLabel.frame.origin.y + profileHeader.bioLabel.frame.size.height + 30 + profileHeader.editProfileButton.height + 10
+        profileHeader.frame.size = CGSize(width: collectionView.width, height: height)
+        return CGSize(width: collectionView.width, height: height)
     }
-    
     
     
 }
@@ -118,6 +127,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
 extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate {
     func profileHeaderDidTapProfileImageView() {
         
+    }
+    
+    func resetHeaderViewHeight() {
+        let cgSize1 = self.collectionView(collectionView!, layout: collectionView!.collectionViewLayout, referenceSizeForHeaderInSection: 0)
+        let cgSize2 = self.collectionView(collectionView!, layout: collectionView!.collectionViewLayout, referenceSizeForHeaderInSection: 1)
     }
 
     func profileHeaderDidTapPostsButton() {

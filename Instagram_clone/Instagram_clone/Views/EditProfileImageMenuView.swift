@@ -63,8 +63,8 @@ class EditProfileImageMenuView: UIView, UINavigationControllerDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        container.frame = CGRect(x: 20, y: self.height * 0.6, width: self.width - 40, height: self.height * 0.3 * 0.9)
-        cancelButton.frame = CGRect(x: 20, y: container.bottom + 10, width: self.width - 40, height: container.height / 5)
+        container.frame = CGRect(x: 20, y: self.height * 0.55, width: self.width - 40, height: self.height * 0.3)
+        cancelButton.frame = CGRect(x: 20, y: container.bottom + 10, width: self.width - 40, height: container.height / 4)
         
         configureMenuTableView()
     }

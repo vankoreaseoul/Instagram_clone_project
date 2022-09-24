@@ -12,7 +12,10 @@ class EditProfilTextView: UIView {
     public let textField: UITextField = {
         let textField = UITextField()
         textField.font = UIFont.init(name: (textField.font?.fontName)!, size: 25.0)
+        textField.autocapitalizationType = .none
         textField.clearButtonMode = .whileEditing
+        textField.returnKeyType = .done
+        textField.enablesReturnKeyAutomatically = true
         return textField
     }()
     
@@ -20,7 +23,7 @@ class EditProfilTextView: UIView {
         let label = UILabel()
         label.textColor = .systemGray
         label.font = UIFont.init(name: (label.font?.fontName)!, size: 14.0)
-        label.numberOfLines = 2
+        label.numberOfLines = 3
         return label
     }()
     
@@ -48,7 +51,7 @@ class EditProfilTextView: UIView {
         super.layoutSubviews()
         title.frame = CGRect(x: 30, y: 10, width: self.width - 60, height: 20)
         textField.frame = CGRect(x: 30, y: title.bottom, width: self.width - 60, height: 40)
-        explantaion1.frame = CGRect(x: 30, y: textField.bottom + 10, width: self.width - 60, height: 50)
+        explantaion1.frame = CGRect(x: 30, y: textField.bottom + 10, width: self.width - 60, height: 60)
         explantaion2.frame = CGRect(x: 30, y: explantaion1.bottom + 10, width: self.width - 60, height: 20)
         
         let bottomLine = CALayer()

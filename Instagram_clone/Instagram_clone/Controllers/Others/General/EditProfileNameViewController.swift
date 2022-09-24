@@ -23,6 +23,7 @@ class EditProfileNameViewController: UIViewController {
         configureNavigationBar()
         configureContents()
         touchView()
+        contentView.textField.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -76,5 +77,12 @@ class EditProfileNameViewController: UIViewController {
         let newName = contentView.textField.text ?? ""
         delegate?.changeProfileName(newName, index)
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension EditProfileNameViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        didTapEditProfileNameDoneButton()
+        return true
     }
 }

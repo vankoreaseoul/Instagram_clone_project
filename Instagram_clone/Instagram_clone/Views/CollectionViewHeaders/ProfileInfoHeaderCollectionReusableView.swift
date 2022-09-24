@@ -7,6 +7,7 @@ protocol ProfileInfoHeaderCollectionReusableViewDelegate: AnyObject {
     func profileHeaderDidTapFollowersButton()
     func profileHeaderDidTapFollowingButton()
     func profileHeaderDidTapEditProfileButton()
+    func resetHeaderViewHeight()
 }
 
 class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
@@ -15,7 +16,7 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     weak var delegate: ProfileInfoHeaderCollectionReusableViewDelegate?
     
     private let profilePhotoImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "profileImage"))
+        let imageView = UIImageView(image: UIImage(named: "profileImage2"))
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
         return imageView
@@ -48,7 +49,7 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         return button
     }()
     
-    private let editProfileButton: UIButton = {
+    public let editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("Edit Profile", for: .normal)  // add number on title
         button.setTitleColor(.label, for: .normal)
@@ -65,7 +66,7 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         return label
     }()
     
-    private let bioLabel: UILabel = {
+    public let bioLabel: UILabel = {
         let label = UILabel()
         label.text = "Bio"
         label.textColor = .label
@@ -128,72 +129,57 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        let profilePhotoSize = width / 3
-        profilePhotoImageView.frame = CGRect(x: 5, y: 20, width: profilePhotoSize, height: profilePhotoSize).integral
-        profilePhotoImageView.layer.cornerRadius = profilePhotoSize/2.0
-        
-        let buttonHeight = profilePhotoSize
-        let countButtonWidth = (width - 10 - profilePhotoSize)/3
-       
-        postsButton.frame = CGRect(x: profilePhotoImageView.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
-        followersButton.frame = CGRect(x: postsButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
-        followingButton.frame = CGRect(x: followersButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
-        editProfileButton.frame = CGRect(x: 10, y: height - 10 - buttonHeight/3, width: width - 20, height: buttonHeight/3).integral
-        
-        let nameLabelSize = nameLabel.sizeThatFits(frame.size)
-        nameLabel.frame = CGRect(x: 25, y: profilePhotoImageView.bottom - 5, width: width - 50, height: nameLabelSize.height).integral
-        
-        let bioLabelSize = bioLabel.sizeThatFits(frame.size)
-        bioLabel.frame = CGRect(x: 25, y: 5 + nameLabel.bottom, width: width - 50, height: bioLabelSize.height).integral
-        
         configureProfileImage()
     }
     
     private func setNewImage(_ image: UIImage) {
         profilePhotoImageView.image = image
         
-        let profilePhotoSize = width / 3.2
-        profilePhotoImageView.frame = CGRect(x: 5, y: 20, width: profilePhotoSize, height: profilePhotoSize).integral
-        profilePhotoImageView.layer.cornerRadius = profilePhotoSize / 2.0
-        
-        let buttonHeight = profilePhotoSize
-        let countButtonWidth = (width - 10 - profilePhotoSize) / 3
-       
-        postsButton.frame = CGRect(x: profilePhotoImageView.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
-        followersButton.frame = CGRect(x: postsButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
-        followingButton.frame = CGRect(x: followersButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
-        editProfileButton.frame = CGRect(x: 10, y: height - 10 - buttonHeight/3, width: width - 20, height: buttonHeight/3).integral
-        
-        let nameLabelSize = nameLabel.sizeThatFits(frame.size)
-        nameLabel.frame = CGRect(x: 25, y: profilePhotoImageView.bottom + 7, width: width - 50, height: nameLabelSize.height).integral
-        
-        let bioLabelSize = bioLabel.sizeThatFits(frame.size)
-        bioLabel.frame = CGRect(x: 25, y: 5 + nameLabel.bottom, width: width - 50, height: bioLabelSize.height).integral
-    }
-    
-    private func setDefaultImage() {
-        profilePhotoImageView.image = UIImage(named: "profileImage")
-        profilePhotoImageView.contentMode = .scaleAspectFit
-        profilePhotoImageView.layer.masksToBounds = true
-        
-        let profilePhotoSize = width / 3
-        profilePhotoImageView.frame = CGRect(x: 5, y: 20, width: profilePhotoSize, height: profilePhotoSize).integral
+        let profilePhotoSize = width / 3.5
+        profilePhotoImageView.frame = CGRect(x: 2, y: 0, width: profilePhotoSize, height: profilePhotoSize).integral
         profilePhotoImageView.layer.cornerRadius = profilePhotoSize/2.0
         
         let buttonHeight = profilePhotoSize
         let countButtonWidth = (width - 10 - profilePhotoSize)/3
        
-        postsButton.frame = CGRect(x: profilePhotoImageView.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
-        followersButton.frame = CGRect(x: postsButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
-        followingButton.frame = CGRect(x: followersButton.right, y: 15, width: countButtonWidth, height: buttonHeight).integral
+        postsButton.frame = CGRect(x: profilePhotoImageView.right, y: 0, width: countButtonWidth, height: buttonHeight).integral
+        followersButton.frame = CGRect(x: postsButton.right - 10, y: 0, width: countButtonWidth, height: buttonHeight).integral
+        followingButton.frame = CGRect(x: followersButton.right + 5, y: 0, width: countButtonWidth, height: buttonHeight).integral
         editProfileButton.frame = CGRect(x: 10, y: height - 10 - buttonHeight/3, width: width - 20, height: buttonHeight/3).integral
         
         let nameLabelSize = nameLabel.sizeThatFits(frame.size)
-        nameLabel.frame = CGRect(x: 25, y: profilePhotoImageView.bottom - 5, width: width - 50, height: nameLabelSize.height).integral
+        nameLabel.frame = CGRect(x: 10, y: profilePhotoImageView.bottom + 5, width: width - 20, height: nameLabelSize.height).integral
         
         let bioLabelSize = bioLabel.sizeThatFits(frame.size)
-        bioLabel.frame = CGRect(x: 25, y: 5 + nameLabel.bottom, width: width - 50, height: bioLabelSize.height).integral
+        bioLabel.frame = CGRect(x: 10, y: nameLabel.bottom + 10, width: width - 20, height: bioLabelSize.height).integral
+        
+        delegate?.resetHeaderViewHeight()
+    }
+    
+    private func setDefaultImage() {
+        profilePhotoImageView.image = UIImage(named: "profileImage2")
+        profilePhotoImageView.contentMode = .scaleAspectFit
+        profilePhotoImageView.layer.masksToBounds = true
+        
+        let profilePhotoSize = width / 3.5
+        profilePhotoImageView.frame = CGRect(x: 2, y: 0, width: profilePhotoSize, height: profilePhotoSize).integral
+        profilePhotoImageView.layer.cornerRadius = profilePhotoSize/2.0
+        
+        let buttonHeight = profilePhotoSize
+        let countButtonWidth = (width - 10 - profilePhotoSize)/3
+       
+        postsButton.frame = CGRect(x: profilePhotoImageView.right, y: 0, width: countButtonWidth, height: buttonHeight).integral
+        followersButton.frame = CGRect(x: postsButton.right - 10, y: 0, width: countButtonWidth, height: buttonHeight).integral
+        followingButton.frame = CGRect(x: followersButton.right + 5, y: 0, width: countButtonWidth, height: buttonHeight).integral
+        editProfileButton.frame = CGRect(x: 10, y: height - 10 - buttonHeight/3, width: width - 20, height: buttonHeight/3).integral
+        
+        let nameLabelSize = nameLabel.sizeThatFits(frame.size)
+        nameLabel.frame = CGRect(x: 10, y: profilePhotoImageView.bottom, width: width - 20, height: nameLabelSize.height).integral
+        
+        let bioLabelSize = bioLabel.sizeThatFits(frame.size)
+        bioLabel.frame = CGRect(x: 10, y: nameLabel.bottom + 10, width: width - 20, height: bioLabelSize.height).integral
+        
+        delegate?.resetHeaderViewHeight()
     }
     
     private func configureProfileImage() {

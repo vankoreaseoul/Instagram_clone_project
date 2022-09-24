@@ -41,7 +41,7 @@ class EditProfileUsernameViewController: EditProfileNameViewController {
         let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         let navibarHeight = self.navigationController?.navigationBar.height ?? 0
         
-        textView.frame = CGRect(x: 25, y: statusBarHeight + navibarHeight - 15, width: contentView.width - 50, height: 100)
+        textView.frame = CGRect(x: 25, y: statusBarHeight + navibarHeight + 10, width: contentView.width - 50, height: 100)
     }
     
     private func getFormerValue() -> String {
@@ -117,7 +117,7 @@ extension EditProfileUsernameViewController: UITextViewDelegate {
     }
 }
 
-extension EditProfileUsernameViewController: UITextFieldDelegate {
+extension EditProfileUsernameViewController {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         let username = textField.text ?? ""
         if username.isEmpty {

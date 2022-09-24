@@ -76,7 +76,7 @@ class EditProfileViewController: UIViewController {
         headerView.frame.size.width = view.width - view.safeAreaInsets.left - view.safeAreaInsets.right
         headerView.frame.size.height = view.height / 5
         
-        editProfileImageButton.frame = CGRect(x: (view.width - 200) / 2, y: headerView.bottom, width: 200, height: 30)
+        editProfileImageButton.frame = CGRect(x: (view.width - 200) / 2, y: headerView.bottom + 10, width: 200, height: 30)
         
         profileTableView.frame = CGRect(x: 0, y: editProfileImageButton.bottom + 30, width: view.width - 20, height: view.height - headerView.height - editProfileImageButton.height - 30)
     }
@@ -156,7 +156,8 @@ class EditProfileViewController: UIViewController {
         let email = StorageManager.shared.callUserInfo()!.email
         let image = (headerView.subviews.first as! UIImageView).image!
         
-        if (headerView.subviews.first as! UIImageView).frame.width == 150 { // image default case
+        print((headerView.subviews.first as! UIImageView).frame.width)
+        if (headerView.subviews.first as! UIImageView).frame.width >= 150 { // image default case
             // delete image named email on server storage
             StorageManager.shared.deleteImage(filename: email)
 //            var user = StorageManager.shared.callUserInfo()!

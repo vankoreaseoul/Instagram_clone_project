@@ -7,13 +7,16 @@ struct Constants {
 }
 
 class SignInViewController: UIViewController {
-   
+    
+    private var isExpand = false
     lazy var sheet = UIAlertController()
     lazy var yesAction = UIAlertAction()
     
     private let header: UIView = {
         let header = UIView()
         let backgroundImageView = UIImageView(image: UIImage(named: "signinHeaderImage"))
+        let imageView = UIImageView(image: UIImage(named: "text"))
+        backgroundImageView.addSubview(imageView)
         header.addSubview(backgroundImageView)
         header.clipsToBounds = true
         return header
@@ -23,13 +26,15 @@ class SignInViewController: UIViewController {
         let field = UITextField()
         field.setTextField(placeholder: "Username or Email..")
         field.returnKeyType = .next
+        field.enablesReturnKeyAutomatically = true
         return field
     }()
     
     private let passwordField: UITextField = {
         let field = UITextField()
         field.setTextField(placeholder: "Password..")
-        field.returnKeyType = .continue
+        field.returnKeyType = .go
+        field.enablesReturnKeyAutomatically = true
         field.isSecureTextEntry = true
         return field
     }()
@@ -71,6 +76,8 @@ class SignInViewController: UIViewController {
         addSubViews()
         resetAllField()
         touchView()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         usernameOrEmailField.delegate = self
         passwordField.delegate = self
@@ -79,6 +86,25 @@ class SignInViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         assignFrames()
+    }
+    
+    @objc func keyboardAppear(_ notification: Notification) {
+        if !isExpand {
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight = keyboardRectangle.height
+                
+                view.frame.size.height = view.height - keyboardHeight
+                isExpand = true
+            }
+        }
+    }
+    
+    @objc func keyboardDisappear() {
+        if isExpand {
+            view.frame.size.height = UIScreen.main.bounds.size.height
+            isExpand = false
+        }
     }
     
     func addSubViews() {
@@ -95,13 +121,21 @@ class SignInViewController: UIViewController {
     
     func assignFrames() {
         header.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height / 3)
-        usernameOrEmailField.frame = CGRect(x: 25, y: header.bottom + 40, width: view.width - 50, height: 52.0)
+        
+        if !isExpand {
+            usernameOrEmailField.frame = CGRect(x: 25, y: header.bottom + 40, width: view.width - 50, height: 52.0)
+        } else {
+            usernameOrEmailField.frame = CGRect(x: 25, y: header.bottom + 20, width: view.width - 50, height: 52.0)
+        }
+        
         passwordField.frame = CGRect(x: 25, y: usernameOrEmailField.bottom + 10, width: view.width - 50, height: 52.0)
         signinButton.frame = CGRect(x: 25, y: passwordField.bottom + 10, width: view.width - 50, height: 52.0)
         createAccountButton.frame = CGRect(x: 25, y: signinButton.bottom + 10, width: view.width - 50, height: 52.0)
         
-        termsButton.frame = CGRect(x: 10, y: view.height - view.safeAreaInsets.bottom - 100, width: view.width - 20, height: 50)
-        privacyButton.frame = CGRect(x: 10, y: view.height - view.safeAreaInsets.bottom - 50, width: view.width - 20, height: 50)
+        if !isExpand {
+            termsButton.frame = CGRect(x: 10, y: view.height - view.safeAreaInsets.bottom - 100, width: view.width - 20, height: 50)
+            privacyButton.frame = CGRect(x: 10, y: view.height - view.safeAreaInsets.bottom - 50, width: view.width - 20, height: 50)
+        }
         
         configureHeader()
     }
@@ -136,6 +170,7 @@ class SignInViewController: UIViewController {
     }
     
     @objc func didTapSigninButton() {
+        view.endEditing(true)
         let usernameOrEmail = usernameOrEmailField.text!
         let password = passwordField.text!
         AuthManager.shared.signIn(usernameOrEmail, password) { result in
@@ -205,11 +240,11 @@ class SignInViewController: UIViewController {
         }
         backgroundImageView.frame = header.bounds
         
-        let imageView = UIImageView(image: UIImage(named: "text"))
+        guard let imageView = backgroundImageView.subviews.first else {
+            return
+        }
         imageView.contentMode = .scaleAspectFit
         imageView.frame = CGRect(x: backgroundImageView.width/4.0, y: view.safeAreaInsets.top, width: backgroundImageView.width/2.0, height: backgroundImageView.height - view.safeAreaInsets.top)
-        backgroundImageView.addSubview(imageView)
-        
     }
     
     func signinButtonStateChange() {
@@ -297,8 +332,6 @@ class SignInViewController: UIViewController {
             }
         } else {
             DatabaseManager.shared.readUser(username: usernameOrEmailField.text, email: nil) { user in
-                print(user)
-                
                     if !user.profileImage.isEmpty {
                         StorageManager.shared.download(user.profileImage) { image in
                             DispatchQueue.main.async {
@@ -324,6 +357,15 @@ class SignInViewController: UIViewController {
 extension SignInViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         signinButtonStateChange()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.usernameOrEmailField {
+            self.passwordField.becomeFirstResponder()
+        } else {
+            self.didTapSigninButton()
+        }
+        return true
     }
 }
 
