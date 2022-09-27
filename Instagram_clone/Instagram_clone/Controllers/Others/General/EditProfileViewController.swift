@@ -92,6 +92,7 @@ class EditProfileViewController: UIViewController {
     
     private func setNewImage(_ image: UIImage) {
         let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFill
         headerView.addSubview(imageView)
         imageView.frame = CGRect(x: (headerView.width - 140) / 2, y: (headerView.height - 140) / 2, width: 140, height: 140).integral
         imageView.layer.masksToBounds = true
@@ -160,9 +161,6 @@ class EditProfileViewController: UIViewController {
         if (headerView.subviews.first as! UIImageView).frame.width >= 150 { // image default case
             // delete image named email on server storage
             StorageManager.shared.deleteImage(filename: email)
-//            var user = StorageManager.shared.callUserInfo()!
-//            user.profileImage = ""
-//            UserDefaults.standard.setIsSignedIn(value: true, user: user)
             
             // delete image on Mobile Directory and path on UserDefaults
             if let hasPath = StorageManager.shared.callProfileImagePath() {
@@ -350,6 +348,7 @@ extension EditProfileViewController: EditProfileImageMenuViewDelegate {
         imageView.layer.cornerRadius = 130 / 2.0
         
         imageView.image = image
+        imageView.contentMode = .scaleAspectFill
     }
     
     func presentLibrary(_ vc: UIViewController) {

@@ -13,7 +13,7 @@ protocol EditProfileImageMenuViewDelegate: AnyObject {
 class EditProfileImageMenuView: UIView, UINavigationControllerDelegate {
     
     struct EditProfileImageMenuCellModel {
-        let title: String
+        var title: String
         let handler: () -> Void
     }
     
@@ -28,7 +28,7 @@ class EditProfileImageMenuView: UIView, UINavigationControllerDelegate {
         return tableView
     }()
     
-    private let container: UIView = {
+    public let container: UIView = {
         let containerView = UIView()
         containerView.backgroundColor = .systemBackground
         containerView.layer.cornerRadius = 24
@@ -37,7 +37,7 @@ class EditProfileImageMenuView: UIView, UINavigationControllerDelegate {
         return containerView
     }()
     
-    private let cancelButton: UIButton = {
+    public let cancelButton: UIButton = {
         let cancelButton = UIButton()
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.setTitleColor(.systemGray, for: .normal)
@@ -69,7 +69,7 @@ class EditProfileImageMenuView: UIView, UINavigationControllerDelegate {
         configureMenuTableView()
     }
     
-    private func configureCellModel() {
+    public func configureCellModel() {
         data.append(EditProfileImageMenuCellModel(title: "Change Profile Photo", handler: {
             
         }))
@@ -149,7 +149,7 @@ class EditProfileImageMenuView: UIView, UINavigationControllerDelegate {
     
     var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
 
-     @objc func handleDismiss(_ sender: UIPanGestureRecognizer) {
+    @objc func handleDismiss( _ sender: UIPanGestureRecognizer) {
         let touchPoint = sender.location(in: self.window)
 
          if sender.state == UIGestureRecognizer.State.began {
@@ -200,7 +200,7 @@ extension EditProfileImageMenuView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return container.height / 4
+        return container.height / CGFloat(data.count)
     }
     
 }

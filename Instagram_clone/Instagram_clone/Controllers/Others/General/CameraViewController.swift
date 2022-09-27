@@ -6,6 +6,15 @@ class CameraViewController: UIViewController {
     
     private var image: UIImage?
     
+    private let changeCameraModeButton: UIButton = {
+       let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        button.layer.cornerRadius = 25
+        button.tintColor = .systemGray
+        button.backgroundColor = .systemBackground
+        button.setImage(UIImage(systemName: "arrow.triangle.2.circlepath.camera"), for: .normal)
+        return button
+    }()
+    
     private let retakeButton: UIButton = {
        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         button.layer.cornerRadius = 25
@@ -32,6 +41,8 @@ class CameraViewController: UIViewController {
         return button
     }()
     
+    var isFront = true
+    var device: AVCaptureDevice?
     
     // Capture Session
     var session: AVCaptureSession?
@@ -55,8 +66,10 @@ class CameraViewController: UIViewController {
         view.layer.addSublayer(previewLayer)
         view.addSubview(shutterButton)
         view.addSubview(closeButton)
+        view.addSubview(changeCameraModeButton)
         shutterButton.addTarget(self, action: #selector(didTapTakePhoto), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        changeCameraModeButton.addTarget(self, action: #selector(didTapChangeCameraModeButton), for: .touchUpInside)
         
         checkCameraPermissions()
     }
@@ -67,6 +80,7 @@ class CameraViewController: UIViewController {
         
         shutterButton.center = CGPoint(x: view.width / 2, y: view.height - 100)
         closeButton.center = CGPoint(x: 30, y: 60)
+        changeCameraModeButton.center = CGPoint(x: view.width - 55, y: 65)
     }
     
     private func checkCameraPermissions() {
@@ -93,11 +107,36 @@ class CameraViewController: UIViewController {
         }
     }
 
+    private func chooseCamera() {
+        if isFront {
+            if let device = AVCaptureDevice.default(.builtInDualCamera,
+                                                    for: .video, position: .front) {
+                self.device = device
+            } else if let device = AVCaptureDevice.default(.builtInWideAngleCamera,
+                                                           for: .video, position: .front) {
+                self.device = device
+            } else {
+                fatalError("Missing expected back camera device.")
+            }
+        } else {
+            if let device = AVCaptureDevice.default(.builtInDualCamera,
+                                                    for: .video, position: .back) {
+                self.device = device
+            } else if let device = AVCaptureDevice.default(.builtInWideAngleCamera,
+                                                           for: .video, position: .back) {
+                self.device = device
+            } else {
+                fatalError("Missing expected back camera device.")
+            }
+        }
+    }
+    
     private func setUpCamera() {
         let session = AVCaptureSession()
-        if let device = AVCaptureDevice.default(for: .video) {
+        chooseCamera()
+        if let hasDevice = self.device {
             do {
-                let input = try AVCaptureDeviceInput(device: device)
+                let input = try AVCaptureDeviceInput(device: hasDevice)
                 if session.canAddInput(input) {
                     session.addInput(input)
                 }
@@ -119,6 +158,25 @@ class CameraViewController: UIViewController {
         }
         
         
+    }
+    
+    private func changeCameraMode() {
+        session!.beginConfiguration()
+        chooseCamera()
+        if let hasDevice = self.device {
+            for input in session!.inputs {
+                session?.removeInput(input as! AVCaptureDeviceInput)
+            }
+            do {
+                let input = try AVCaptureDeviceInput(device: hasDevice)
+                if session!.canAddInput(input) {
+                    session!.addInput(input)
+                }
+            } catch {
+                print(error)
+            }
+        }
+        session?.commitConfiguration()
     }
     
     @objc private func didTapTakePhoto() {
@@ -158,6 +216,15 @@ class CameraViewController: UIViewController {
     
     @objc func didTapCloseButton() {
         self.dismiss(animated: true)
+    }
+    
+    @objc func didTapChangeCameraModeButton() {
+        if isFront {
+            isFront = false
+        } else {
+            isFront = true
+        }
+        changeCameraMode()
     }
     
     

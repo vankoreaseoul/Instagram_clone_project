@@ -5,6 +5,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate  // for pop up FilmViewController
     }
     
     override func viewDidLayoutSubviews() {

@@ -7,7 +7,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .blue
+        backgroundColor = .black.withAlphaComponent(0.5)
     }
     
     required init?(coder: NSCoder) {

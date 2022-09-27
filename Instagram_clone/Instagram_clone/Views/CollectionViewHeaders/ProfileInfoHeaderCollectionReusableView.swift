@@ -2,7 +2,7 @@
 import UIKit
 
 protocol ProfileInfoHeaderCollectionReusableViewDelegate: AnyObject {
-    func profileHeaderDidTapProfileImageView()
+    func profileHeaderDidTapProfileImageView(_ image: UIImage)
     func profileHeaderDidTapPostsButton()
     func profileHeaderDidTapFollowersButton()
     func profileHeaderDidTapFollowingButton()
@@ -102,6 +102,7 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     private func addButtonActions() {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapProfileImageView))
         self.profilePhotoImageView.addGestureRecognizer(gesture)
+        self.profilePhotoImageView.isUserInteractionEnabled = true
         
         postsButton.addTarget(self, action: #selector(didTapPostsButton), for: .touchUpInside)
         followersButton.addTarget(self, action: #selector(didTapFollowersButton), for: .touchUpInside)
@@ -110,8 +111,7 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     }
     
     @objc func didTapProfileImageView() {
-        // show window where to be able to put gallary photo
-        delegate?.profileHeaderDidTapProfileImageView()
+        delegate?.profileHeaderDidTapProfileImageView(profilePhotoImageView.image!)
     }
     
     @objc func didTapPostsButton() {
@@ -134,6 +134,7 @@ class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
     
     private func setNewImage(_ image: UIImage) {
         profilePhotoImageView.image = image
+        profilePhotoImageView.contentMode = .scaleAspectFill
         
         let profilePhotoSize = width / 3.5
         profilePhotoImageView.frame = CGRect(x: 2, y: 0, width: profilePhotoSize, height: profilePhotoSize).integral

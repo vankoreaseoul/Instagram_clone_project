@@ -8,7 +8,7 @@
 import UIKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
     
     var window: UIWindow?
     
@@ -20,6 +20,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         return true
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if viewController.children.first is FilmViewController {
+            let filmVC = FilmViewController()
+            
+            let vc1 = FilmLibraryViewController()
+            let vc2 = FilmPhotoViewController()
+            let vc3 = FilmVideoViewController()
+            
+            vc1.title = "Library"
+            vc2.title = "Photo"
+            vc3.title = "Video"
+            
+            let naviVC1 = UINavigationController(rootViewController: vc1)
+            let naviVC2 = UINavigationController(rootViewController: vc2)
+            let naviVC3 = UINavigationController(rootViewController: vc3)
+            
+            filmVC.setViewControllers([naviVC1, naviVC2, naviVC3], animated: false)
+            
+            filmVC.modalPresentationStyle = .fullScreen
+            tabBarController.present(filmVC, animated: true)
+            return false
+        }
+        return true
+    } // for pop up FilmViewController
+    
+    @objc func didTapCancelButton() {
+        
     }
 
     // MARK: UISceneSession Lifecycle
