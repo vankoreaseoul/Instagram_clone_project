@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC1935A528E55D1100979FE8 /* FilmLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1935A428E55D1100979FE8 /* FilmLibraryViewController.swift */; };
+		DC1935A728E5D1B100979FE8 /* ImageFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1935A628E5D1B100979FE8 /* ImageFilterView.swift */; };
 		DC1C31F428D2DF720018F30D /* EditProfileTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1C31F328D2DF720018F30D /* EditProfileTextView.swift */; };
 		DC3424E828D08834004E6587 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3424E728D08834004E6587 /* EditProfileViewController.swift */; };
 		DC42D85D28D811FF005105AB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC42D85C28D811FF005105AB /* ExploreViewController.swift */; };
@@ -61,6 +63,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DC1935A428E55D1100979FE8 /* FilmLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmLibraryViewController.swift; sourceTree = "<group>"; };
+		DC1935A628E5D1B100979FE8 /* ImageFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilterView.swift; sourceTree = "<group>"; };
 		DC1C31F328D2DF720018F30D /* EditProfileTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTextView.swift; sourceTree = "<group>"; };
 		DC3424E728D08834004E6587 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		DC42D85C28D811FF005105AB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
@@ -126,7 +130,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DC657B7028CF9F7D00154779 /* General */ = {
+		DC1935A228E55C1500979FE8 /* ProfileVC */ = {
 			isa = PBXGroup;
 			children = (
 				DC657B7128CF9F9300154779 /* SettingViewController.swift */,
@@ -136,6 +140,23 @@
 				DC8513E828D14EA900EBB63A /* EditProfileNameViewController.swift */,
 				DC8513EC28D15F7100EBB63A /* EditProfileBioViewController.swift */,
 				DC8513EA28D15C2900EBB63A /* EditProfileUsernameViewController.swift */,
+			);
+			path = ProfileVC;
+			sourceTree = "<group>";
+		};
+		DC1935A328E55C6700979FE8 /* FilmVC */ = {
+			isa = PBXGroup;
+			children = (
+				DC1935A428E55D1100979FE8 /* FilmLibraryViewController.swift */,
+			);
+			path = FilmVC;
+			sourceTree = "<group>";
+		};
+		DC657B7028CF9F7D00154779 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				DC1935A328E55C6700979FE8 /* FilmVC */,
+				DC1935A228E55C1500979FE8 /* ProfileVC */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -249,6 +270,7 @@
 				DCDF45A128C48A8600253B35 /* Storyboards */,
 				DCDF457428C488D300253B35 /* Assets.xcassets */,
 				DC8513F028D1B9CB00EBB63A /* EditProfileImageMenuView.swift */,
+				DC1935A628E5D1B100979FE8 /* ImageFilterView.swift */,
 				DC5DECCA28E29BF100ACF744 /* AddProfileImageMenuView.swift */,
 				DC1C31F328D2DF720018F30D /* EditProfileTextView.swift */,
 			);
@@ -426,6 +448,7 @@
 				DCDF457028C488D300253B35 /* HomeViewController.swift in Sources */,
 				DCDF456C28C488D300253B35 /* AppDelegate.swift in Sources */,
 				DC8513F128D1B9CB00EBB63A /* EditProfileImageMenuView.swift in Sources */,
+				DC1935A528E55D1100979FE8 /* FilmLibraryViewController.swift in Sources */,
 				DCDAC28C28C4C5CF00F9B418 /* SignInViewController.swift in Sources */,
 				DC1C31F428D2DF720018F30D /* EditProfileTextView.swift in Sources */,
 				DC59C58628C5BD05005A3DB7 /* RegisterViewController.swift in Sources */,
@@ -440,6 +463,7 @@
 				DC59C58428C59B24005A3DB7 /* Extensions.swift in Sources */,
 				DC8513E928D14EA900EBB63A /* EditProfileNameViewController.swift in Sources */,
 				DC42D86128D81259005105AB /* FilmViewController.swift in Sources */,
+				DC1935A728E5D1B100979FE8 /* ImageFilterView.swift in Sources */,
 				DC4709C528C6C551007B915A /* DatabaseManager.swift in Sources */,
 				DCF80ACE28D0684B00135444 /* PhotoCollectionViewCell.swift in Sources */,
 				DC8513EB28D15C2900EBB63A /* EditProfileUsernameViewController.swift in Sources */,

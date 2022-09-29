@@ -8,6 +8,12 @@ class FilmViewController: UITabBarController {
         configureTabBar()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.tabBar.frame.size.height = 40
+        self.tabBar.frame.origin.y = view.frame.height - tabBar.frame.size.height
+    }
+    
     private func configureTabBar() {
         let tabBarAppearance = UITabBarAppearance()
         let tabBarItemAppearance = UITabBarItemAppearance()
@@ -17,6 +23,7 @@ class FilmViewController: UITabBarController {
         tabBarItemAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray.withAlphaComponent(0.8)]
         tabBarItemAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         tabBarItemAppearance.normal.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18.0)]
+        tabBarItemAppearance.normal.titlePositionAdjustment =  UIOffset(horizontal: 0, vertical: -10)
         tabBarAppearance.stackedLayoutAppearance = tabBarItemAppearance
         
         self.tabBar.standardAppearance = tabBarAppearance
@@ -41,7 +48,7 @@ class CommonForm: UIViewController {
         super.viewDidAppear(animated)
     }
 
-    private func configureNaviBar() {
+    func configureNaviBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapCancelButton))
         navigationItem.leftBarButtonItem?.tintColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(didTapNextButton))
@@ -57,39 +64,6 @@ class CommonForm: UIViewController {
 
 }
 
-class FilmLibraryViewController: CommonForm {
-    
-    private lazy var images = [PHAsset]()
-    
-    private let imageView: UIImageView = {
-       let imageView = UIImageView()
-        return imageView
-    }()
-    
-    private let collectionView: UICollectionView = {
-       let collectionView = UICollectionView()
-        return collectionView
-    }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setPhotos()
-    }
-    
-    private func setPhotos() {
-        PHPhotoLibrary.requestAuthorization(for: .addOnly) { [weak self] status in
-            if status == .authorized {
-                let assets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
-                assets.enumerateObjects { (object, _, _) in
-                    self?.images.append(object)
-                    self?.images.reverse()
-                    // self.collectionView?.reloadData()
-                }
-            }
-        }
-    }
-    
-}
 
 class FilmPhotoViewController: CommonForm {
     override func viewDidLoad() {
