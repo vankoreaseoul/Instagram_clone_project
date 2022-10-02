@@ -4,6 +4,8 @@ import Photos
 
 class FilmLibraryViewController: CommonForm {
     
+    private var originalImage: UIImage?
+    
     private var cellList = [Bool]()    // cellState(isChecked) list
     
     private var oldIndexPath: IndexPath?
@@ -38,6 +40,7 @@ class FilmLibraryViewController: CommonForm {
     }
     
     @objc func didTapFilterButton() {
+        self.tabBarController?.tabBar.isHidden = true
         filterButton.isHidden = true
         changeNaviBar()
         changeCollectionView()
@@ -47,6 +50,9 @@ class FilmLibraryViewController: CommonForm {
         super.configureNaviBar()
         self.navigationItem.titleView = nil
         filterButton.isHidden = false
+        self.view.subviews.last?.removeFromSuperview()
+        self.imageView.image = originalImage
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     private func changeNaviBar() {
@@ -78,6 +84,7 @@ class FilmLibraryViewController: CommonForm {
         let filterView = ImageFilterView(frame: frame)
         filterView.image = self.imageView.image
         filterView.backgroundColor = .black
+        filterView.delegate = self
         self.view.addSubview(filterView)
     }
     
@@ -88,7 +95,20 @@ class FilmLibraryViewController: CommonForm {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        guard originalImage == nil else {
+            return
+        }
         defaultSetting()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if self.view.subviews.last is ImageFilterView {
+            return
+        }
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     private func assignFrames() {
@@ -152,6 +172,7 @@ class FilmLibraryViewController: CommonForm {
         manager.requestImage(for: asset, targetSize: CGSize(width: imageView.width, height: imageView.height), contentMode: .aspectFill, options: nil) { image, _ in
             DispatchQueue.main.async {
                 self.imageView.image = image
+                self.originalImage = image
             }
         }
     }
@@ -166,7 +187,16 @@ class FilmLibraryViewController: CommonForm {
     }
     
     override func didTapNextButton() {
-        print(2)
+        let postUploadVC = PostUploadViewController()
+        postUploadVC.title = "New Post"
+        postUploadVC.image = imageView.image
+        self.navigationController?.pushViewController(postUploadVC, animated: true)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(didTapNaviBackButton))
+        self.navigationItem.backBarButtonItem?.tintColor = .systemGray
+    }
+    
+    @objc func didTapNaviBackButton() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -209,5 +239,13 @@ extension FilmLibraryViewController: UICollectionViewDelegate, UICollectionViewD
         self.setImageOnImageView(indexPath.row)
         collectionView.reloadData()
     }
+    
+}
+
+extension FilmLibraryViewController: ImageFilterViewDelegate {
+    func changeImageOnImageView(_ image: UIImage) {
+        self.imageView.image = image
+    }
+    
     
 }
