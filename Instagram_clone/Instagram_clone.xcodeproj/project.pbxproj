@@ -29,6 +29,7 @@
 		DC8513F128D1B9CB00EBB63A /* EditProfileImageMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8513F028D1B9CB00EBB63A /* EditProfileImageMenuView.swift */; };
 		DC8AF8D728E1488A0036AAC3 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF8D628E1488A0036AAC3 /* PhotoDetailViewController.swift */; };
 		DCBC378C28D718C70053A254 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBC378B28D718C70053A254 /* StorageManager.swift */; };
+		DCC559A728EAB81A00A4EEE4 /* TagPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC559A628EAB81A00A4EEE4 /* TagPeopleViewController.swift */; };
 		DCDAC28628C4C32000F9B418 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDAC28528C4C32000F9B418 /* AuthManager.swift */; };
 		DCDAC28C28C4C5CF00F9B418 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDAC28B28C4C5CF00F9B418 /* SignInViewController.swift */; };
 		DCDF456C28C488D300253B35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF456B28C488D300253B35 /* AppDelegate.swift */; };
@@ -86,6 +87,7 @@
 		DC8513F028D1B9CB00EBB63A /* EditProfileImageMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageMenuView.swift; sourceTree = "<group>"; };
 		DC8AF8D628E1488A0036AAC3 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		DCBC378B28D718C70053A254 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		DCC559A628EAB81A00A4EEE4 /* TagPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPeopleViewController.swift; sourceTree = "<group>"; };
 		DCDAC28528C4C32000F9B418 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		DCDAC28B28C4C5CF00F9B418 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DCDF456828C488D300253B35 /* Instagram_clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram_clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +153,7 @@
 			children = (
 				DC1935A428E55D1100979FE8 /* FilmLibraryViewController.swift */,
 				DC2C521728E6C1B700C4C987 /* PostUploadViewController.swift */,
+				DCC559A628EAB81A00A4EEE4 /* TagPeopleViewController.swift */,
 			);
 			path = FilmVC;
 			sourceTree = "<group>";
@@ -162,6 +165,24 @@
 				DC1935A228E55C1500979FE8 /* ProfileVC */,
 			);
 			path = General;
+			sourceTree = "<group>";
+		};
+		DCC559A228EAAF3300A4EEE4 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				DC5DECCA28E29BF100ACF744 /* AddProfileImageMenuView.swift */,
+				DC1C31F328D2DF720018F30D /* EditProfileTextView.swift */,
+				DC8513F028D1B9CB00EBB63A /* EditProfileImageMenuView.swift */,
+			);
+			path = ProfileView;
+			sourceTree = "<group>";
+		};
+		DCC559A328EAAF9E00A4EEE4 /* FilmView */ = {
+			isa = PBXGroup;
+			children = (
+				DC1935A628E5D1B100979FE8 /* ImageFilterView.swift */,
+			);
+			path = FilmView;
 			sourceTree = "<group>";
 		};
 		DCDAC28728C4C51800F9B418 /* Others */ = {
@@ -268,14 +289,12 @@
 		DCDF459D28C4899300253B35 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DCC559A328EAAF9E00A4EEE4 /* FilmView */,
+				DCC559A228EAAF3300A4EEE4 /* ProfileView */,
 				DCF80ACC28D0682800135444 /* Cells */,
 				DCF80AC728D04FD900135444 /* CollectionViewHeaders */,
 				DCDF45A128C48A8600253B35 /* Storyboards */,
 				DCDF457428C488D300253B35 /* Assets.xcassets */,
-				DC8513F028D1B9CB00EBB63A /* EditProfileImageMenuView.swift */,
-				DC1935A628E5D1B100979FE8 /* ImageFilterView.swift */,
-				DC5DECCA28E29BF100ACF744 /* AddProfileImageMenuView.swift */,
-				DC1C31F328D2DF720018F30D /* EditProfileTextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -459,6 +478,7 @@
 				DC8AF8D728E1488A0036AAC3 /* PhotoDetailViewController.swift in Sources */,
 				DC657B6F28CF9F2100154779 /* ProfileViewController.swift in Sources */,
 				DC42D85F28D8123B005105AB /* NotificationViewController.swift in Sources */,
+				DCC559A728EAB81A00A4EEE4 /* TagPeopleViewController.swift in Sources */,
 				DC8513ED28D15F7100EBB63A /* EditProfileBioViewController.swift in Sources */,
 				DC838A2628D598CA00A09F03 /* CameraViewController.swift in Sources */,
 				DCDF45A028C48A3800253B35 /* Models.swift in Sources */,

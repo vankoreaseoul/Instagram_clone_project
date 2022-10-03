@@ -3,6 +3,13 @@ import UIKit
 
 class PostUploadViewController: UIViewController {
     
+    struct model {
+        let title: String
+        let handler: () -> Void
+    }
+    
+    private var modelList = [model]()
+    
     private var textViewMaxHeight: CGFloat?
     
     var image: UIImage?
@@ -17,7 +24,7 @@ class PostUploadViewController: UIViewController {
     
     private let captionViewLine: UIView = {
         let line = UIView()
-        line.backgroundColor = .lightGray.withAlphaComponent(0.2)
+        line.backgroundColor = .lightGray.withAlphaComponent(0.3)
         return line
     }()
     
@@ -36,15 +43,24 @@ class PostUploadViewController: UIViewController {
         textView.isScrollEnabled = false
         return textView
     }()
-
+    
+    private let tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
         view.backgroundColor = .systemBackground
         configureNaviBar()
         addSubviews()
+        configureModelList()
         
         textView.delegate = self
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -56,6 +72,25 @@ class PostUploadViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(didTapShareButton))
     }
     
+    private func configureModelList() {
+        modelList.append(
+            model(title: "Tag People", handler: { [weak self] in
+                let tagPeopleVC = TagPeopleViewController()
+                tagPeopleVC.title = "Tag People"
+                tagPeopleVC.image = self?.image
+                let tagPeopleNC = UINavigationController(rootViewController: tagPeopleVC)
+                tagPeopleNC.modalPresentationStyle = .fullScreen
+                self?.present(tagPeopleNC, animated: true)
+            })
+        )
+        modelList.append(
+            model(title: "Add Location") { [weak self] in
+                let testVC = UIViewController()
+                self?.present(testVC, animated: true)
+            }
+        )
+    }
+    
     @objc func didTapShareButton() {
         
     }
@@ -65,6 +100,7 @@ class PostUploadViewController: UIViewController {
         self.view.addSubview(imageView)
         self.view.addSubview(textView)
         self.view.addSubview(captionViewLine)
+        self.view.addSubview(tableView)
         
         if let hasImage = image {
             imageView.image = hasImage
@@ -97,6 +133,8 @@ class PostUploadViewController: UIViewController {
             dummyView.frame.origin.y = captionView.bottom
         }
         makeLine()
+        
+        tableView.frame = CGRect(x: 0, y: captionView.bottom + 1, width: self.view.width, height: self.view.height - captionView.height)
     }
     
     private func makeLine() {
@@ -191,8 +229,24 @@ extension PostUploadViewController: UITextViewDelegate {
         
     }
     
+}
 
+extension PostUploadViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return modelList.count
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = .systemBackground.withAlphaComponent(0.1)
+        cell.textLabel?.text = modelList[indexPath.row].title
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        modelList[indexPath.row].handler()
+    }
 }
 
