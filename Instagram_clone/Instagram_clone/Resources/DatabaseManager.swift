@@ -120,5 +120,24 @@ class DatabaseManager {
         }.resume()
     }
     
+    public func searchUsers( username: String, completion: @escaping ([(String, String)]) -> Void ) {
+        let url = MainURL.domain + "/user/search"
+        var components = URLComponents(string: url)
+        let queryUsername = URLQueryItem(name: "username", value: username)
+        components?.queryItems = [queryUsername]
+
+        let totalUrl = (components?.url)!
+        
+        let task = URLSession.shared.dataTask(with: totalUrl) {(data, response, error) in
+            guard let data = data else { return }
+            let users: [User] = try! JSONDecoder().decode([User].self, from: data)
+            
+            let results = users.map { (username: $0.username, imagePath: $0.profileImage) }
+            completion(results)
+        }
+
+        task.resume()
+    }
+    
 }
 

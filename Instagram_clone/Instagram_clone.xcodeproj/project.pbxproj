@@ -20,6 +20,7 @@
 		DC59C58428C59B24005A3DB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC59C58328C59B24005A3DB7 /* Extensions.swift */; };
 		DC59C58628C5BD05005A3DB7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC59C58528C5BD05005A3DB7 /* RegisterViewController.swift */; };
 		DC5DECCB28E29BF100ACF744 /* AddProfileImageMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5DECCA28E29BF100ACF744 /* AddProfileImageMenuView.swift */; };
+		DC609F5828EBE98500BBCEC9 /* PeopleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC609F5728EBE98500BBCEC9 /* PeopleTableViewCell.swift */; };
 		DC657B6F28CF9F2100154779 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC657B6E28CF9F2100154779 /* ProfileViewController.swift */; };
 		DC657B7228CF9F9300154779 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC657B7128CF9F9300154779 /* SettingViewController.swift */; };
 		DC838A2628D598CA00A09F03 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC838A2528D598CA00A09F03 /* CameraViewController.swift */; };
@@ -78,6 +79,7 @@
 		DC59C58328C59B24005A3DB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DC59C58528C5BD05005A3DB7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DC5DECCA28E29BF100ACF744 /* AddProfileImageMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileImageMenuView.swift; sourceTree = "<group>"; };
+		DC609F5728EBE98500BBCEC9 /* PeopleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleTableViewCell.swift; sourceTree = "<group>"; };
 		DC657B6E28CF9F2100154779 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DC657B7128CF9F9300154779 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		DC838A2528D598CA00A09F03 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				DCF80ACD28D0684B00135444 /* PhotoCollectionViewCell.swift */,
+				DC609F5728EBE98500BBCEC9 /* PeopleTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				DCDAC28628C4C32000F9B418 /* AuthManager.swift in Sources */,
 				DC59C58428C59B24005A3DB7 /* Extensions.swift in Sources */,
 				DC8513E928D14EA900EBB63A /* EditProfileNameViewController.swift in Sources */,
+				DC609F5828EBE98500BBCEC9 /* PeopleTableViewCell.swift in Sources */,
 				DC42D86128D81259005105AB /* FilmViewController.swift in Sources */,
 				DC1935A728E5D1B100979FE8 /* ImageFilterView.swift in Sources */,
 				DC4709C528C6C551007B915A /* DatabaseManager.swift in Sources */,
