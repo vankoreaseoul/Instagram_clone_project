@@ -6,7 +6,7 @@ To setup this project, you need to follow this instruction.
 2. Make storage on your computer for Server.
 - I didn't use Image host server. Instead I get Server to save images in local directory. Go to 'FileUploadServiceImpl' file in back-end code and check two variables named 'uploadProfileFolderPath' and 'uploadPostFolderPath'. That's the pathname for folders where images will be saved. You have to make your own folders and put the pathname on there.
 3. Download Google Place API library on pods and get API key.
-- In this project, I tried not to use third party libraries. But it looks way better to use this to search location. Here is a link.  https://cocoapods.org/pods/GooglePlaces  You need to make Google developer account to use their services. You can get API key after. Put API key in function called GMSPlacesClient.provideAPIKey("xxxx") in 'AppDelegate' file.
+- In this project, I tried not to use third party libraries. But it looks way better to use this to search location. Here is a link. <br/>  https://cocoapods.org/pods/GooglePlaces  <br/> You need to make Google developer account to use their services. You can get API key after. Put API key in function called GMSPlacesClient.provideAPIKey("xxxx") in 'AppDelegate' file.
 ### Feature
 - Swift, Cocoa Touch
 - Xcode
