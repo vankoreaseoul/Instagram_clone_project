@@ -6,4 +6,9 @@ To setup this project, you need to follow this instruction.
 2. Make storage on your computer for Server.
 - I didn't use Image host server. Instead I get Server to save images in local directory. Go to 'FileUploadServiceImpl' file in Backend code and check two variables named 'uploadProfileFolderPath' and 'uploadPostFolderPath'. That's the pathname for folders where images will be saved. You have to make your own folders and put the pathname on there. 
 ### Feature
--
+- Swift, Cocoa Touch
+- Xcode
+- Auto Layout
+- RESTful APIs to connect iOS application to back-end services
+- MVC design pattern
+- 
