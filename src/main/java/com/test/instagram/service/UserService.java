@@ -2,6 +2,8 @@ package com.test.instagram.service;
 
 import com.test.instagram.entity.User;
 
+import java.util.List;
+
 public interface UserService {
 
     // username and email should be unique.
@@ -14,4 +16,5 @@ public interface UserService {
     void insertImagePath(String email, String imagePath);
     Integer updateUser(User user);
     void deleteImagePath(String email);
+    List<User> searchUsers(String username);
 }

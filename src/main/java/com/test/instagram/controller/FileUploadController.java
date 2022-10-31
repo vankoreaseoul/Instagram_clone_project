@@ -27,4 +27,5 @@ public class FileUploadController {
         String newFileName = (String) filename.get("filename");
         fileUploadService.deleteAtLocal(newFileName);
     }
+
 }

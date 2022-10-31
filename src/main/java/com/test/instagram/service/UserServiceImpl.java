@@ -5,6 +5,7 @@ import com.test.instagram.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,6 +134,31 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email).get(0);
         user.setProfileImage(null);
         userRepository.save(user);
+    }
+
+    @Override
+    public List<User> searchUsers(String username) {
+        // String keyword = "%username%";
+        List<User> users = userRepository.findByUsernameContaining(username);
+        if (users.isEmpty()) {
+            return users;
+        } else {
+            List<User> edittedUsers = new ArrayList<>();
+            for (User user : users) {
+                user.setPassword("");
+                if (user.getProfileImage() == null) {
+                    user.setProfileImage("");
+                }
+                if (user.getName() == null) {
+                    user.setName("");
+                }
+                if (user.getBio() == null) {
+                    user.setBio("");
+                }
+                edittedUsers.add(user);
+            }
+            return edittedUsers;
+        }
     }
 
 

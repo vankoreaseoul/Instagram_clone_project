@@ -4,6 +4,7 @@ package com.test.instagram.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -27,5 +28,5 @@ public class User {
     private String name;
     private String bio;
     private String profileImage;
-
+    private Date day;
 }
