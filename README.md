@@ -28,3 +28,6 @@ You should satisfy all conditions, then the button will be enable. And you will 
 <br/>  
 You can edit your profile information on profile page. To change your profile image, you can take a photo by camera or choose in your library. And your username should be unique, any username can't be duplicated. 
 #### 3. Search page <br/>
+![](https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/follow.png)
+<br/> 
+You can find friends in people tab on search page. You can see thier uploaded posts or tagged posts. If you want to get thier news, you can follow them. But if you want to unfollow them, you can do in your profile page.  
