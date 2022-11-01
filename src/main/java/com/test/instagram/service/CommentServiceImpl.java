@@ -159,6 +159,27 @@ public class CommentServiceImpl implements CommentService {
         String strDate = formatter.format(date);
         commentFake.setDayString(strDate);
 
+        List<String> mentionUserIdList = comment.getMentions();
+        List<String> mentionUsernameList = new ArrayList<>();
+        if (mentionUserIdList.size() > 0) {
+            for (String mentionUserIdString : mentionUserIdList) {
+                String mentionUsername = userRepository.findById(Integer.valueOf(mentionUserIdString)).get().getUsername();
+                mentionUsernameList.add(mentionUsername);
+            }
+        }
+
+        List<String> hashtagIdList = comment.getHashtags();
+        List<String> hashtagNameList = new ArrayList<>();
+        if (hashtagIdList.size() > 0) {
+            for (String hashtagIdString : hashtagIdList) {
+                String hashtagName = hashTagRepository.findById(Integer.valueOf(hashtagIdString)).get().getName();
+                hashtagNameList.add(hashtagName);
+            }
+        }
+
+        commentFake.setMentions(mentionUsernameList);
+        commentFake.setHashtags(hashtagNameList);
+
         return commentFake;
     }
 
@@ -198,6 +219,27 @@ public class CommentServiceImpl implements CommentService {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String strDate = formatter.format(date);
                 commentFake.setDayString(strDate);
+
+                List<String> mentionUserIdList = comment.getMentions();
+                List<String> mentionUsernameList = new ArrayList<>();
+                if (mentionUserIdList.size() > 0) {
+                    for (String mentionUserIdString : mentionUserIdList) {
+                        String mentionUsername = userRepository.findById(Integer.valueOf(mentionUserIdString)).get().getUsername();
+                        mentionUsernameList.add(mentionUsername);
+                    }
+                }
+
+                List<String> hashtagIdList = comment.getHashtags();
+                List<String> hashtagNameList = new ArrayList<>();
+                if (hashtagIdList.size() > 0) {
+                    for (String hashtagIdString : hashtagIdList) {
+                        String hashtagName = hashTagRepository.findById(Integer.valueOf(hashtagIdString)).get().getName();
+                        hashtagNameList.add(hashtagName);
+                    }
+                }
+
+                commentFake.setMentions(mentionUsernameList);
+                commentFake.setHashtags(hashtagNameList);
 
                 return commentFake;
             }
