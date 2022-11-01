@@ -19,7 +19,7 @@ To setup this project, you need to follow this instruction.
 - JSON Decoding
 - error handling
 ### Screenshot
-#### 1.Sign up <br/>  
+#### 1. Sign up <br/>  
 ![](https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/sign_up.png)
 <br/>  
 You should satisfy all conditions, then the button will be enable. And you will get an email on which a specific number array is written. It's for knowing if the email is valid. After you can sign in.
@@ -27,3 +27,4 @@ You should satisfy all conditions, then the button will be enable. And you will 
 ![](https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/edit_profile.png)
 <br/>  
 You can edit your profile information on profile page. To change your profile image, you can take a photo by camera or choose in your library. And your username should be unique, any username can't be duplicated. 
+#### 3. Search page <br/>
