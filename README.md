@@ -23,4 +23,5 @@ To setup this project, you need to follow this instruction.
 ![](https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/Simulator%20Screen%20Recording%20-%20iPhone%208%20-%202022-11-01%20at%2016.56.39.png)
 <br/>  
 You should satisfy all conditions, then the button will be enable. And you will get an email on which a specific number array is written. It's for knowing if the email is valid. After you can sign in. 
+- Edit profile <br/>  
 
