@@ -163,18 +163,10 @@ extension TagPeopleViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PeopleTableViewCell.identifier, for: indexPath) as! PeopleTableViewCell
-        cell.imageView?.image = UIImage(named: "profileImage2")
         
-        let imagePath = data[indexPath.row].1
-        if !imagePath.isEmpty {
-            StorageManager.shared.download(imagePath) { image in
-                DispatchQueue.main.async {
-                    cell.imageView?.image = image
-                }
-            }
-        }
-      
-        cell.textLabel?.text = data[indexPath.row].0
+        let username = data[indexPath.row].0
+        cell.profileImageView.setProfileImage(username: username)
+        cell.configureUsername(username)
         
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
