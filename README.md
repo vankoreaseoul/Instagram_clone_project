@@ -31,4 +31,7 @@ You can edit your profile information on profile page. To change your profile im
 ![](https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/follow.png)
 <br/> 
 You can find friends in people tab on search page. You can see thier uploaded posts or tagged posts. If you want to get thier news, you can follow them. But if you want to unfollow them, you can do in your profile page.  
-#### 4. Search with Hashtag
+#### 4. Search with Hashtag <br/>
+![](https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/hashtag.png)
+<br/> 
+You can search certain themed posts by hashtag in search page. 
