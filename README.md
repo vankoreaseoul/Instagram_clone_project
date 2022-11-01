@@ -35,6 +35,6 @@ You can find friends in people tab on search page. You can see thier uploaded po
 ![](https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/hashtag.png)
 <br/> 
 You can search certain themed posts by hashtag in search page. 
-#### 5. How to post
-<br/> It's hard to show every function here because of the restricted file upload size. Here is a link where you can see. <br/>
-https://drive.google.com/file/d/1VcOGo56VZacQnco_g0dJMtOZHa1OfeHG/view?usp=share_link
+#### 5. How to post and etc...
+<br/> It's hard to show every function here because of the restricted file upload size. Here is a link where you can see overall. <br/>
+https://drive.google.com/file/d/1wWFApMgr2jeSVsQa-5-Ozw5-AeAD7aZU/view?usp=share_link
