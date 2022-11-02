@@ -2,7 +2,7 @@
 import UIKit
 
 protocol PostHeaderTableViewCellDelegate {
-    func didTapMoreButton()
+    func didTapMoreButton(_ sender: UIButton)
 }
 
 class PostHeaderTableViewCell: UITableViewCell {
@@ -53,6 +53,7 @@ class PostHeaderTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         assignFrames()
+        self.bringSubviewToFront(moreButton)
     }
     
     private func addSubviews() {
@@ -72,8 +73,8 @@ class PostHeaderTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    @objc func didTapMoreButton() {
-        delegate?.didTapMoreButton()
+    @IBAction func didTapMoreButton(_ sender: UIButton) {
+        delegate?.didTapMoreButton(sender)
     }
     
     public func setUsernameAndLocation(username: String, location: String) {

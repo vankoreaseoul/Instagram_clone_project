@@ -276,6 +276,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostHeaderTableViewCell.identifier, for: indexPath) as! PostHeaderTableViewCell
             cell.setUsernameAndLocation(username: post.username, location: post.location)
             cell.profileImage.setProfileImage(username: post.username)
+            cell.delegate = self
             return cell
         }
         if indexPath.row % 4 == 1 {
@@ -343,6 +344,21 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+}
+
+extension HomeViewController: PostHeaderTableViewCellDelegate {
+    func didTapMoreButton(_ sender: UIButton) {
+        let point = sender.convert(CGPoint.zero, to: tableView)
+        guard let indexpath = tableView?.indexPathForRow(at: point) else {
+            return
+        }
+        let index = indexpath.row / 4
+        let postId = posts[index].id
+        
+        
+    }
+    
     
 }
 

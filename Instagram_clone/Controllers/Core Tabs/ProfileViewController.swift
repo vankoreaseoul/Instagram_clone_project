@@ -265,7 +265,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
 
 extension ProfileViewController: ProfileInfoHeaderCollectionReusableViewDelegate {
     func profileHeaderDidTapProfileImageView(_ image: UIImage) {
-        guard image.size.width > 680 else {
+        guard image != UIImage(named: "profileImage2") else {
             return showMenuSheet()
         }
         let photoDetailVC = PhotoDetailViewController()

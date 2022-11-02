@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC10177F2912313E008E8079 /* PostMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10177E2912313E008E8079 /* PostMenuView.swift */; };
 		DC1935A528E55D1100979FE8 /* FilmLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1935A428E55D1100979FE8 /* FilmLibraryViewController.swift */; };
 		DC1935A728E5D1B100979FE8 /* ImageFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1935A628E5D1B100979FE8 /* ImageFilterView.swift */; };
 		DC1C31F428D2DF720018F30D /* EditProfileTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1C31F328D2DF720018F30D /* EditProfileTextView.swift */; };
@@ -89,6 +90,7 @@
 		39453AD0735F115E64FB0480 /* Pods-Instagram_clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram_clone.release.xcconfig"; path = "Target Support Files/Pods-Instagram_clone/Pods-Instagram_clone.release.xcconfig"; sourceTree = "<group>"; };
 		73B707ED57DF8DAF5B982EBA /* Pods_Instagram_clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Instagram_clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D86831B34BBF0B8A900A4E84 /* Pods-Instagram_clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram_clone.debug.xcconfig"; path = "Target Support Files/Pods-Instagram_clone/Pods-Instagram_clone.debug.xcconfig"; sourceTree = "<group>"; };
+		DC10177E2912313E008E8079 /* PostMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMenuView.swift; sourceTree = "<group>"; };
 		DC1935A428E55D1100979FE8 /* FilmLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmLibraryViewController.swift; sourceTree = "<group>"; };
 		DC1935A628E5D1B100979FE8 /* ImageFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilterView.swift; sourceTree = "<group>"; };
 		DC1C31F328D2DF720018F30D /* EditProfileTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTextView.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				DC70D2BD290A6955000C9AB4 /* CommentMentionHashTagSearchView.swift */,
+				DC10177E2912313E008E8079 /* PostMenuView.swift */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -669,6 +672,7 @@
 				DC42D86128D81259005105AB /* FilmViewController.swift in Sources */,
 				DC1935A728E5D1B100979FE8 /* ImageFilterView.swift in Sources */,
 				DC4709C528C6C551007B915A /* DatabaseManager.swift in Sources */,
+				DC10177F2912313E008E8079 /* PostMenuView.swift in Sources */,
 				DCEA66CC28EE9FF100AFF2BE /* PostTextTableViewCell.swift in Sources */,
 				DCF80ACE28D0684B00135444 /* PhotoCollectionViewCell.swift in Sources */,
 				DC8513EB28D15C2900EBB63A /* EditProfileUsernameViewController.swift in Sources */,
