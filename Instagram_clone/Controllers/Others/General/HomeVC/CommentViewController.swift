@@ -76,6 +76,20 @@ class CommentViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         textView.becomeFirstResponder()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    @objc func keyboardWillChangeFrame(_ notification: Notification?) { // emoji keyboard
+        if let keyboardFrame: NSValue = notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            
+            UIView.animate(withDuration: TimeInterval((notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.floatValue ?? 0.0), delay: 0, options: UIView.AnimationOptions(rawValue: UInt((notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber)?.intValue ?? 0)), animations: {
+    
+                let keyboardHeight = keyboardRectangle.height
+                self.view.frame.size.height = ((UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.height ?? 0) - keyboardHeight
+                self.isExpand = true
+            })
+        }
     }
     
     @objc func keyboardAppear(_ notification: Notification) {
