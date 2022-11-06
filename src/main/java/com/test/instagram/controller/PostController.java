@@ -50,6 +50,39 @@ public class PostController {
         return postService.insetNewPost(post);
     }
 
+    @DeleteMapping(value = "")
+    private Integer deletePost(@RequestBody JSONObject jsonObject) {
+        int postId = (Integer) jsonObject.get("postId");
+        return postService.deletePost(postId);
+    }
+
+    @PutMapping(value = "")
+    private PostFake2 updatePost(@RequestBody PostFake postFake) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = simpleDateFormat.parse(postFake.getDayString());
+        Post post = new Post();
+        post.setId(postFake.getId());
+        post.setContent(postFake.getContent());
+        post.setUserId(postFake.getUserId());
+        post.setTagPeopleUserIdList(postFake.getTagPeopleUserIdList());
+        post.setLocation(postFake.getLocation());
+        post.setDay(date);
+        post.setMentionUserIdList(postFake.getMentionUserIdList());
+        post.setHashTagIdList(postFake.getHashTagIdList());
+
+        List<String> usernames = postFake.getLikes();
+        List<String> userIdList = new ArrayList<>();
+        for (String username : usernames) {
+            User user = userService.readUserByUsername(username);
+            int userId = user.getId();
+            userIdList.add(String.valueOf(userId));
+        }
+
+        post.setLikeUserIdList(userIdList);
+
+        return postService.updatePost(post);
+    }
+
     @GetMapping(value = "")
     private List<PostFake2> readAllPostsByUserIdList(@RequestParam String userIdList) {
         String replace = userIdList.replace("[","");

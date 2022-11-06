@@ -19,6 +19,8 @@ public class PostServiceImpl implements PostService {
     UserRepository userRepository;
     @Autowired
     HashTagRepository hashTagRepository;
+    @Autowired
+    FileUploadService fileUploadService;
 
     @Override
     public Integer insetNewPost(Post post) {
@@ -27,6 +29,85 @@ public class PostServiceImpl implements PostService {
             return savedPost.getId();
         } catch(Error e) {
             return 0;
+        }
+    }
+
+    @Override
+    public Integer deletePost(int postId) {
+        try {
+            Post post = postRepository.findById(postId).get();
+            int userId = post.getUserId();
+            String filename = String.valueOf(userId) + "/" + String.valueOf(postId) + ".png";
+            postRepository.delete(post);
+            fileUploadService.deleteAtLocal(filename);
+            return  0;
+        } catch (IllegalArgumentException e) {
+            return  1;
+        }
+    }
+
+    @Override
+    public PostFake2 updatePost(Post post) {
+        System.out.println(post);
+        try {
+            Post savedPost = postRepository.save(post);
+
+            PostFake2 postFake2 = new PostFake2();
+            postFake2.setId(savedPost.getId());
+            postFake2.setUsername(userRepository.findById(savedPost.getUserId()).get().getUsername());
+
+            String content = savedPost.getContent();
+            if (content == null) {
+                content = "";
+            }
+            postFake2.setContent(content);
+
+            List<String> tagUserIdList = savedPost.getTagPeopleUserIdList();
+            List<String> tagUsernameList = new ArrayList<>();
+            for (String userIdLetter : tagUserIdList) {
+                int tagUserId = Integer.valueOf(userIdLetter);
+                tagUsernameList.add(userRepository.findById(tagUserId).get().getUsername());
+            }
+            postFake2.setTagPeople(tagUsernameList);
+
+            List<String> mentionUserIdList = savedPost.getMentionUserIdList();
+            List<String> mentionUsernameList = new ArrayList<>();
+            for (String mentionUserIdString : mentionUserIdList) {
+                int mentionUserId = Integer.valueOf(mentionUserIdString);
+                mentionUsernameList.add(userRepository.findById(mentionUserId).get().getUsername());
+            }
+            postFake2.setMentions(mentionUsernameList);
+
+            List<String> hashTagIdList = savedPost.getHashTagIdList();
+            List<String> hashTagNameList = new ArrayList<>();
+            for (String hashTagIdString : hashTagIdList) {
+                int hashTagId = Integer.valueOf(hashTagIdString);
+                hashTagNameList.add(hashTagRepository.findById(hashTagId).get().getName());
+            }
+            postFake2.setHashtags(hashTagNameList);
+
+            String location = savedPost.getLocation();
+            if (location == null) {
+                location = "";
+            }
+            postFake2.setLocation(location);
+
+            Date date = savedPost.getDay();
+            SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
+            String strDate = formatter.format(date);
+            postFake2.setDayString(strDate);
+
+            List<String> userIdArray = savedPost.getLikeUserIdList();
+            List<String> usernames = new ArrayList<>();
+            for (String userIdSting : userIdArray) {
+                int userIdNumber = Integer.valueOf(userIdSting);
+                String username = userRepository.findById(userIdNumber).get().getUsername();
+                usernames.add(username);
+            }
+            postFake2.setLikes(usernames);
+            return postFake2;
+        } catch(Error e) {
+            return new PostFake2();
         }
     }
 

@@ -23,6 +23,12 @@ public class CommentController {
         return commentService.insertComment(commentFake);
     }
 
+    @DeleteMapping(value = "")
+    private Integer deleteComment(@RequestBody JSONObject jsonObject) {
+        int commentId = (Integer) jsonObject.get("commentId");
+        return commentService.deleteComment(commentId);
+    }
+
     @GetMapping(value = "")
     private List<CommentFake> readAllComments(@RequestParam String postIdString) {
         int postId = Integer.valueOf(postIdString);

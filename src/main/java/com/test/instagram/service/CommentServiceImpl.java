@@ -64,6 +64,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Integer deleteComment(int commentId) {
+        try {
+            Comment comment = commentRepository.findById(commentId).get();
+            commentRepository.delete(comment);
+            return 0;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+            return 1;
+        }
+    }
+
+    @Override
     public List<CommentFake> readAllComments(int postId) {
         List<Comment> comments = commentRepository.findAllByPostId(postId);
         List<CommentFake> commentFakeList = new ArrayList<>();

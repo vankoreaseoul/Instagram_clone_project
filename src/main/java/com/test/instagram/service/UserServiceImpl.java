@@ -117,6 +117,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email).get(0);
         user.setProfileImage(imagePath);
         userRepository.save(user);
+        System.out.println("imagePath saved");
     }
 
     @Override
@@ -134,6 +135,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email).get(0);
         user.setProfileImage(null);
         userRepository.save(user);
+        System.out.println("imagePath deleted");
     }
 
     @Override

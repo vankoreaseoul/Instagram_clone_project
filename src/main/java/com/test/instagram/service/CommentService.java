@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CommentService {
     Integer insertComment(CommentFake commentFake) throws ParseException;
+    Integer deleteComment(int commentId);
     List<CommentFake> readAllComments(int postId);
     CommentFake insertLike(int commentId, String username);
     CommentFake deleteLike(int commentId, String username);

@@ -9,6 +9,8 @@ import java.util.List;
 public interface PostService {
 
     Integer insetNewPost(Post post);
+    Integer deletePost(int postId);
+    PostFake2 updatePost(Post post);
     List<PostFake2> readAllPostsByUserIdList(List<Integer> userIdList);
     List<PostFake2> readTaggedPostsByUserId(String userId);
     List<PostFake2> readHashtagPosts(String hashtagId);

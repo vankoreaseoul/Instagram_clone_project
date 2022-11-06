@@ -68,8 +68,13 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Override
     public void deleteAtLocal(String filename) {
         try {
-            userService.deleteImagePath(filename);
-            String pathString = uploadProfileFolderPath + filename + ".png";
+            String pathString = "";
+            if (filename.contains("@")) {
+                userService.deleteImagePath(filename);
+                pathString = uploadProfileFolderPath + filename + ".png";
+            } else {
+                pathString = uploadPostFolderPath + filename;
+            }
             Path path = Paths.get(pathString);
             Files.delete(path);
         } catch (IOException e) {
