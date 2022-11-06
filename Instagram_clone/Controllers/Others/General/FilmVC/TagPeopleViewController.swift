@@ -17,7 +17,7 @@ class TagPeopleViewController: UIViewController {
     
     var data = [(String, String)]()
     
-    private let imageView: UIImageView = {
+    public let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
@@ -46,6 +46,7 @@ class TagPeopleViewController: UIViewController {
     }
     
     private func configureNaviBar() {
+        self.navigationItem.title = "Tag People"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(didTapDoneButton))
     }
     

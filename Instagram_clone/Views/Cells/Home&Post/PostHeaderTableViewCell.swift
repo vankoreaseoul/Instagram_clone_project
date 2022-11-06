@@ -3,6 +3,7 @@ import UIKit
 
 protocol PostHeaderTableViewCellDelegate {
     func didTapMoreButton(_ sender: UIButton)
+    func didTapLocationButton()
 }
 
 class PostHeaderTableViewCell: UITableViewCell {
@@ -20,18 +21,19 @@ class PostHeaderTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private let usernameLabel: UILabel = {
+    public let usernameLabel: UILabel = {
        let label = UILabel()
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 17)
         return label
     }()
     
-    private let locationLabel: UILabel = {
-       let label = UILabel()
-        label.textColor = .systemGray
-        label.font = .systemFont(ofSize: 15)
-        return label
+    public let locationLabel: UIButton = {
+       let button = UIButton()
+        button.setTitleColor(.systemGray, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15)
+        button.titleLabel?.textAlignment = .left
+        return button
     }()
     
     private let moreButton: UIButton = {
@@ -59,14 +61,11 @@ class PostHeaderTableViewCell: UITableViewCell {
     private func addSubviews() {
         self.addSubview(profileImage)
         self.addSubview(usernameLabel)
-        self.addSubview(moreButton)
-        self.addSubview(locationLabel)
+        self.contentView.addSubview(locationLabel)
     }
     
     private func assignFrames() {
         profileImage.frame = CGRect(x: 5, y: 5, width: 40, height: 40)
-        moreButton.frame = CGRect(x: self.width - 30, y: 15, width: 20, height: 20)
-        moreButton.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -85,14 +84,33 @@ class PostHeaderTableViewCell: UITableViewCell {
             locationLabel.frame = CGRect(x: 55, y: usernameLabel.bottom - 3, width: 250, height: 20)
         }
         usernameLabel.text = username
-        locationLabel.text = location
+        locationLabel.setTitle(location, for: .normal)
+        locationLabel.sizeToFit()
+    }
+    
+    public func configureMoreButton(_ username: String) {
+        let myUsername = StorageManager.shared.callUserInfo()!.username
+        if myUsername == username {
+            self.addSubview(moreButton)
+            moreButton.frame = CGRect(x: self.width - 30, y: 15, width: 20, height: 20)
+            moreButton.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
+        }
+    }
+    
+    public func addAction() {
+        locationLabel.addTarget(self, action: #selector(didTapLocationButton), for: .touchUpInside)
+    }
+    
+    @objc func didTapLocationButton() {
+        delegate?.didTapLocationButton()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         profileImage.image = UIImage(named: "profileImage2")
         usernameLabel.text = ""
-        locationLabel.text = ""
+        locationLabel.setTitle("", for: .normal)
+        moreButton.removeFromSuperview()
     }
     
 }

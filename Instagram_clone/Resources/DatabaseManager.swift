@@ -234,6 +234,96 @@ class DatabaseManager {
         }.resume()
     }
     
+    public func deletePost( postId: Int, completion: @escaping (String) -> Void ) {
+         let param = ["postId": postId]
+         let requestBody = try! JSONSerialization.data(withJSONObject: param, options: [])
+         
+         let urlString = MainURL.domain + "/post"
+         let url = URL(string: urlString)!
+         var request = URLRequest(url: url)
+         request.httpMethod = "DELETE"
+         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+         request.httpBody = requestBody
+         
+         let defaultSession = URLSession(configuration: .default)
+         defaultSession.dataTask(with: request) {(data, response, error) in
+             guard let hasData = data else { return }
+             let result = String(data: hasData, encoding: .utf8)!
+             completion(result)
+         }.resume()
+    }
+    
+    public func updatePost( post: Post, completion: @escaping (Post) -> Void ) {
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        let id = post.id
+        let content = post.content
+        let username = post.username
+        var userId = 0
+        readUser(username: username, email: nil) { user in
+            userId = user.id
+            semaphore.signal()
+        }
+        semaphore.wait()
+        
+        let tagPeopleUsernameList = post.tagPeople
+        var tagPeopleUserIdList = [Int]()
+        for i in 0..<tagPeopleUsernameList.count {
+            let postPersonUsername = tagPeopleUsernameList[i]
+            readUser(username: postPersonUsername, email: nil) { user in
+                let postPersonId = user.id
+                tagPeopleUserIdList.append(postPersonId)
+                semaphore.signal()
+            }
+            semaphore.wait()
+        }
+        
+        let location = post.location
+        let dayString = post.dayString
+        let likes = post.likes
+        
+        let mentionUsernameList = post.mentions
+        var mentionUserIdList = [Int]()
+        for i in 0..<mentionUsernameList.count {
+            let mentionUsername = mentionUsernameList[i]
+            readUser(username: mentionUsername, email: nil) { user in
+                let mentionUserId = user.id
+                mentionUserIdList.append(mentionUserId)
+                semaphore.signal()
+            }
+            semaphore.wait()
+        }
+        
+        let hashTagNameList = post.hashtags
+        var hashTagIdList = [Int]()
+        for i in 0..<hashTagNameList.count {
+            let hashTagName = hashTagNameList[i]
+            readHashTag(hashTagName) { hashTag in
+                let hashTagId = hashTag.id
+                hashTagIdList.append(hashTagId)
+                semaphore.signal()
+            }
+            semaphore.wait()
+        }
+        
+        let params = ["id": id, "content": content, "userId": userId, "tagPeopleUserIdList": tagPeopleUserIdList, "location": location, "dayString": dayString, "mentionUserIdList": mentionUserIdList, "hashTagIdList": hashTagIdList, "likes": likes] as [String : Any]
+        let requestBody = try! JSONSerialization.data(withJSONObject: params, options: [])
+        
+        let urlString = MainURL.domain + "/post"
+        let url = URL(string: urlString)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = requestBody
+        
+        let defaultSession = URLSession(configuration: .default)
+        defaultSession.dataTask(with: request) {(data, response, error) in
+            guard let hasData = data else { return }
+            let post: Post = try! JSONDecoder().decode(Post.self, from: hasData)
+            completion(post)
+        }.resume()
+    }
+    
     public func readAllPostsByUserIdList( _ userIdList: [Int], completion: @escaping ([Post]) -> Void ) {
         let url = MainURL.domain + "/post"
         var components = URLComponents(string: url)
@@ -557,6 +647,26 @@ class DatabaseManager {
              let result = String(data: hasData, encoding: .utf8)!
              completion(result)
          }.resume()
+    }
+    
+    public func deleteComment(commentId: Int, completion: @escaping (String) -> Void) {
+        let urlString = MainURL.domain + "/comment"
+        let url = URL(string: urlString)
+       
+        let params = ["commentId": commentId]
+        let requestBody = try! JSONSerialization.data(withJSONObject: params, options: [])
+        
+        var request = URLRequest(url: url!)
+        request.httpMethod = "DELETE"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = requestBody
+        
+        let defaultSession = URLSession(configuration: .default)
+        defaultSession.dataTask(with: request) {(data, response, error) in
+            guard let hasData = data else { return }
+            let result = String(data: hasData, encoding: .utf8)!
+            completion(result)
+        }.resume()
     }
     
     public func readAllComments( postId: Int, completion: @escaping ([Comment]) -> Void) {

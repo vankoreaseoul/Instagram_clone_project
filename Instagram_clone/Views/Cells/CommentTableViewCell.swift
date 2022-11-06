@@ -1,7 +1,7 @@
 
 import UIKit
 
-protocol CommentTableViewCellDelegate {
+protocol CommentTableViewCellDelegate { // Use contentview!
     func didTapCommentLikeButton(sender: UIButton)
 }
 
@@ -10,6 +10,18 @@ class CommentTableViewCell: UITableViewCell {
     static let identifier = "CommentTableViewCell"
     
     var delegate: CommentTableViewCellDelegate?
+    
+    private let deleteImageView: UIImageView = {
+       let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "trash")
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .red.withAlphaComponent(0)
+        imageView.tintColor = .white
+        imageView.frame.size = CGSize(width: 30, height: 30)
+        imageView.isHidden = true
+        return imageView
+    }()
     
     private let profileImageView: UIImageView = {
        let imageView = UIImageView()
@@ -53,6 +65,8 @@ class CommentTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .red.withAlphaComponent(0.5)
+        self.contentView.backgroundColor = .systemBackground
         addSubViews()
         
         setConstraints()
@@ -60,39 +74,40 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     private func addSubViews() {
-        self.addSubview(profileImageView)
-        self.addSubview(contentLabel)
-        self.addSubview(timeLabel)
-        self.addSubview(likeLabel)
-        self.addSubview(likeButton)
+        self.addSubview(deleteImageView)
+        self.contentView.addSubview(profileImageView)
+        self.contentView.addSubview(contentLabel)
+        self.contentView.addSubview(timeLabel)
+        self.contentView.addSubview(likeLabel)
+        self.contentView.addSubview(likeButton)
     }
     
     private func setConstraints() {
-        profileImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5.0).isActive = true
-        profileImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5.0).isActive = true
+        profileImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         profileImageView.layer.cornerRadius = 25
         
-        contentLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5.0).isActive = true
-        contentLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant:-35.0).isActive = true
-        contentLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 70.0).isActive = true
-        contentLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -50.0).isActive = true
+        contentLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5.0).isActive = true
+        contentLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor,constant:-35.0).isActive = true
+        contentLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,constant: 70.0).isActive = true
+        contentLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -50.0).isActive = true
         
-        likeButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 15.0).isActive = true
-        likeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15.0).isActive = true
+        likeButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15.0).isActive = true
+        likeButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -15.0).isActive = true
         likeButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         likeButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         timeLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        timeLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant:-5.0).isActive = true
-        timeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 70.0).isActive = true
-        timeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -180.0).isActive = true
+        timeLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor,constant:-5.0).isActive = true
+        timeLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,constant: 70.0).isActive = true
+        timeLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -180.0).isActive = true
         
         likeLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        likeLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant:-5.0).isActive = true
-        likeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 210.0).isActive = true
-        likeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -50.0).isActive = true
+        likeLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor,constant:-5.0).isActive = true
+        likeLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,constant: 210.0).isActive = true
+        likeLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -50.0).isActive = true
     }
     
     private func addTargetOnButtons() {
@@ -163,6 +178,29 @@ class CommentTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.bringSubviewToFront(likeButton)
+    }
+    
+    public func setImage(_ MaxX: CGFloat) {
+        let width = self.width - MaxX
+        let height = self.height
+        let center: CGPoint = CGPoint(x: MaxX + width / 2, y: height / 2)
+        
+        if center.x == 0 || width < 30 || MaxX == self.width {
+            deleteImageView.isHidden = true
+        } else {
+            deleteImageView.isHidden = false
+        }
+        
+        deleteImageView.center = center
+        
+    }
+    
+    public func deleteAll() {
+        profileImageView.image = nil
+        contentLabel.text = ""
+        timeLabel.text = ""
+        likeLabel.text = ""
+        likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
     }
     
     required init?(coder: NSCoder) {

@@ -233,7 +233,9 @@ class HomeViewController: UIViewController {
         }
     }
     
-    
+    func tapDoneButton(_ indexpathRow: Int, _ post: Post) {
+        return
+    }
 
 }
 
@@ -276,6 +278,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostHeaderTableViewCell.identifier, for: indexPath) as! PostHeaderTableViewCell
             cell.setUsernameAndLocation(username: post.username, location: post.location)
             cell.profileImage.setProfileImage(username: post.username)
+            cell.configureMoreButton(post.username)
             cell.delegate = self
             return cell
         }
@@ -348,15 +351,73 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension HomeViewController: PostHeaderTableViewCellDelegate {
+    func didTapLocationButton() {
+        return
+    }
+    
     func didTapMoreButton(_ sender: UIButton) {
         let point = sender.convert(CGPoint.zero, to: tableView)
         guard let indexpath = tableView?.indexPathForRow(at: point) else {
             return
         }
         let index = indexpath.row / 4
-        let postId = posts[index].id
         
+        let postMenuView = PostMenuView()
+        postMenuView.customDelegate = self
+        postMenuView.post = posts[index]
+        postMenuView.indexpathRow = indexpath.row
+        self.tabBarController?.view.addSubview(postMenuView)
+        postMenuView.frame = CGRect(x: 0, y: view.height, width: view.width, height: 0)
         
+        UIView.animate(withDuration: 0.5,
+                         delay: 0, usingSpringWithDamping: 1.0,
+                         initialSpringVelocity: 1.0,
+                         options: .curveEaseInOut, animations: {
+            postMenuView.frame = self.view.bounds
+          }, completion: nil)
+        
+        self.tabBarController?.tabBar.isHidden = true
+    }
+}
+
+extension HomeViewController: PostMenuViewDelegate {
+    func didTapDelegateButton(_ post: Post, _ indexpathRow: Int) {
+        let postId = post.id
+        DatabaseManager.shared.deletePost(postId: postId) { result in
+            if result == Result.success.rawValue {
+                DispatchQueue.main.async {
+                    self.reconfigureDataAndTableview(indexpathRow)
+                }
+            }
+        }
+    }
+    
+    private func reconfigureDataAndTableview(_ indexpathRow: Int) {
+        let index = indexpathRow / 4
+        posts.remove(at: index)
+        
+        var indexpaths = [IndexPath]()
+        tableView?.beginUpdates()
+        for i in 0..<4 {
+            let indexpath = IndexPath(row: indexpathRow + i, section: 0)
+            indexpaths.append(indexpath)
+        }
+        tableView?.deleteRows(at: indexpaths, with: .fade)
+        tableView?.endUpdates()
+    }
+    
+    func didTapEditButton(_ post: Post, _ indexpathRow: Int) {
+        let editPostVC = EditPostViewController()
+        editPostVC.posts = [post]
+        editPostVC.indexpathRow = indexpathRow
+        editPostVC.delegate = self
+        let editPostNV = UINavigationController(rootViewController: editPostVC)
+        editPostNV.modalPresentationStyle = .fullScreen
+        self.present(editPostNV, animated: false)
+    }
+    
+    func showTabbar() {
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     
@@ -399,7 +460,6 @@ extension HomeViewController: PostActionTableViewCellDelegate {
 
 extension HomeViewController: PostTextTableViewCellDelegate {
     func didTapCommentsLabel(sender: UIButton) {
-        print("call")
         let point = sender.convert(CGPoint.zero, to: tableView)
         guard let indexpath = tableView?.indexPathForRow(at: point) else {
             return
@@ -435,5 +495,10 @@ extension HomeViewController: PostTextTableViewCellDelegate {
         resizeCell(indexpath)
     }
     
-    
+}
+
+extension HomeViewController: EditPostViewControllerDelegate {
+    func didTapDoneButton(_ indexpathRow: Int, _ post: Post) {
+        self.tapDoneButton(indexpathRow, post)
+    }
 }

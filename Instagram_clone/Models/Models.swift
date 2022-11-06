@@ -21,12 +21,12 @@ struct User: Codable {
 struct Post: Codable {
     let id: Int
     let username: String
-    let content: String
-    let mentions: [String]
-    let hashtags: [String]
-    let tagPeople: [String]
-    let location: String
-    let dayString: String
+    var content: String
+    var mentions: [String]
+    var hashtags: [String]
+    var tagPeople: [String]
+    var location: String
+    var dayString: String
     let likes: [String]
 }
 

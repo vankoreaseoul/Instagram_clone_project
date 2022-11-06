@@ -20,6 +20,7 @@ class PostListViewController: HomeViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
         
         if isScrolled == false {
             scrollMoveToCertainCell()
@@ -54,8 +55,18 @@ class PostListViewController: HomeViewController {
     
     private func scrollMoveToCertainCell() {
         let indexpath = IndexPath(row: indexpathRow * 4, section: 0)
-        print(indexpath)
         tableView?.scrollToRow(at: indexpath, at: .top, animated: true)
     }
 
+    override func tapDoneButton(_ indexpathRow: Int, _ post: Post) {
+        let index = indexpathRow / 4
+        super.posts.remove(at: index)
+        var emptyPostList = [Post]()
+        emptyPostList.append(contentsOf: super.posts)
+        super.posts.removeAll()
+        super.posts.append(post)
+        super.posts.append(contentsOf: emptyPostList)
+        tableView?.reloadData()
+        tableView?.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    }
 }

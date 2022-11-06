@@ -1,9 +1,15 @@
 
 import UIKit
 
+protocol PostTableViewCellDelegate {
+    func didTapTagButton()
+}
+
 class PostTableViewCell: UITableViewCell {
     
     static let identifier = "PostTableViewCell"
+    
+    var delegate: PostTableViewCellDelegate?
     
     var tags: [String]?
     
@@ -102,6 +108,18 @@ class PostTableViewCell: UITableViewCell {
                 sub.removeFromSuperview()
             }
         }
+    }
+    
+    public func configureTagButton(){
+        self.contentView.addSubview(mentionIconButton)
+        mentionIconButton.addTarget(self, action: #selector(didTapTagButton), for: .touchUpInside)
+        mentionIconButton.frame.size = CGSize(width: 50, height: 50)
+        mentionIconButton.frame.origin.x = 10
+        mentionIconButton.frame.origin.y = self.height - 60
+    }
+    
+    @objc func didTapTagButton() {
+        delegate?.didTapTagButton()
     }
     
     override func prepareForReuse() {

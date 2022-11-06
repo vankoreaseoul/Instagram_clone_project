@@ -7,11 +7,24 @@ class CommentViewController: UIViewController {
     lazy var mentions = [String]()
     lazy var hashTags = [String]()
     
+    var isDeleted = false
+    
     var postId: Int?
     
     var data: [Comment]?
     
     private var isExpand = false
+    
+    private let alertView: UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor(red: 255/255, green: 139/255, blue: 134/255, alpha: 1.0)
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textColor = .white
+        label.text = "1 comment deleted."
+        view.addSubview(label)
+        return view
+    }()
     
     private var tableView = UITableView()
     
@@ -314,6 +327,112 @@ class CommentViewController: UIViewController {
         viewDidLayoutSubviews()
     }
     
+    @objc func swiped(_ sender: UIPanGestureRecognizer) {
+        if isDeleted {
+            return
+        }
+        
+        let point = sender.view?.convert(CGPoint.zero, to: tableView)
+        guard let indexpath = tableView.indexPathForRow(at: point!) else {
+            return
+        }
+        
+        let username = data![indexpath.row].username
+        let myUsername = StorageManager.shared.callUserInfo()!.username
+        if myUsername != username {
+            return
+        }
+        
+        let cell = tableView.cellForRow(at: indexpath) as! CommentTableViewCell
+        
+        var contentViewCenter = cell.contentView.center
+        let contentViewMaxX = cell.contentView.frame.maxX
+        let diff = sender.translation(in: cell)
+        let cellCenter = cell.center
+        
+        if sender.state == .changed {
+            contentViewCenter.x += diff.x
+            if contentViewCenter.x > cellCenter.x {
+                return
+            }
+            
+            cell.contentView.center = contentViewCenter
+            sender.setTranslation(CGPoint.zero, in: cell)
+            cell.setImage(cell.contentView.frame.maxX)
+        } else if sender.state == .ended {
+            
+            if contentViewMaxX < cellCenter.x   {
+                UIView.animate(withDuration: 1) {
+                    cell.contentView.center.x = -cellCenter.x
+                    cell.setImage(0)
+                    self.isDeleted = true
+                    return
+                } completion: { bool in
+                    if bool {
+                        self.deleteComment(indexpath)
+                        return
+                    }
+                }
+
+            } else {
+                cell.contentView.center.x = cellCenter.x
+                cell.setImage(self.view.width)
+            }
+        }
+    }
+    
+    private func deleteComment(_ indexpath: IndexPath) {
+        let commentId = data![indexpath.row].id
+        let cell = tableView.cellForRow(at: indexpath) as! CommentTableViewCell
+        cell.deleteAll()
+        self.data!.remove(at: indexpath.row)
+        self.tableView.beginUpdates()
+        self.tableView.deleteRows(at: [indexpath], with: .none)
+        self.tableView.endUpdates()
+        
+        DatabaseManager.shared.deleteComment(commentId: commentId) { result in
+            switch result {
+            case Result.success.rawValue:
+                DispatchQueue.main.async {
+                    self.showAlert()
+                }
+            case Result.failure.rawValue:
+                print("fail")
+            default:
+                fatalError("Invalied value")
+            }
+        }
+    }
+    
+    private func showAlert() {
+        let statusHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        let naviBarHeight = self.navigationController?.navigationBar.frame.size.height ?? 0
+        
+        alertView.frame = CGRect(x: 0, y: statusHeight + naviBarHeight, width: view.width, height: 0)
+        if !view.subviews.contains(alertView) {
+            view.addSubview(alertView)
+        }
+        
+        alertView.subviews.first?.frame = CGRect(x: 115, y: 5, width: 200, height: 0)
+        
+        UIView.animate(withDuration: 1) {
+            self.alertView.frame.size.height = 30
+            self.alertView.subviews.first?.frame.size.height = 20
+        } completion: { bool in
+            if bool {
+                self.hideAlert()
+            }
+        }
+        
+    }
+    
+    private func hideAlert() {
+        UIView.animate(withDuration: 1) {
+            self.alertView.frame.size.height = 0
+            self.alertView.subviews.first?.frame.size.height = 0
+            self.isDeleted = false
+        }
+    }
     
 }
 
@@ -331,6 +450,10 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.setValues(username: comment.username, content: comment.content, dayString: comment.dayString, likes: comment.likes)
         cell.delegate = self
+        
+        let swipe = UIPanGestureRecognizer(target: self, action: #selector(swiped))
+        cell.addGestureRecognizer(swipe)
+        swipe.delegate = self
         return cell
     }
     
@@ -479,7 +602,12 @@ extension CommentViewController: CommentMentionHashTagSearchViewDelegate {
         }
     }
     
-    
+}
+
+extension CommentViewController: UIGestureRecognizerDelegate { // scroll and delete swipe action, make both available
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }
     
 

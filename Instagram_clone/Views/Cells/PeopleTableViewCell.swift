@@ -46,7 +46,7 @@ class PeopleTableViewCell: UITableViewCell {
     public func configureUsername(_ text: String) {
         usernameLabel.text = text
     }
-   
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         profileImageView.image = nil
