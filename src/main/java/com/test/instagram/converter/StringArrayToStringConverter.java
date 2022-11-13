@@ -19,6 +19,6 @@ public class StringArrayToStringConverter implements AttributeConverter<List<Str
 
     @Override
     public List<String> convertToEntityAttribute(String string) {
-        return string != null ? Arrays.asList(string.split(SPLIT_CHAR)) : emptyList();
+        return string != null && !string.equals("") ? Arrays.asList(string.split(SPLIT_CHAR)) : emptyList();
     }
 }

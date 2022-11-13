@@ -48,7 +48,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostFake2 updatePost(Post post) {
-        System.out.println(post);
         try {
             Post savedPost = postRepository.save(post);
 
@@ -64,25 +63,31 @@ public class PostServiceImpl implements PostService {
 
             List<String> tagUserIdList = savedPost.getTagPeopleUserIdList();
             List<String> tagUsernameList = new ArrayList<>();
-            for (String userIdLetter : tagUserIdList) {
-                int tagUserId = Integer.valueOf(userIdLetter);
-                tagUsernameList.add(userRepository.findById(tagUserId).get().getUsername());
+            if (!tagUserIdList.isEmpty()) {
+                for (String userIdLetter : tagUserIdList) {
+                    int tagUserId = Integer.valueOf(userIdLetter);
+                    tagUsernameList.add(userRepository.findById(tagUserId).get().getUsername());
+                }
             }
             postFake2.setTagPeople(tagUsernameList);
 
             List<String> mentionUserIdList = savedPost.getMentionUserIdList();
             List<String> mentionUsernameList = new ArrayList<>();
-            for (String mentionUserIdString : mentionUserIdList) {
-                int mentionUserId = Integer.valueOf(mentionUserIdString);
-                mentionUsernameList.add(userRepository.findById(mentionUserId).get().getUsername());
+            if (!mentionUserIdList.isEmpty()) {
+                for (String mentionUserIdString : mentionUserIdList) {
+                    int mentionUserId = Integer.valueOf(mentionUserIdString);
+                    mentionUsernameList.add(userRepository.findById(mentionUserId).get().getUsername());
+                }
             }
             postFake2.setMentions(mentionUsernameList);
 
             List<String> hashTagIdList = savedPost.getHashTagIdList();
             List<String> hashTagNameList = new ArrayList<>();
-            for (String hashTagIdString : hashTagIdList) {
-                int hashTagId = Integer.valueOf(hashTagIdString);
-                hashTagNameList.add(hashTagRepository.findById(hashTagId).get().getName());
+            if (!hashTagIdList.isEmpty()) {
+                for (String hashTagIdString : hashTagIdList) {
+                    int hashTagId = Integer.valueOf(hashTagIdString);
+                    hashTagNameList.add(hashTagRepository.findById(hashTagId).get().getName());
+                }
             }
             postFake2.setHashtags(hashTagNameList);
 
@@ -99,10 +104,12 @@ public class PostServiceImpl implements PostService {
 
             List<String> userIdArray = savedPost.getLikeUserIdList();
             List<String> usernames = new ArrayList<>();
-            for (String userIdSting : userIdArray) {
-                int userIdNumber = Integer.valueOf(userIdSting);
-                String username = userRepository.findById(userIdNumber).get().getUsername();
-                usernames.add(username);
+            if (!userIdArray.isEmpty()) {
+                for (String userIdSting : userIdArray) {
+                    int userIdNumber = Integer.valueOf(userIdSting);
+                    String username = userRepository.findById(userIdNumber).get().getUsername();
+                    usernames.add(username);
+                }
             }
             postFake2.setLikes(usernames);
             return postFake2;
