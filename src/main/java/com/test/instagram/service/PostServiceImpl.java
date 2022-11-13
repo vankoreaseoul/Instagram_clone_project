@@ -184,6 +184,65 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public PostFake2 readPostByPostId(int postId) {
+        Post post = postRepository.findById(postId).get();
+        PostFake2 postFake2 = new PostFake2();
+        postFake2.setId(post.getId());
+        postFake2.setUsername(userRepository.findById(post.getUserId()).get().getUsername());
+
+        String content = post.getContent();
+        if (content == null) {
+            content = "";
+        }
+        postFake2.setContent(content);
+
+        List<String> tagUserIdList = post.getTagPeopleUserIdList();
+        List<String> tagUsernameList = new ArrayList<>();
+        for (String userIdString : tagUserIdList) {
+            int tagUserId = Integer.valueOf(userIdString);
+            tagUsernameList.add(userRepository.findById(tagUserId).get().getUsername());
+        }
+        postFake2.setTagPeople(tagUsernameList);
+
+        List<String> mentionUserIdList = post.getMentionUserIdList();
+        List<String> mentionUsernameList = new ArrayList<>();
+        for (String mentionUserIdString : mentionUserIdList) {
+            int mentionUserId = Integer.valueOf(mentionUserIdString);
+            mentionUsernameList.add(userRepository.findById(mentionUserId).get().getUsername());
+        }
+        postFake2.setMentions(mentionUsernameList);
+
+        List<String> hashTagIdList = post.getHashTagIdList();
+        List<String> hashTagNameList = new ArrayList<>();
+        for (String hashTagIdString : hashTagIdList) {
+            int hashTagId = Integer.valueOf(hashTagIdString);
+            hashTagNameList.add(hashTagRepository.findById(hashTagId).get().getName());
+        }
+        postFake2.setHashtags(hashTagNameList);
+
+        String location = post.getLocation();
+        if (location == null) {
+            location = "";
+        }
+        postFake2.setLocation(location);
+
+        Date date = post.getDay();
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
+        String strDate = formatter.format(date);
+        postFake2.setDayString(strDate);
+
+        List<String> userIds = post.getLikeUserIdList();
+        List<String> usernames = new ArrayList<>();
+        for (String userIdSting : userIds) {
+            int userId = Integer.valueOf(userIdSting);
+            String username = userRepository.findById(userId).get().getUsername();
+            usernames.add(username);
+        }
+        postFake2.setLikes(usernames);
+        return postFake2;
+    }
+
+    @Override
     public List<PostFake2> readTaggedPostsByUserId(String userId) {
         String q1 = userId;
         String q2 = "%," + userId;

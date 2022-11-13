@@ -13,6 +13,7 @@ public interface FollowService {
     Integer numberOfFollowers(String myUserId);
     List<User> listOfFollowing(Integer myUserId);
     List<User> listOfFollowers(String myUserId);
+    List<User> readAllFollowsAndFollowers(String myUserId);
     List<Integer> readAllFollowers(String myUserId);
     Integer unfollowToUser(int myUserId, String theOtherUserId);
     Integer removeFollower(String myUserId, int theOtherUserId);

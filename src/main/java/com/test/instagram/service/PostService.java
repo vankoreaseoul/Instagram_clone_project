@@ -12,6 +12,7 @@ public interface PostService {
     Integer deletePost(int postId);
     PostFake2 updatePost(Post post);
     List<PostFake2> readAllPostsByUserIdList(List<Integer> userIdList);
+    PostFake2 readPostByPostId(int postId);
     List<PostFake2> readTaggedPostsByUserId(String userId);
     List<PostFake2> readHashtagPosts(String hashtagId);
     PostFake2 insertLike(int postId, String userId);

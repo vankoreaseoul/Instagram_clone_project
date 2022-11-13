@@ -95,6 +95,11 @@ public class PostController {
         return postService.readAllPostsByUserIdList(idList);
     }
 
+    @GetMapping(value = "/postId")
+    private PostFake2 readPostByPostId(@RequestParam String postId) {
+        return postService.readPostByPostId(Integer.valueOf(postId));
+    }
+
     @GetMapping(value = "/tag")
     private List<PostFake2> readTaggedPostsByUserId(@RequestParam String userId) {
         return postService.readTaggedPostsByUserId(userId);

@@ -135,6 +135,20 @@ public class FollowServiceImpl implements  FollowService {
     }
 
     @Override
+    public List<User> readAllFollowsAndFollowers(String myUserId) {
+        List<User> users1 = listOfFollowers(myUserId);
+        List<User> users2 = listOfFollowing(Integer.valueOf(myUserId));
+        List<User> users = new ArrayList<>();
+        users.addAll(users1);
+        users.addAll(users2);
+        Set<User> set = new HashSet<>();
+        set.addAll(users);
+        users.clear();
+        users.addAll(set);
+        return users;
+    }
+
+    @Override
     public List<Integer> readAllFollowers(String myUserId) {
         List<Integer> userIdList = new ArrayList<>();
         String q1 = myUserId;

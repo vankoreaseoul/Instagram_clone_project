@@ -83,6 +83,29 @@ public class FollowController {
         return userFakes;
     }
 
+    @GetMapping(value = "/follows")
+    private List<UserFake> readAllFollowsAndFollowers(@RequestParam String myUserId) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<UserFake> userFakes = new ArrayList<>();
+        List<User> users = followService.readAllFollowsAndFollowers(myUserId);
+
+        for (User user: users) {
+            UserFake userFake = new UserFake();
+            userFake.setProfileImage(user.getProfileImage());
+            userFake.setUsername(user.getUsername());
+            userFake.setName(user.getName());
+            userFake.setBio(user.getBio());
+            userFake.setEmail(user.getEmail());
+            userFake.setEmailValidated(user.getEmailValidated());
+            userFake.setDayString(formatter.format(user.getDay()));
+            userFake.setId(user.getId());
+            userFake.setPassword("");
+            userFakes.add(userFake);
+        }
+
+        return userFakes;
+    }
+
     @DeleteMapping(value = "")
     private Integer unfollowToUser(@RequestBody JSONObject jsonObject) throws ParseException {
         int myUserId = (Integer) jsonObject.get("myUserId");
