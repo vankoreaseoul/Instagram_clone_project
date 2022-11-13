@@ -213,7 +213,12 @@ class TheOtherProfileInfoHeaderCollectionReusableView: ProfileInfoHeaderCollecti
     
     
     @objc func didTapMessageButton() {
-        
+        let messageVC = MessageViewController()
+        messageVC.user = self.user!
+        let parentVC = self.superview?.superview?.next as? UIViewController
+        parentVC?.navigationController?.pushViewController(messageVC, animated: true)
+        parentVC?.tabBarController?.tabBar.isHidden = true
+        parentVC?.navigationController?.navigationBar.topItem?.backButtonTitle = ""
     }
     
 }

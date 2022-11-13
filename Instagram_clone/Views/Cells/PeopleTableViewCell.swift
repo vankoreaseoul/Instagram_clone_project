@@ -5,6 +5,8 @@ class PeopleTableViewCell: UITableViewCell {
     
     static let identifier = "PeopleTableViewCell"
     
+    var index = 0 // To change frame
+    
     public let profileImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -37,10 +39,22 @@ class PeopleTableViewCell: UITableViewCell {
     }
     
     private func assignFrames() {
-        let size = self.width / 7
-        profileImageView.frame = CGRect(x: 30, y: (self.height - size) / 2, width: size, height: size)
-        profileImageView.layer.cornerRadius = size / 2
-        usernameLabel.frame = CGRect(x: profileImageView.right + 30, y: profileImageView.top, width: self.width - 30 - profileImageView.width - 30 - 30, height: profileImageView.height)
+        if index == 0 {
+            let size = self.width / 7
+            profileImageView.frame = CGRect(x: 30, y: (self.height - size) / 2, width: size, height: size)
+            profileImageView.layer.cornerRadius = size / 2
+            usernameLabel.frame = CGRect(x: profileImageView.right + 30, y: profileImageView.top, width: self.width - 30 - profileImageView.width - 30 - 30, height: profileImageView.height)
+        } else if index == 1 {
+            let size = self.width / 8
+            profileImageView.frame = CGRect(x: 20, y: (self.height - size) / 2, width: size, height: size)
+            profileImageView.layer.cornerRadius = size / 2
+            usernameLabel.frame = CGRect(x: profileImageView.right + 20, y: profileImageView.top, width: self.width - 20 - profileImageView.width - 55 - 20, height: profileImageView.height)
+        } else if index == 2 {
+            let size = self.height - 10
+            profileImageView.frame = CGRect(x: 0, y: (self.height - size) / 2, width: size, height: size)
+            profileImageView.layer.cornerRadius = size / 2
+            usernameLabel.frame = CGRect(x: profileImageView.right + 10, y: profileImageView.top, width: self.width - profileImageView.width - 20, height: profileImageView.height)
+        }
     }
     
     public func configureUsername(_ text: String) {

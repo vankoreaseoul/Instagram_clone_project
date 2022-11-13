@@ -7,6 +7,12 @@ class HomeViewController: UIViewController {
     
     var posts = [Post]()
     
+    private lazy var darkView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black.withAlphaComponent(0.4)
+        return view
+    }()
+    
     private let header: UIView = {
        let view = UIView()
         view.backgroundColor = .systemBackground
@@ -30,6 +36,7 @@ class HomeViewController: UIViewController {
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate  // for pop up FilmViewController
         
         addSubViews()
+        configureMessageButton()
         configureCollectionView()
         configureTableView()
     }
@@ -47,6 +54,17 @@ class HomeViewController: UIViewController {
         scrollToFirstRow()
     }
 
+    private func configureMessageButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "paperplane"), style: .plain, target: self, action: #selector(didTapMessageButton))
+        self.navigationItem.rightBarButtonItem?.tintColor = .black
+    }
+    
+    @objc func didTapMessageButton() {
+        let messageSearchVC = MessageSearchViewController()
+        self.navigationController?.pushViewController(messageSearchVC, animated: true)
+        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
+    }
     
     public func scrollToFirstRow() {
         if posts.count > 0 {
@@ -276,7 +294,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.row % 4 == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostHeaderTableViewCell.identifier, for: indexPath) as! PostHeaderTableViewCell
-            cell.setUsernameAndLocation(username: post.username, location: post.location)
+            cell.setUsernameAndLocation(username: post.username, location: post.location, time: "")
             cell.profileImage.setProfileImage(username: post.username)
             cell.configureMoreButton(post.username)
             cell.delegate = self
@@ -448,11 +466,28 @@ extension HomeViewController: PostActionTableViewCellDelegate {
         self.navigationController?.navigationBar.tintColor = .black
     }
     
-    func didTapPaperPlaneButton() {
+    func didTapPaperPlaneButton(_ sender: UIButton) {
+        let point = sender.convert(CGPoint.zero, to: tableView)
+        guard let indexpath = tableView?.indexPathForRow(at: point) else {
+            return
+        }
+        let index = indexpath.row / 4
+        let post = posts[index]
         
+        darkView.frame = self.view.window?.windowScene?.screen.bounds ?? CGRect.zero
+        self.tabBarController?.view.addSubview(darkView)
+        let sharePostView = SharePostView()
+        sharePostView.post = post
+        darkView.addSubview(sharePostView)
+        sharePostView.frame = CGRect(x: 0, y: view.bottom, width: view.width, height: 0)
+        
+        UIView.animate(withDuration: 0.3) {
+            sharePostView.frame = CGRect(x: 0, y: self.view.bottom - self.view.height * 0.7, width: self.view.width, height: self.view.height * 0.7)
+            sharePostView.layer.cornerRadius = 15
+        }
     }
     
-    func didTapBookMarkButton() {
+    func didTapBookMarkButton(_ sender: UIButton) {
         
     }
     

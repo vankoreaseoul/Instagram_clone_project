@@ -341,6 +341,23 @@ class DatabaseManager {
         task.resume()
     }
     
+    public func readPostsByPostId( _ postId: Int, completion: @escaping (Post) -> Void ) {
+        let url = MainURL.domain + "/post/postId"
+        var components = URLComponents(string: url)
+        let queryPostId = URLQueryItem(name: "postId", value: postId.description)
+        components?.queryItems = [queryPostId]
+        
+        let totalUrl = (components?.url)!
+   
+        let task = URLSession.shared.dataTask(with: totalUrl) {(data, response, error) in
+            guard let hasData = data else { return }
+            let post: Post = try! JSONDecoder().decode(Post.self, from: hasData)
+            completion(post)
+        }
+
+        task.resume()
+    }
+    
     public func readTaggedPostsByUserId( _ userId: Int, completion: @escaping ([Post]) -> Void ) {
         let url = MainURL.domain + "/post/tag"
         var components = URLComponents(string: url)
@@ -510,6 +527,23 @@ class DatabaseManager {
     
     public func readFollowersList( myUserId: Int, completion: @escaping ([User]) -> Void ) {
         let url = MainURL.domain + "/following/followers_list"
+        var components = URLComponents(string: url)
+        let queryMyUserId = URLQueryItem(name: "myUserId", value: myUserId.description)
+        components?.queryItems = [queryMyUserId]
+
+        let totalUrl = (components?.url)!
+        
+        let task = URLSession.shared.dataTask(with: totalUrl) {(data, response, error) in
+            guard let data = data else { return }
+            let users: [User] = try! JSONDecoder().decode([User].self, from: data)
+            completion(users)
+        }
+
+        task.resume()
+    }
+    
+    public func readAllFollowsAndFollowers( myUserId: Int, completion: @escaping ([User]) -> Void ) {
+        let url = MainURL.domain + "/following/follows"
         var components = URLComponents(string: url)
         let queryMyUserId = URLQueryItem(name: "myUserId", value: myUserId.description)
         components?.queryItems = [queryMyUserId]
@@ -725,5 +759,80 @@ class DatabaseManager {
         }.resume()
     }
     
+    // MARK: - Message
+    public func insertMessage( message: Message, completion: @escaping (String) -> Void ) {
+        let senderId = message.senderId
+        let recipientId = message.recipientId
+        let content = message.content
+        let dayString = message.dayString
+        let postId = message.postId
+        
+        let params = ["senderId": senderId, "recipientId": recipientId, "content": content, "dayString": dayString, "postId": postId] as [String : Any]
+         let requestBody = try! JSONSerialization.data(withJSONObject: params, options: [])
+         
+         let urlString = MainURL.domain + "/message"
+         let url = URL(string: urlString)!
+         var request = URLRequest(url: url)
+         request.httpMethod = "POST"
+         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+         request.httpBody = requestBody
+         
+         let defaultSession = URLSession(configuration: .default)
+         defaultSession.dataTask(with: request) {(data, response, error) in
+             guard let hasData = data else { return }
+             let result = String(data: hasData, encoding: .utf8)!
+             completion(result)
+         }.resume()
+    }
+    
+    public func readMessages( senderId: Int, recipientId: Int, completion: @escaping ([Message]) -> Void) {
+        let url = MainURL.domain + "/message"
+        var components = URLComponents(string: url)
+        let querySenderId = URLQueryItem(name: "senderIdString", value: senderId.description)
+        let queryRecipientId = URLQueryItem(name: "recipientIdString", value: recipientId.description)
+        components?.queryItems = [querySenderId, queryRecipientId]
+
+        let totalUrl = (components?.url)!
+        
+        let task = URLSession.shared.dataTask(with: totalUrl) {(data, response, error) in
+            guard let hasData = data else { return }
+            let messages: [Message] = try! JSONDecoder().decode([Message].self, from: hasData)
+            completion(messages)
+        }
+        task.resume()
+    }
+    
+    public func readAllMessageCounterparts( myUserId: Int, completion: @escaping ([User]) -> Void ) {
+        let url = MainURL.domain + "/message/user_list"
+        var components = URLComponents(string: url)
+        let queryMyUserId = URLQueryItem(name: "myUserIdString", value: myUserId.description)
+        components?.queryItems = [queryMyUserId]
+
+        let totalUrl = (components?.url)!
+        
+        let task = URLSession.shared.dataTask(with: totalUrl) {(data, response, error) in
+            guard let hasData = data else { return }
+            let users: [User] = try! JSONDecoder().decode([User].self, from: hasData)
+            completion(users)
+        }
+        task.resume()
+    }
+    
+    public func readLastMessage( senderId: Int, recipientIdList: [Int], completion: @escaping ([Message]) -> Void) {
+        let url = MainURL.domain + "/message/last"
+        var components = URLComponents(string: url)
+        let querySenderId = URLQueryItem(name: "senderIdString", value: senderId.description)
+        let queryRecipientIdList = URLQueryItem(name: "recipientIdListString", value: recipientIdList.description)
+        components?.queryItems = [querySenderId, queryRecipientIdList]
+
+        let totalUrl = (components?.url)!
+        
+        let task = URLSession.shared.dataTask(with: totalUrl) {(data, response, error) in
+            guard let hasData = data else { return }
+            let messages: [Message] = try! JSONDecoder().decode([Message].self, from: hasData)
+            completion(messages)
+        }
+        task.resume()
+    }
 }
 

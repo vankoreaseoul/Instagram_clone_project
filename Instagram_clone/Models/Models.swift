@@ -6,7 +6,7 @@ struct MainURL {
     // "http://localhost:8080"
 }
 
-struct User: Codable {
+struct User: Codable, Hashable {
     let id: Int
     var username: String
     let email: String
@@ -44,4 +44,13 @@ struct Comment: Codable {
     let hashtags: [String]
     let dayString: String
     let postId: Int
+}
+
+struct Message: Codable {
+    let id: Int
+    let senderId: Int
+    let recipientId: Int
+    let content: String
+    let dayString: String
+    var postId: Int = 0
 }

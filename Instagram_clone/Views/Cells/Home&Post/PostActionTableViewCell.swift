@@ -4,8 +4,8 @@ import UIKit
 protocol PostActionTableViewCellDelegate {
     func didTapHeartButton(_ sender: UIButton)
     func didTapChatBubbleButton(_ sender: UIButton)
-    func didTapPaperPlaneButton()
-    func didTapBookMarkButton()
+    func didTapPaperPlaneButton(_ sender: UIButton)
+    func didTapBookMarkButton(_ sender: UIButton)
 }
 
 class PostActionTableViewCell: UITableViewCell {
@@ -115,16 +115,16 @@ class PostActionTableViewCell: UITableViewCell {
         delegate?.didTapHeartButton(sender)
     }
     
-    @objc func didTapChatBubbleButton(_ sender: UIButton) {
+    @IBAction func didTapChatBubbleButton(_ sender: UIButton) {
         delegate?.didTapChatBubbleButton(sender)
     }
     
-    @objc func didTapPaperPlaneButton() {
-        delegate?.didTapPaperPlaneButton()
+    @IBAction func didTapPaperPlaneButton(_ sender: UIButton) {
+        delegate?.didTapPaperPlaneButton(sender)
     }
     
-    @objc func didTapBookMarkButton() {
-        delegate?.didTapBookMarkButton()
+    @IBAction func didTapBookMarkButton(_ sender: UIButton) {
+        delegate?.didTapBookMarkButton(sender)
     }
     
     override func prepareForReuse() {

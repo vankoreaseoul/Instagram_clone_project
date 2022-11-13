@@ -16,6 +16,7 @@
 		DC26D04D28F950F900C8013C /* RemoveConfirmHeaderTableReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC26D04C28F950F900C8013C /* RemoveConfirmHeaderTableReusableView.swift */; };
 		DC2C521828E6C1B700C4C987 /* PostUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C521728E6C1B700C4C987 /* PostUploadViewController.swift */; };
 		DC3424E828D08834004E6587 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3424E728D08834004E6587 /* EditProfileViewController.swift */; };
+		DC376DF3291B6AC600BA7C8F /* MyMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC376DF2291B6AC600BA7C8F /* MyMessageTableViewCell.swift */; };
 		DC42D85D28D811FF005105AB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC42D85C28D811FF005105AB /* ExploreViewController.swift */; };
 		DC42D85F28D8123B005105AB /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC42D85E28D8123B005105AB /* NotificationViewController.swift */; };
 		DC42D86128D81259005105AB /* FilmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC42D86028D81259005105AB /* FilmViewController.swift */; };
@@ -27,6 +28,7 @@
 		DC59C58628C5BD05005A3DB7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC59C58528C5BD05005A3DB7 /* RegisterViewController.swift */; };
 		DC5DECCB28E29BF100ACF744 /* AddProfileImageMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5DECCA28E29BF100ACF744 /* AddProfileImageMenuView.swift */; };
 		DC609F5828EBE98500BBCEC9 /* PeopleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC609F5728EBE98500BBCEC9 /* PeopleTableViewCell.swift */; };
+		DC6420542917A5EB00B07FDA /* SharePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6420532917A5EB00B07FDA /* SharePostView.swift */; };
 		DC657B6F28CF9F2100154779 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC657B6E28CF9F2100154779 /* ProfileViewController.swift */; };
 		DC657B7228CF9F9300154779 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC657B7128CF9F9300154779 /* SettingViewController.swift */; };
 		DC6F40E928F7F6BC004D5CCD /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F40E828F7F6BC004D5CCD /* SearchResultView.swift */; };
@@ -43,11 +45,17 @@
 		DC8AF8D728E1488A0036AAC3 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF8D628E1488A0036AAC3 /* PhotoDetailViewController.swift */; };
 		DC8FEDC2290C30440085BBB3 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8FEDC1290C30440085BBB3 /* PostListViewController.swift */; };
 		DC992B7D290E49A400EA20FE /* HashtagDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC992B7C290E49A400EA20FE /* HashtagDisplayViewController.swift */; };
+		DC9AFAA9291F80D7005B7142 /* MyPhotoMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9AFAA8291F80D7005B7142 /* MyPhotoMessageTableViewCell.swift */; };
+		DC9AFAAB291FA22C005B7142 /* TheOtherPhotoMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9AFAAA291FA22C005B7142 /* TheOtherPhotoMessageTableViewCell.swift */; };
 		DCAE28912906C1A300FCC04B /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE28902906C1A300FCC04B /* CommentTableViewCell.swift */; };
 		DCAE689628FEB27300CD771B /* InputAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE689528FEB27300CD771B /* InputAlertView.swift */; };
+		DCB86645291912F300B15019 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB86644291912F300B15019 /* MessageViewController.swift */; };
 		DCB95B1629065A2A00A0C108 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB95B1529065A2A00A0C108 /* CommentViewController.swift */; };
 		DCBC378C28D718C70053A254 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBC378B28D718C70053A254 /* StorageManager.swift */; };
 		DCC559A728EAB81A00A4EEE4 /* TagPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC559A628EAB81A00A4EEE4 /* TagPeopleViewController.swift */; };
+		DCD43450291E3CC200D4CE5A /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD4344F291E3CC200D4CE5A /* NewMessageViewController.swift */; };
+		DCD4A138291A000700392983 /* MessageHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD4A137291A000700392983 /* MessageHeaderTableViewCell.swift */; };
+		DCD4A13A291A7ABD00392983 /* TheOtherMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD4A139291A7ABD00392983 /* TheOtherMessageTableViewCell.swift */; };
 		DCDAC28628C4C32000F9B418 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDAC28528C4C32000F9B418 /* AuthManager.swift */; };
 		DCDAC28C28C4C5CF00F9B418 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDAC28B28C4C5CF00F9B418 /* SignInViewController.swift */; };
 		DCDF456C28C488D300253B35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF456B28C488D300253B35 /* AppDelegate.swift */; };
@@ -61,6 +69,7 @@
 		DCDF458F28C488D300253B35 /* Instagram_cloneUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF458E28C488D300253B35 /* Instagram_cloneUITestsLaunchTests.swift */; };
 		DCDF45A028C48A3800253B35 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF459F28C48A3800253B35 /* Models.swift */; };
 		DCE5591B28F56A0700BF80D3 /* FollowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE5591A28F56A0700BF80D3 /* FollowViewController.swift */; };
+		DCE8834B291C9F960004A292 /* MessageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8834A291C9F960004A292 /* MessageSearchViewController.swift */; };
 		DCEA66C628EE9F5F00AFF2BE /* PostHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEA66C528EE9F5F00AFF2BE /* PostHeaderTableViewCell.swift */; };
 		DCEA66C828EE9F7600AFF2BE /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEA66C728EE9F7600AFF2BE /* PostTableViewCell.swift */; };
 		DCEA66CA28EE9F8E00AFF2BE /* PostActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEA66C928EE9F8E00AFF2BE /* PostActionTableViewCell.swift */; };
@@ -100,6 +109,7 @@
 		DC26D04C28F950F900C8013C /* RemoveConfirmHeaderTableReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveConfirmHeaderTableReusableView.swift; sourceTree = "<group>"; };
 		DC2C521728E6C1B700C4C987 /* PostUploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUploadViewController.swift; sourceTree = "<group>"; };
 		DC3424E728D08834004E6587 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		DC376DF2291B6AC600BA7C8F /* MyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessageTableViewCell.swift; sourceTree = "<group>"; };
 		DC42D85C28D811FF005105AB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		DC42D85E28D8123B005105AB /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		DC42D86028D81259005105AB /* FilmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +121,7 @@
 		DC59C58528C5BD05005A3DB7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DC5DECCA28E29BF100ACF744 /* AddProfileImageMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileImageMenuView.swift; sourceTree = "<group>"; };
 		DC609F5728EBE98500BBCEC9 /* PeopleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleTableViewCell.swift; sourceTree = "<group>"; };
+		DC6420532917A5EB00B07FDA /* SharePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePostView.swift; sourceTree = "<group>"; };
 		DC657B6E28CF9F2100154779 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DC657B7128CF9F9300154779 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		DC6F40E828F7F6BC004D5CCD /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
@@ -127,11 +138,17 @@
 		DC8AF8D628E1488A0036AAC3 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		DC8FEDC1290C30440085BBB3 /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
 		DC992B7C290E49A400EA20FE /* HashtagDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagDisplayViewController.swift; sourceTree = "<group>"; };
+		DC9AFAA8291F80D7005B7142 /* MyPhotoMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPhotoMessageTableViewCell.swift; sourceTree = "<group>"; };
+		DC9AFAAA291FA22C005B7142 /* TheOtherPhotoMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheOtherPhotoMessageTableViewCell.swift; sourceTree = "<group>"; };
 		DCAE28902906C1A300FCC04B /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		DCAE689528FEB27300CD771B /* InputAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAlertView.swift; sourceTree = "<group>"; };
+		DCB86644291912F300B15019 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		DCB95B1529065A2A00A0C108 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		DCBC378B28D718C70053A254 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		DCC559A628EAB81A00A4EEE4 /* TagPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPeopleViewController.swift; sourceTree = "<group>"; };
+		DCD4344F291E3CC200D4CE5A /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
+		DCD4A137291A000700392983 /* MessageHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		DCD4A139291A7ABD00392983 /* TheOtherMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheOtherMessageTableViewCell.swift; sourceTree = "<group>"; };
 		DCDAC28528C4C32000F9B418 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		DCDAC28B28C4C5CF00F9B418 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DCDF456828C488D300253B35 /* Instagram_clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram_clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +166,7 @@
 		DCDF458E28C488D300253B35 /* Instagram_cloneUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instagram_cloneUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DCDF459F28C48A3800253B35 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		DCE5591A28F56A0700BF80D3 /* FollowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowViewController.swift; sourceTree = "<group>"; };
+		DCE8834A291C9F960004A292 /* MessageSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSearchViewController.swift; sourceTree = "<group>"; };
 		DCEA66C528EE9F5F00AFF2BE /* PostHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		DCEA66C728EE9F7600AFF2BE /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		DCEA66C928EE9F8E00AFF2BE /* PostActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostActionTableViewCell.swift; sourceTree = "<group>"; };
@@ -251,6 +269,7 @@
 			children = (
 				DC70D2BD290A6955000C9AB4 /* CommentMentionHashTagSearchView.swift */,
 				DC10177E2912313E008E8079 /* PostMenuView.swift */,
+				DC6420532917A5EB00B07FDA /* SharePostView.swift */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -259,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				DC992B7C290E49A400EA20FE /* HashtagDisplayViewController.swift */,
+				DCB86644291912F300B15019 /* MessageViewController.swift */,
 			);
 			path = ExploreVC;
 			sourceTree = "<group>";
@@ -267,8 +287,10 @@
 			isa = PBXGroup;
 			children = (
 				DCB95B1529065A2A00A0C108 /* CommentViewController.swift */,
-				DC101780291255CB008E8079 /* EditPostViewController.swift */,
 				DC70D2BA290A416E000C9AB4 /* AllCommentsViewController.swift */,
+				DC101780291255CB008E8079 /* EditPostViewController.swift */,
+				DCE8834A291C9F960004A292 /* MessageSearchViewController.swift */,
+				DCD4344F291E3CC200D4CE5A /* NewMessageViewController.swift */,
 			);
 			path = HomeVC;
 			sourceTree = "<group>";
@@ -402,11 +424,11 @@
 		DCDF459D28C4899300253B35 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DC5946C728F7ADEF00545A2D /* TableViewHeaders */,
 				DC70D2BC290A68CF000C9AB4 /* HomeView */,
 				DCC559A328EAAF9E00A4EEE4 /* FilmView */,
 				DCC559A228EAAF3300A4EEE4 /* ProfileView */,
 				DCF80ACC28D0682800135444 /* Cells */,
+				DC5946C728F7ADEF00545A2D /* TableViewHeaders */,
 				DCF80AC728D04FD900135444 /* CollectionViewHeaders */,
 				DCDF45A128C48A8600253B35 /* Storyboards */,
 				DCDF457428C488D300253B35 /* Assets.xcassets */,
@@ -461,6 +483,11 @@
 				DC609F5728EBE98500BBCEC9 /* PeopleTableViewCell.swift */,
 				DCAE28902906C1A300FCC04B /* CommentTableViewCell.swift */,
 				DC70D2BF290A7C1A000C9AB4 /* TextLabelCollectionViewCell.swift */,
+				DCD4A137291A000700392983 /* MessageHeaderTableViewCell.swift */,
+				DCD4A139291A7ABD00392983 /* TheOtherMessageTableViewCell.swift */,
+				DC9AFAAA291FA22C005B7142 /* TheOtherPhotoMessageTableViewCell.swift */,
+				DC376DF2291B6AC600BA7C8F /* MyMessageTableViewCell.swift */,
+				DC9AFAA8291F80D7005B7142 /* MyPhotoMessageTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -655,6 +682,7 @@
 				DCAE689628FEB27300CD771B /* InputAlertView.swift in Sources */,
 				DC26D04B28F9492700C8013C /* RemoveMenuView.swift in Sources */,
 				DCDF456E28C488D300253B35 /* SceneDelegate.swift in Sources */,
+				DCD4A138291A000700392983 /* MessageHeaderTableViewCell.swift in Sources */,
 				DC8A802028F2A60A00899356 /* TheOtherProfileInfoHeaderCollectionReusableView.swift in Sources */,
 				DC87150E28FC0A1F00EC275F /* MentionHashTagSearchResultView.swift in Sources */,
 				DC8AF8D728E1488A0036AAC3 /* PhotoDetailViewController.swift in Sources */,
@@ -663,6 +691,7 @@
 				DC42D85F28D8123B005105AB /* NotificationViewController.swift in Sources */,
 				DCC559A728EAB81A00A4EEE4 /* TagPeopleViewController.swift in Sources */,
 				DC8513ED28D15F7100EBB63A /* EditProfileBioViewController.swift in Sources */,
+				DCE8834B291C9F960004A292 /* MessageSearchViewController.swift in Sources */,
 				DC838A2628D598CA00A09F03 /* CameraViewController.swift in Sources */,
 				DC5946C928F7AEC700545A2D /* UnfollowConfirmHeaderTableReusableView.swift in Sources */,
 				DCDF45A028C48A3800253B35 /* Models.swift in Sources */,
@@ -682,15 +711,22 @@
 				DC8513EB28D15C2900EBB63A /* EditProfileUsernameViewController.swift in Sources */,
 				DCF80ACB28D0677F00135444 /* ProfileTabsCollectionReusableView.swift in Sources */,
 				DC26D04D28F950F900C8013C /* RemoveConfirmHeaderTableReusableView.swift in Sources */,
+				DC6420542917A5EB00B07FDA /* SharePostView.swift in Sources */,
+				DCD43450291E3CC200D4CE5A /* NewMessageViewController.swift in Sources */,
 				DC2C521828E6C1B700C4C987 /* PostUploadViewController.swift in Sources */,
+				DC376DF3291B6AC600BA7C8F /* MyMessageTableViewCell.swift in Sources */,
+				DC9AFAA9291F80D7005B7142 /* MyPhotoMessageTableViewCell.swift in Sources */,
 				DC42D85D28D811FF005105AB /* ExploreViewController.swift in Sources */,
 				DCB95B1629065A2A00A0C108 /* CommentViewController.swift in Sources */,
 				DC657B7228CF9F9300154779 /* SettingViewController.swift in Sources */,
+				DCD4A13A291A7ABD00392983 /* TheOtherMessageTableViewCell.swift in Sources */,
 				DC992B7D290E49A400EA20FE /* HashtagDisplayViewController.swift in Sources */,
 				DC8FEDC2290C30440085BBB3 /* PostListViewController.swift in Sources */,
+				DC9AFAAB291FA22C005B7142 /* TheOtherPhotoMessageTableViewCell.swift in Sources */,
 				DCAE28912906C1A300FCC04B /* CommentTableViewCell.swift in Sources */,
 				DC5DECCB28E29BF100ACF744 /* AddProfileImageMenuView.swift in Sources */,
 				DCF80AC928D0509600135444 /* ProfileInfoHeaderCollectionReusableView.swift in Sources */,
+				DCB86645291912F300B15019 /* MessageViewController.swift in Sources */,
 				DC70D2BB290A416E000C9AB4 /* AllCommentsViewController.swift in Sources */,
 				DC70D2C0290A7C1A000C9AB4 /* TextLabelCollectionViewCell.swift in Sources */,
 				DCBC378C28D718C70053A254 /* StorageManager.swift in Sources */,

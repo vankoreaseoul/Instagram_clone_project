@@ -43,6 +43,7 @@ class PostListViewController: HomeViewController {
         title.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: title)
         self.navigationItem.leftItemsSupplementBackButton = true
+        self.navigationItem.rightBarButtonItem = nil
     }
     
     override func setFollowingList() {

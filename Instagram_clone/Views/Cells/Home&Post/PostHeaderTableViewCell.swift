@@ -8,6 +8,8 @@ protocol PostHeaderTableViewCellDelegate {
 
 class PostHeaderTableViewCell: UITableViewCell {
     
+    var index = 0
+    
     var delegate: PostHeaderTableViewCellDelegate?
     
     static let identifier = "PostHeaderTableViewCell"
@@ -24,15 +26,25 @@ class PostHeaderTableViewCell: UITableViewCell {
     public let usernameLabel: UILabel = {
        let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.numberOfLines = 1
+        label.font = .systemFont(ofSize: 17, weight: .semibold)
         return label
     }()
     
     public let locationLabel: UIButton = {
-       let button = UIButton()
-        button.setTitleColor(.systemGray, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 15)
-        button.titleLabel?.textAlignment = .left
+        let button = UIButton()
+        let label = UILabel()
+        label.textColor = .systemGray
+        label.numberOfLines = 1
+        label.font = .systemFont(ofSize: 15)
+        label.textAlignment = .left
+        button.addSubview(label)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.leadingAnchor.constraint(equalTo: button.leadingAnchor).isActive = true
+        label.trailingAnchor.constraint(lessThanOrEqualTo: button.trailingAnchor, constant: -10).isActive = true
+        label.topAnchor.constraint(equalTo: button.topAnchor, constant: 5).isActive = true
+        label.bottomAnchor.constraint(equalTo: button.bottomAnchor).isActive = true
         return button
     }()
     
@@ -41,6 +53,15 @@ class PostHeaderTableViewCell: UITableViewCell {
         button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         button.tintColor = .black
         return button
+    }()
+    
+    private let timeLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: 15)
+        label.textColor = .systemGray
+        return label
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -62,10 +83,18 @@ class PostHeaderTableViewCell: UITableViewCell {
         self.addSubview(profileImage)
         self.addSubview(usernameLabel)
         self.contentView.addSubview(locationLabel)
+        self.addSubview(timeLabel)
     }
     
     private func assignFrames() {
-        profileImage.frame = CGRect(x: 5, y: 5, width: 40, height: 40)
+        if index == 0 {
+            profileImage.frame = CGRect(x: 5, y: 5, width: 40, height: 40)
+        } else if index == 1 {
+            profileImage.frame = CGRect(x: 5, y: 10, width: 60, height: 60)
+        } else if index == 2 {
+            profileImage.frame = CGRect(x: 10, y: 15, width: 50, height: 50)
+        }
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -76,16 +105,46 @@ class PostHeaderTableViewCell: UITableViewCell {
         delegate?.didTapMoreButton(sender)
     }
     
-    public func setUsernameAndLocation(username: String, location: String) {
-        if location.isEmpty {
-            usernameLabel.frame = CGRect(x: 55, y: 15, width: 250, height: 20)
-        } else {
-            usernameLabel.frame = CGRect(x: 55, y: 5, width: 250, height: 20)
-            locationLabel.frame = CGRect(x: 55, y: usernameLabel.bottom - 3, width: 250, height: 20)
+    public func setUsernameAndLocation(username: String, location: String, time: String) {
+        if index == 0 {
+            if location.isEmpty {
+                usernameLabel.frame = CGRect(x: 55, y: 15, width: 250, height: 20)
+            } else {
+                usernameLabel.frame = CGRect(x: 55, y: 5, width: 250, height: 20)
+                locationLabel.frame = CGRect(x: 55, y: usernameLabel.bottom - 3, width: 250, height: 20)
+            }
+        } else if index == 1 {
+            usernameLabel.frame = CGRect(x: 80, y: 15, width: 250, height: 20)
+            locationLabel.frame = CGRect(x: 80, y: usernameLabel.bottom, width: 120, height: 20)
+        } else if index == 2 {
+            usernameLabel.frame = CGRect(x: 75, y: 30, width: 240, height: 20)
         }
+       
         usernameLabel.text = username
-        locationLabel.setTitle(location, for: .normal)
-        locationLabel.sizeToFit()
+        for subview in locationLabel.subviews {
+            if let label = subview as? UILabel {
+                label.text = location
+            }
+        }
+        
+        if index == 1 {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en_US")
+            formatter.dateFormat = "dd-MMMM-yyyy"
+            let strDate = formatter.string(from: Date())
+            
+            let day = String(time.split(separator: " ", omittingEmptySubsequences: true).first!)
+            let hour = String(String(time.split(separator: " ", omittingEmptySubsequences: true).last!).dropLast(3))
+            if day == strDate {
+                timeLabel.text = hour
+            } else {
+                timeLabel.text = day
+            }
+            
+            timeLabel.frame = CGRect(x: 210, y: locationLabel.top, width: 100, height: 20)
+            timeLabel.sizeToFit()
+            timeLabel.frame = CGRect(x: self.width - timeLabel.width - 10, y: locationLabel.top + 3, width: timeLabel.width, height: 20)
+        }
     }
     
     public func configureMoreButton(_ username: String) {

@@ -126,7 +126,7 @@ class EditPostViewController: UIViewController {
         }
         
         cell.profileImage.setProfileImage(username: username)
-        cell.setUsernameAndLocation(username: username, location: location)
+        cell.setUsernameAndLocation(username: username, location: location, time: "")
         cell.usernameLabel.textColor = .systemGray
         cell.locationLabel.setTitleColor(.black, for: .normal)
         cell.addAction()
