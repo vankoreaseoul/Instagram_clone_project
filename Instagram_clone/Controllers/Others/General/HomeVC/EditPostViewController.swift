@@ -128,7 +128,7 @@ class EditPostViewController: UIViewController {
         cell.profileImage.setProfileImage(username: username)
         cell.setUsernameAndLocation(username: username, location: location, time: "")
         cell.usernameLabel.textColor = .systemGray
-        cell.locationLabel.setTitleColor(.black, for: .normal)
+        (cell.locationLabel.subviews.first as? UILabel)?.textColor = .black
         cell.addAction()
         self.view.addSubview(cell)
         cell.delegate = self
@@ -179,9 +179,12 @@ class EditPostViewController: UIViewController {
         let mentions = self.mentions
         let hashtags = self.hashTags
         var location = ""
-        if cell.locationLabel.title(for: .normal) != "Add Location..." {
-            location = cell.locationLabel.title(for: .normal)!
+        
+        if (cell.locationLabel.subviews.first as? UILabel)?.text != "Add Location..." {
+            location = ((cell.locationLabel.subviews.first as? UILabel)?.text)!
         }
+        
+        
         let dayString = Date().description
         var post = posts!.first!
         post.content = content ?? ""
@@ -229,8 +232,7 @@ extension EditPostViewController: GMSAutocompleteViewControllerDelegate {
         let location = place.name
         
         if let hasLocation = location {
-            cell.locationLabel.setTitle(hasLocation, for: .normal)
-            cell.locationLabel.sizeToFit()
+            (cell.locationLabel.subviews.first as? UILabel)?.text = hasLocation
         }
       
       dismiss(animated: true, completion: nil)
