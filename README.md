@@ -71,4 +71,5 @@ https://drive.google.com/file/d/1ESgeVUxJE7d4CrkDAyQ43TqtMhbhrEoF/view?usp=share
 - The concept of Auto Layout is really important in UIKit. So I tried to use it rather than assign frame directly, but often I faced errors or warnings to say I broke Auto Layout and sometimes I really couldn't find which part was wrong. In this project, some layouts are not stable. I need to get more used to Auto Layout.    
 4. Needs to learn Mention and Hashtag algorithm.
 - Mention and Hashtag was one of the most annoying functions while embodying this project. I researched hard but couldn't find what I really wanted and above all, I didn't want to use third party library. So I made my own logic for it and it seems to work roughly but not perfectly for sure. The research for it will go on. 
-5. 
+5. Needs to apply Push Notification.
+- Definitely when it comes to Push Notification, I know that I need to accept and use third party library. I tried to make it by my own but I realised it's over my ability. But even to accept and apply third party library, I think I should know how it works. That's why I leave it behind. When I can understand the algorithm at least roughly, I will add in this project.  
