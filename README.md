@@ -4,8 +4,7 @@
 - Development objectives: Using swift, embody social network service
 - Development period: 02 September 2022 ~ 13 November 2022 (about 10 weeks)
 - Structure
-[<img src="https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/structure.png">]
-![](https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/structure.png)
+
 
 ### Introduction
 To setup this project, you need to follow this instruction. 
