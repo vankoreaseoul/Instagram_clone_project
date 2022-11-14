@@ -4,6 +4,7 @@
 - Development objectives: &nbsp;  Using swift, embody social network service
 - Development period: &nbsp;  02 September 2022 ~ 13 November 2022 (about 10 weeks)
 - Developer / Role: &nbsp;  Seo Heawon / Full-stack
+- Main functions: &nbsp; Sign in / up, Edit profile, Post upload / update / delete / share, Mention / Hashtag / Tag, Follow / UnFollow, Message, Like, Comment upload / delete
 - Structure
 ![](https://user-images.githubusercontent.com/91598430/201608176-aa7a2505-a504-4e1d-936f-25417d0fd3bc.jpg)
   - Front-end: &nbsp;  Swift UIKit <br/>
@@ -19,6 +20,7 @@ To setup this project, you need to follow this instruction.
 - I didn't use Image host server. Instead I get Server to save images in local directory. Go to 'FileUploadServiceImpl' file in back-end code and check two variables named 'uploadProfileFolderPath' and 'uploadPostFolderPath'. That's the pathname for folders where images will be saved. You have to make your own folders and put the pathname on there.
 3. Download Google Place API library on pods and get API key.
 - In this project, I tried not to use third party libraries. But it looks way better to use this to search location. Here is a link. <br/>  https://cocoapods.org/pods/GooglePlaces  <br/> You need to make Google developer account to use their services. You can get API key after. Put API key in function called GMSPlacesClient.provideAPIKey("xxxx") in 'AppDelegate' file.
+
 ### Feature
 - Swift, Cocoa Touch
 - Xcode
@@ -30,6 +32,7 @@ To setup this project, you need to follow this instruction.
 - Image Cache
 - JSON Decoding
 - error handling
+
 ### Screenshot
 #### 1. Sign up <br/>  
 ![](https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/sign_up.png)
@@ -50,5 +53,6 @@ You can search certain themed posts by hashtag in search page.
 #### 5. How to post and etc...
 It's hard to show every function here because of the restricted file upload size. Here is a link where you can see overall. <br/>
 https://drive.google.com/file/d/1ESgeVUxJE7d4CrkDAyQ43TqtMhbhrEoF/view?usp=share_link
+
 ### Improvements
 -
