@@ -6,11 +6,11 @@
 - Developer / Role: &nbsp;  Seo Heawon / Full-stack
 - Main functions: &nbsp; Sign in / up, Edit profile, Post upload / update / delete / share, Mention / Hashtag / Tag, Follow / UnFollow, Message, Like, Comment upload / delete
 - Structure
-![](https://user-images.githubusercontent.com/91598430/201608176-aa7a2505-a504-4e1d-936f-25417d0fd3bc.jpg)
   - Front-end: &nbsp;  Swift UIKit <br/>
   - Back-end: &nbsp;  Java Spring boot (including storage inside) <br/>
   - Database: &nbsp;  Oracle cloud <br/>
   - Details: &nbsp;  When clients request text information such as comments, server brings the information from remote database. On the other hand, in case that clients require image information like profile image, server brings from internal storage.
+![](https://user-images.githubusercontent.com/91598430/201608176-aa7a2505-a504-4e1d-936f-25417d0fd3bc.jpg)
 
 ### Introduction
 To setup this project, you need to follow this instruction. 
