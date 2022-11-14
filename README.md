@@ -1,4 +1,17 @@
 ## Instagram_clone_project
+
+### Table of contents
+
+​	[Summary](#Summary)
+
+​	[Use Case Diagram](#use-case-diagram)
+
+​	[File Tree](#file-tree)
+
+​	[Database Modeling](#database-modeling)
+
+​	[UI](#ui)
+
 ### Summary
 - Project name: &nbsp;  Instagram clone project
 - Development objectives: &nbsp;  Using swift, embody social network service
