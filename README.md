@@ -35,11 +35,11 @@ To setup this project, you need to follow this instruction.
 - Auto Layout
 - RESTful APIs to connect iOS application to back-end services
 - MVC design pattern
-- user authentication and user default
+- User authentication and user default
 - Google Place API
 - Image Cache
 - JSON Decoding
-- error handling
+- Error handling
 
 ### Screenshot
 #### 1. Sign up <br/>  
@@ -67,4 +67,5 @@ https://drive.google.com/file/d/1ESgeVUxJE7d4CrkDAyQ43TqtMhbhrEoF/view?usp=share
 - These days, more and more mobile apps are accepting MVVM pattern. MVC pattern I applied for this project, which has long history, used for long time and still one of stable good patterns, but it puts a lot of burdens on controller. So I need to learn and apply MVVM pattern. 
 2. Needs to learn more stable ways to handle image.
 - As you can see on video, even though image is uploaded well, sometimes a few image views are blank. I made code which downloads image from server and saves in its own image cache. The way is used commonly to deal with image based on my research, but I can see it's not enough and doesn't work perfectly. I don't know if I'm wrong with this way or there are better ways or perhaps it might be a problem on server. I need to research.
-3.  
+3. Needs to get more used to Auto Layout.
+- The concept of Auto Layout is really important in UIKit. So I tried to use it rather than assign frame directly, but often I faced errors or warnings to say I broke Auto Layout and sometimes I really couldn't find which part was wrong. In this project, some layouts are not stable. I need to get more used to Auto Layout.    
