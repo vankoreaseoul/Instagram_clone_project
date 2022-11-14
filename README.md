@@ -3,6 +3,8 @@
 - Project name: Instagram clone project
 - Development objectives: Using swift, embody social network service
 - Development period: 02 September 2022 ~ 13 November 2022 (about 10 weeks)
+- Structure:
+  --
 ### Introduction
 To setup this project, you need to follow this instruction. 
 1. Connect to your own database and mail account.
