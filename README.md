@@ -4,13 +4,13 @@
 
 ​	[Summary](#Summary)
 
-​	[Use Case Diagram](#use-case-diagram)
+​	[Introduction](#Introduction)
 
-​	[File Tree](#file-tree)
+​	[Feature](#Feature)
 
-​	[Database Modeling](#database-modeling)
+​	[Screenshot](#Screenshot)
 
-​	[UI](#ui)
+​	[Improvements](#Improvements)
 
 ### Summary
 - Project name: &nbsp;  Instagram clone project
