@@ -6,8 +6,8 @@
 - Structure
 ![](https://user-images.githubusercontent.com/91598430/201608176-aa7a2505-a504-4e1d-936f-25417d0fd3bc.jpg)
 &nbsp;&nbsp;- Front-end: Swift UIKit <br/>
-&nbsp;&nbsp;- Back-end: Java Spring boot
-- Database: Oracle cloud
+&nbsp;&nbsp;- Back-end: Java Spring boot(including storage inside) <br/>
+&nbsp;&nbsp;- Database: Oracle cloud <br/>
 
 ### Introduction
 To setup this project, you need to follow this instruction. 
