@@ -5,8 +5,8 @@
 - Development period: 02 September 2022 ~ 13 November 2022 (about 10 weeks)
 - Structure
 ![](https://user-images.githubusercontent.com/91598430/201608176-aa7a2505-a504-4e1d-936f-25417d0fd3bc.jpg)
-
-
+<br/>  
+- Front-end
 
 ### Introduction
 To setup this project, you need to follow this instruction. 
