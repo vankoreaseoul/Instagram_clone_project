@@ -66,4 +66,5 @@ https://drive.google.com/file/d/1ESgeVUxJE7d4CrkDAyQ43TqtMhbhrEoF/view?usp=share
 1. Needs to apply MVVM design pattern.
 - These days, more and more mobile apps are accepting MVVM pattern. MVC pattern I applied for this project, which has long history, used for long time and still one of stable good patterns, but it puts a lot of burdens on controller. So I need to learn and apply MVVM pattern. 
 2. Needs to learn more stable ways to handle image.
-- As you can see on video, even though image is uploaded well, sometimes a few image views are blank. I made code which downloads image from server and saves in its own image cache. The way is used commonly to deal with image based on my research, but I can see it's not enough and doesn't work perfectly. 
+- As you can see on video, even though image is uploaded well, sometimes a few image views are blank. I made code which downloads image from server and saves in its own image cache. The way is used commonly to deal with image based on my research, but I can see it's not enough and doesn't work perfectly. I don't know if I'm wrong with this way or there are better ways or perhaps it might be a problem on server. I need to research.
+3.  
