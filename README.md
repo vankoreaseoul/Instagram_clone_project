@@ -9,7 +9,8 @@
 &nbsp;&nbsp;- Back-end: Java Spring boot (including storage inside) <br/>
 &nbsp;&nbsp;- Database: Oracle cloud <br/>
 &nbsp;&nbsp;- Details: 
-- When clients request text information such as comments, server brings the information from remote database. On the other hand, in case that clients require image information like profile image, server brings from internal storage.
+- 
+  - When clients request text information such as comments, server brings the information from remote database. On the other hand, in case that clients require image information like profile image, server brings from internal storage.
 
 ### Introduction
 To setup this project, you need to follow this instruction. 
