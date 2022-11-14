@@ -1,15 +1,15 @@
 ## Instagram_clone_project
 ### Summary
-- Project name: Instagram clone project
-- Development objectives: Using swift, embody social network service
-- Development period: 02 September 2022 ~ 13 November 2022 (about 10 weeks)
+- Project name:   Instagram clone project
+- Development objectives:   Using swift, embody social network service
+- Development period:   02 September 2022 ~ 13 November 2022 (about 10 weeks)
 - Structure
 ![](https://user-images.githubusercontent.com/91598430/201608176-aa7a2505-a504-4e1d-936f-25417d0fd3bc.jpg)
-  - Front-end: Swift UIKit <br/>
-  - Back-end: Java Spring boot (including storage inside) <br/>
-  - Database: Oracle cloud <br/>
-  - Details: When clients request text information such as comments, server brings the information from remote database. On the other hand, in case that clients require image information like profile image, server brings from internal storage.
-- Developer/Role: Seo Heawon/full-stack
+  - Front-end:   Swift UIKit <br/>
+  - Back-end:   Java Spring boot (including storage inside) <br/>
+  - Database:   Oracle cloud <br/>
+  - Details:   When clients request text information such as comments, server brings the information from remote database. On the other hand, in case that clients require image information like profile image, server brings from internal storage.
+- Developer / Role:   Seo Heawon / Full-stack
 
 ### Introduction
 To setup this project, you need to follow this instruction. 
