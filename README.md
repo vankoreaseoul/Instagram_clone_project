@@ -58,9 +58,12 @@ You can find friends in people tab on search page. You can see thier uploaded po
 ![](https://github.com/vankoreaseoul/Instagram_clone_project/blob/main/gifs/hashtag.png)
 <br/> 
 You can search certain themed posts by hashtag in search page. 
-#### 5. How to post and etc...
+#### 5. How to post and etc..
 It's hard to show every function here because of the restricted file upload size. Here is a link where you can see overall. <br/>
 https://drive.google.com/file/d/1ESgeVUxJE7d4CrkDAyQ43TqtMhbhrEoF/view?usp=share_link
 
 ### Improvements
--
+1. Needs to apply MVVM design pattern.
+- These days, more and more mobile apps are accepting MVVM pattern. MVC pattern I applied for this project, which has long history, used for long time and still one of stable good patterns, but it puts a lot of burdens on controller. So I need to learn and apply MVVM pattern. 
+2. Needs to learn more stable ways to handle image.
+- As you can see on video, even though image is uploaded well, sometimes a few image views are blank. I made code which downloads image from server and saves in its own image cache. The way is used commonly to deal with image based on my research, but I can see it's not enough and doesn't work perfectly. 
