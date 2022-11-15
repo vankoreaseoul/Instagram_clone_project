@@ -73,7 +73,7 @@ You can find friends in people tab on search page. You can see thier uploaded po
 You can search certain themed posts by hashtag in search page. 
 #### 5. How to post and etc..
 It's hard to show every function here because of the restricted file upload size. Here is a link where you can see overall. <br/>
-https://drive.google.com/file/d/1ESgeVUxJE7d4CrkDAyQ43TqtMhbhrEoF/view?usp=share_link
+https://drive.google.com/file/d/1Qo9WvF8z2Qp8Vf6XcUKHfeU_hNqG7Jvv/view?usp=share_link
 
 ### Improvements
 1. Needs to apply MVVM design pattern.
