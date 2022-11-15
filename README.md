@@ -86,3 +86,5 @@ https://drive.google.com/file/d/1Qo9WvF8z2Qp8Vf6XcUKHfeU_hNqG7Jvv/view?usp=share
 - Mention and Hashtag was one of the most annoying functions while embodying this project. I researched hard but couldn't find what I really wanted and above all, I didn't want to use third party library. So I made my own logic for it and it seems to work roughly but not perfectly for sure. The research for it will go on. 
 5. Needs to apply Push Notification.
 - Definitely when it comes to Push Notification, I know that I need to accept and use third party library. I tried to make it by my own but I realised it's over my ability. But even to accept and apply third party library, I think I should know how it works. That's why I leave it behind. When I can understand the algorithm at least roughly, I will add in this project.  
+6. Needs to build Real-time database.
+- For message chat, server should be able to detect changes on entity in database and update information in client side when its state changes. But http protocol and RDMS database can respond when client side requests. So 
